@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    width: 100%;
+    height: 100%;
+    font-family: 'Nunito';
+    letter-spacing: 0.03em;
+    line-height: 1.6;
+}
+.logo{
+    position: absolute;
+    max-width: 55px;
+    left: 23px;
+    top: 10px;
+    z-index: 2;
+}
+nav{
+    margin-top: 0px;
+    left: 0;
+    width: 100%;
+    position: relative;
+    font-family: 'Nunito', sans-serif;
+    z-index: 1;
+    font-size: 18px;
+    background-color: white;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+}
+.menu-principal{
+    list-style: none;
+    display:flex;
+    justify-content:flex-end;
+    margin-right: 79px;
+}
+.menu-principal >li>a{
+    display: block;
+    padding: 30px 15px;
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+}
+.menu-principal>li:hover{
+    background-color:deepskyblue;
+}
+.submenu{
+    position: absolute;
+    display: none;
+    list-style: none;
+    width: 200px;
+    background-color:rgba(0, 191, 255, 0.541);
+}
+.menu-principal li:hover .submenu{
+    display: block;
+}
+.submenu li:hover{
+    background-color: deepskyblue;
+}
+.submenu li a{
+    display: block;
+    color: black;
+    text-decoration:none;
+    padding: 15px 15px 15px 20px;
+}
+html, body{
+    margin: 0;
+    padding: 0;
+}
+.title{
+    text-align: center;
+    font-size: 40px;
+    color: black;
+    text-shadow: 0 2px 2px rgba(0, 0, 0, 0.438);
+    margin-top: 40px;
+    font-weight: 100;
+    font-size: 50px;
+    font-family: 'Montserrat', sans-serif;
+}
+.contenido{
+    padding: 34px;
+}

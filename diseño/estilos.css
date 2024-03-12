@@ -1,0 +1,416 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@500&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Nunito';
+}
+.logo{
+    position: absolute;
+    max-width: 55px;
+    left: 23px;
+    top: 10px;
+    z-index: 2;
+}
+header{
+    align-items: center;
+    justify-content: center;
+}
+nav{
+    margin-top: 0;
+    left: 0;
+    width: 100%;
+    position: absolute;
+    font-family: 'Nunito','sans-serif';
+    z-index: 1;
+    font-size: 18px;
+    background-color: white;
+    box-sizing: border-box;
+}
+.menu-principal{
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 94px;
+}
+.menu-principal>li>a{
+    display: block;
+    padding: 30px 15px;
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+}
+.menu-principal>li:hover{
+    background-color: deepskyblue;
+}
+.submenu{
+    position: absolute;
+    display: none;
+    list-style: none;
+    width: 200px;
+    background-color: rgba(0, 191, 255, 0.664);
+}
+.menu-principal li:hover .submenu{
+    display: block;
+}
+.submenu li:hover{
+    background-color: deepskyblue;
+}
+.submenu li a{
+    display: block;
+    color: black;
+    text-decoration: none;
+    padding: 15px 15px 15px 20px;
+}
+.inicio{
+    background-size: cover;
+    background-position:center;
+    width: 100%;
+    height: 100vh;
+    background-image: url('../imagenes/Hotel_piscina.jpg');
+}
+.contenedor{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 70vh;
+}
+.contenido .inicio header h1,h2{    
+    text-align: center;
+    flex-direction: column;
+    justify-content: flex-end;
+    color: white;
+    font-family: 'Nunito';
+    text-shadow: 10px 10px 10px black;
+}
+.inicio header h1{
+    font-size: 55px;
+}
+.inicio header h2{
+    font-size: 40px;
+}
+.fecha{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 5vh;
+    margin-top: 34px;
+}
+.inicio .fecha .boton{
+    width: 10%;
+    background-color: deepskyblue;
+    border: 2px solid dodgerblue;
+    padding: 7px;
+    font-weight: bold;
+    border-radius: 50px;
+    cursor: pointer;
+    /*margin-left: 4px;*/
+}
+.inicio .fecha .casilla{
+    border: 1px solid deepskyblue;
+    margin-right: 8px;
+    border-radius: 5px;
+    padding: 8px;
+    outline: none;
+}
+.inicio .fecha .boton:hover{
+    background-color: dodgerblue;
+}
+.contenido{
+    max-width: 100%;
+}
+
+/*------banner-------------*/
+#banner{
+    position: relative;
+    margin: auto;
+    width: 80%;
+}
+#banner h1{
+    font-family: 'Nunito',sans-serif;
+    position: absolute;
+    top: 95px;
+    font-size: 27px;
+}
+.contenedor-banner{
+    margin: auto;
+    position: relative;
+    top: 150px;
+    height: 570px;
+    overflow: hidden;
+    border: 15px solid white;
+    /*box-shadow: 0 0 10px #000000 0 15px 50px;*/
+    box-shadow: 0 10px 15px 10px #000000 ;
+}
+
+.caja{
+    width: 300%;
+    height: 570px;
+    display:flex;
+}
+
+.section_caja{
+    width: 100%;
+}
+
+.img_caja{
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.btn_atras,
+.btn_siguiente{
+    width: 40px;
+    height: 40px;
+    background-color: white;
+    position: absolute;
+    top: 75%;
+    transform: translateY(-50%);
+    line-height: 40px;
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 50%;
+    font-family: monospace;
+    cursor: pointer;
+    margin: 16px;
+}
+
+.btn_atras{
+    left: 10px;
+}
+
+.btn_siguiente{
+    right: 10px;
+}
+
+/*-------------------------------------------*/
+.servicios{
+    width: 100%;
+    box-sizing: border-box;
+}
+.servicios h1{
+    /*display: flex;
+    flex-direction: column;
+    justify-content: flex-start;*/
+    position: relative;
+    top: 235px;
+    text-align: center;
+}
+.contenedor_imagenes{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    /*align-items: flex-end;*/
+}
+.servicios .item img{
+    max-width: 235px;
+    height: 245px;
+    position: relative;
+    top: 270px;
+    margin-left: 10px;
+    box-shadow: 4px 4px 3px rgb(97, 97, 97);
+}
+.servicios .item .cont{
+    position: absolute;
+    margin: 84px;
+}
+.servicios .item button{
+    width: 100px;
+    padding: 5px;
+    position: absolute;
+    background-color: white;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3 ease;
+    display: flex;
+    justify-content: center;
+    box-shadow: 4px 4px 5px black;
+}
+.item .cont h2{
+    margin: 15px 4px;
+    text-shadow: 4px 4px 5px black;
+    font-size: 29px;
+}
+.item .cont .tbar{
+    margin-left: 25px;
+}
+.item .cont .trestaurante{
+    margin-left: -25px;
+}
+.item .cont .tspa{
+    margin-left: 25px;
+}
+.servicios .item .cont a{
+    text-decoration: none;
+    color: dodgerblue;
+    font-family: 'Nunito';
+    font-weight: bold;
+    font-size: 15px;
+}
+.servicios .item button:hover{
+    transform: translateY(-7px);
+}
+.final{
+    background-image: url('../imagenes/Inicio.jpg');
+    position: relative;
+    top: 350px;
+    width: 100%;
+    height: 200px;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+}
+.final h2{
+    color: black;
+    margin-left: 350px;
+    font-family: 'Nunito';
+    text-shadow: 3px 3px 3px rgb(104, 104, 104);
+}
+footer{
+    position: relative;
+    top: 370px;
+    width: 100%;
+    left: 0;
+    font-family: 'Nunito';
+    background-color:rgb(240, 240, 240);
+    border-top: 1px solid #d7d7d7;
+    height: 220px;
+}
+footer section{
+    display: table-cell;
+    width: 300px;
+    position: relative;
+}
+footer section a{
+    color: black;
+}
+.informacion{
+    padding: 15px;
+}
+.informacion2{
+    padding: 15px;
+    position: relative;
+    left: 103px;
+}
+footer section i{
+    font-size: 33px;
+    padding-left: 20px;
+}
+.iconos{
+    position: relative;
+    top: 0px;
+    left: 290px;
+}
+.terminos{
+    text-align: center;
+    margin-top: 12px;
+}
+.terminos p{
+    position: relative;
+    top: 23px;
+    margin-bottom: 12px;
+}
+.datos{
+    position: relative;
+    top: 105px;
+}
+@media (max-width: 360px) {
+    .bloque-inicio{ 
+        width: 100%;
+    }
+    .btn_atras,
+    .btn_siguiente{
+        top: 95%;
+    }
+    .fecha{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .contenedor img{
+        width: 100%;
+    }
+    #banner{
+        width: 90%;
+    }
+    #banner h1{
+        font-size: 17px;
+        display: flex;
+    }
+    .img_caja{
+        display: block;
+        width: 100%;
+        height: 300px;
+    }
+    .contenedor-banner{
+        height: 300px;
+    }
+    .contenedor_imagenes {
+        width: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: center;
+    }
+    .item {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    
+    .final{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .content-final h2{
+        margin-left: 12px;
+    }
+
+    footer{
+        display: flex;
+        flex-direction: column;
+        height: 196px;
+    }
+    .iconos{
+        position: relative;
+        top: 12px;
+        left: 23px;
+    }
+}
+@media(min-width:1500px){
+    .bloque-inicio{ 
+        width: 100%;
+    }
+    .final{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+    .content-final h2{
+        margin-left: 12px;
+    }
+    #banner{
+        position: relative;
+        margin: auto;
+        width: 70%;
+    }
+    .contenedor-banner{
+        margin: auto;
+        position: relative;
+        top: 150px;
+        height: 650px;
+        overflow: hidden;
+        border: 15px solid white;
+        /*box-shadow: 0 0 10px #000000 0 15px 50px;*/
+        box-shadow: 0 10px 15px 10px #000000 ;
+    }
+    .img_caja{
+        display: block;
+        width: 100%;
+        height: 110%;
+    }
+    
+}

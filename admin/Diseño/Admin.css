@@ -1,0 +1,198 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@10..48,500&family=Kanit:wght@500&family=Montserrat:wght@400;600&family=Poppins:ital,wght@0,100;0,400;1,300&family=REM:wght@100;700;900&family=Ysabeau+Infant:wght@900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@10..48,500&family=Comfortaa:wght@700&family=Hind:wght@700&family=Josefin+Sans:wght@500&family=Kanit:wght@500&family=Montserrat:wght@400;600&family=Open+Sans:wght@700&family=Poppins:ital,wght@0,100;0,400;1,300&family=REM:wght@100;700;900&family=Ysabeau+Infant:wght@900&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    width: 100%;
+    height: 100%;
+    font-family: 'Nunito';
+    letter-spacing: 0.03em;
+    line-height: 1.6;
+    background-color: rgb(245, 245, 245);
+}
+
+.logo{
+    position: absolute;
+    max-width: 55px;
+    left: 23px;
+    top: 10px;
+    z-index: 2;
+}
+nav{
+    margin-top: 0px;
+    left: 0;
+    width: 100%;
+    position: relative;
+    font-family: 'Nunito', sans-serif;
+    z-index: 1;
+    font-size: 18px;
+    background-color: white;
+}
+.menu-principal{
+    list-style: none;
+    display:flex;
+    justify-content:flex-end;
+    margin-right: 94px;
+}
+.menu-principal >li>a{
+    display: block;
+    padding: 30px 15px;
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+}
+.menu-principal>li:hover{
+    background-color:deepskyblue;
+}
+.submenu{
+    position: absolute;
+    display: none;
+    list-style: none;
+    width: 200px;
+    background-color:rgba(0, 191, 255, 0.541);
+}
+.menu-principal li:hover .submenu{
+    display: block;
+}
+.submenu li:hover{
+    background-color: deepskyblue;
+}
+.submenu li a{
+    display: block;
+    color: black;
+    text-decoration:none;
+    padding: 15px 15px 15px 20px;
+}
+html, body{
+    margin: 0;
+    padding: 0;
+}
+.title{
+    text-align: center;
+    font-size: 40px;
+    color: black;
+    text-shadow: 0 2px 2px rgba(0, 0, 0, 0.438);
+    margin-top: 40px;
+    font-weight: 100;
+    font-size: 50px;
+    font-family: 'Montserrat', sans-serif;
+}
+.contenido{
+    padding: 34px;
+}
+.contenido a{
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+.container{
+    width: 100%;
+    max-width: 1200px;
+    height: 430px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: auto;
+    margin-bottom: 534px;
+}
+.container .card{
+    width: 330px;
+    height: 430px;
+    border-radius: 8px;
+    box-shadow: 0 2px 2px rgba(6, 49, 85, 0.63);
+    overflow: hidden;
+    margin: 20px;
+    text-align: center;
+    transition: all 0.25s;
+    cursor: pointer;
+    background-color: #fff;
+}
+.container .card:hover{
+    transform: translateY(-15px);
+    box-shadow: 0 12px 16px rgba(0,0,0,0.2);
+}
+.container .card img{
+    width: 200px;
+    height: 200px;
+    padding: 34px;
+}
+.container .card h4{
+    font-weight: 600;
+}
+.container .card p{
+    padding: 0 2rem 9px;
+    font-size: 16px;
+    font-weight: 300;
+}
+.container .card a{
+    font-weight: bold;
+    text-decoration: none;
+    color: #3498db;
+}
+input[type="button"]{
+    width:143px;
+    padding: 10px;
+    border-radius: 23px;
+    background-color: dodgerblue;
+    cursor: pointer;
+    border:none;
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
+    font-family: 'Nunito', sans-serif;
+}
+.informacion{
+    /*text-align: justify;*/
+    padding: 15px;
+}
+.informacion2{
+    /*text-align: justify;*/
+    padding: 15px;
+    position: relative;
+    left: 103px;
+}
+.iconos{
+    position: relative;
+    top: 0px;
+    left: 290px;
+}
+.terminos{
+    text-align: center;
+    margin-top: 12px;
+}
+.terminos p{
+    position: relative;
+    top: 23px;
+    margin-bottom: 12px;
+}
+/*Estilo responsivo de la pagina del administrador*/
+@media only screen and (max-width: 768px) {
+    .menu-principal {
+        justify-content: center;
+        margin-right: 0;
+    }
+
+    .menu-principal > li {
+        margin-right: 20px;
+    }
+
+    .submenu {
+        position: static;
+        width: 100%;
+        background-color: rgba(0, 191, 255, 0.541);
+    }
+
+    .submenu li {
+        display: block;
+    }
+
+    .submenu li a {
+        padding: 15px;
+    }
+}

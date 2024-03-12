@@ -1,0 +1,230 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.425)), url('../imagenes/piscina\ \(2\).jpg');
+    background-repeat: no-repeat;
+    background-size: 120%;
+    background-attachment: fixed;
+    font-family: 'Nunito';
+}
+.logo{
+    position: absolute;
+    max-width: 55px;
+    left: 23px;
+    top: 10px;
+    z-index: 2;
+}
+.logoi{
+    position: absolute;
+    max-width: 55px;
+    left: 1093px;
+    top: 15px;
+    z-index: 2;
+    border-radius: 500px;
+    width: 60px;
+    height: 53px;
+}
+nav{
+    margin-top: 0px;
+    left: 0;
+    width: 100%;
+    position: relative;
+    font-family: 'Nunito', sans-serif;
+    z-index: 1;
+    font-size: 18px;
+    background-color: white;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+}
+.menu-principal{
+    list-style: none;
+    display:flex;
+    justify-content:flex-end;
+    margin-right: 139px;
+}
+.menu-principal >li>a{
+    display: block;
+    padding: 30px 15px;
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+}
+.menu-principal>li:hover{
+    background-color:deepskyblue;
+}
+#foto-perfil:hover{
+    background-color: white;
+}
+.submenu{
+    position: absolute;
+    display: none;
+    list-style: none;
+    width: 200px;
+    background-color:rgba(0, 191, 255, 0.719);
+}
+.menu-principal li:hover .submenu{
+    display: block;
+}
+.submenu li:hover{
+    background-color: deepskyblue;
+}
+.submenu li a{
+    display: block;
+    color: black;
+    text-decoration:none;
+    padding: 15px 15px 15px 20px;
+}
+p{
+    font-size: 24px;
+    text-align:center;
+    color: white;
+}
+.head{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.container{
+    display: grid;
+    grid-template-columns: repeat(3fr);
+    column-gap: 20px;
+}
+.formulario{
+    width: 60vw;
+    background-color: rgba(255, 255, 255, 0.616);
+    padding: 40px;
+    margin: auto;
+    margin-top: 110px;
+    border-radius: 10px;
+    box-shadow: 7px 13px 37px black;
+}
+.control{
+    width: 47%;
+    padding: 7px;
+    border: none;
+    background-color: #f2fcff;
+    border-bottom: 2px solid deepskyblue;
+    font-family: 'calibri';
+    border-radius: 6px;
+    margin-bottom: 16px;
+    font-size: 18px;
+    outline: none;
+    margin-left: 13px;
+}
+.formulario h1{ 
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: 34px;
+}
+.container h2{ 
+    font-family: 'Nunito';
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 34px;
+}
+label{
+    font-family: 'Calibri';
+    margin-left: 13px;
+    font-size: 17px;
+}
+input[type="file"]{
+    margin-top: 5px;
+    margin-bottom: 12px;
+}
+fieldset{
+    border: none;
+}
+.control:focus{
+    box-shadow: 1px 1px 2px 2px rgba(0, 146, 214, 0.699);
+    background-color: white;
+}
+.boton{
+    width: 49%;
+    padding: 8px;
+    background-color: dodgerblue;
+    color: white;
+    border: none;
+    font-family: 'Nunito';
+    margin: 26px 10px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 6px;
+}
+.boton:hover{
+    cursor: pointer;
+}
+.volver img{
+    width: 8px;
+}
+p{
+    font-family: 'Nunito';
+    color: rgb(63, 63, 63);
+    font-size: 15px;
+    margin-right: 314.5px;
+}
+p a{
+    color: black;
+}
+p a:hover{
+    text-decoration: none;
+}
+.ir_login{
+    color:rgb(24, 106, 187);
+    text-decoration: none;
+    font-style: bold;
+    font-family:'Nunito';
+    font-size: 17px;
+}
+a:hover{
+    text-decoration: underline;
+}
+.terminos{
+    font-size: 15px;
+    color: black;
+    text-decoration: underline;
+}
+span{
+    font-family: 'Nunito';
+    font-size: 21px;
+}
+span a{
+    font-size: 19px;
+    font-weight: bold;
+    color: black;
+    text-decoration: none;
+}
+span a:hover{
+    color: rgb(21, 114, 206);
+    text-decoration: underline;
+}
+.formulario img{
+    width: 123px;
+    border-radius: 990px;
+    height: 115px;
+}
+.alerta{
+    background-color: rgb(233, 193, 193);
+    color: darkred;
+    border-radius: 5px;
+    margin: -25px 0px 16px 13px;
+    padding: 8px;
+    font-family: 'Nunito';
+    text-align: center;
+    width: 97%;
+}
+.bx{
+    margin-left: -34px;
+    position: relative;
+    top: 5px;
+    font-size: 23px;
+    cursor: pointer;
+}
+#foto-perfil li:hover{
+    background-color: none;
+}

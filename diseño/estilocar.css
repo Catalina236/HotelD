@@ -1,0 +1,48 @@
+/* Contenido del archivo estilo_carrito.css */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Nunito', sans-serif;
+    background: #f4f4fd;
+    background-size: cover;
+    padding: 20px;
+}
+
+h1 {
+    color: #1c1c1c;
+    margin-bottom: 20px;
+}
+
+.titulo-carrito {
+    color: dodgerblue;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 2px solid #000000;
+}
+
+th {
+    background-color: dodgerblue;
+    color: rgb(0, 0, 0);
+}
+
+tr:hover {
+    background-color: #ffffff;
+}
+
+.mensaje-carrito {
+    color: #333;
+}
