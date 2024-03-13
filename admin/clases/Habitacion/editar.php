@@ -108,7 +108,7 @@ if(isset($_GET['cod'])){
                 ?>
         </select>
         <label for="">Descripción</label>
-        <textarea class="casilla" name="descripcion" id="" cols="10" rows="0" values="<?php echo $d7;?>"></textarea>
+        <input class="casilla" name="descripcion" type="text" value="<?php echo $d7;?>">
         <label for="">Imagen</label>
         <input type="file" name="imagen" class="casilla" value="<?php echo $d8;?>">
         <input class="casilla" type="submit" value="Enviar" name="Enviar">
