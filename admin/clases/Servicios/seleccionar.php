@@ -1,11 +1,20 @@
 <?php
 require_once('../class.php');
+session_start();
+if(!isset($_SESSION['cod_usuario'])){
+    header("Location:../../../index.php");
+}
+else{
+    if($_SESSION['cod_usuario']!=2){
+        header("Location:../../../index.php");
+    }
+}
 $trabajo=new Trabajo();
 $pagina_actual=isset($_GET['pagina'])? $_GET['pagina']:1;
 $resultado_pagina=10;
 $inicio=($pagina_actual-1)* $resultado_pagina;
 $datos=$trabajo->DatoServicios($inicio,$resultado_pagina);
-$total=$trabajo->traerServicio();
+$total=$trabajo->VerServicios();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,27 +29,27 @@ $total=$trabajo->traerServicio();
         <table>
             <thead bgcolor=#8CAAF8>
                 <tr>
-                    <th colspan=9>
+                    <th colspan="5">
                         <h2>Servicios</h2>
                     </th>
                     <th><a href="registrar_serv.php"><img src="../../imagenes/restaurante.png" alt=""></a></th> 
                 </tr>
 
                 <tr>
-                    <th>Codigo Servicio</th>
-                    <th>Numero de documento</th>
                     <th>ID restaurante</th>
-                    <th>Nombre Producto</th>
+                    <th>Codigo Servicio</th>
+                    <th>Nombre del producto</th>
                     <th>Valor</th>
+                    <th>Editar</th>
+                    <th>Eliminar</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach($datos as $row) { ?>
                     <tr>
-                        <td><?php echo $row['cod_servicio'];?></td>
-                        <td><?php echo $row['num_doc_cliente'];?></td>
                         <td><?php echo $row['id_rest'];?></td>
-                        <td><?php echo $row['nom_producto'];?></td>
+                        <td><?php echo $row['cod_servicio'];?></td>
+                        <td><?php echo $row['nom_producto_rest'];?></td>
                         <td><?php echo $row['valor'];?></td>
                     </tr>
                 <?php }?>
@@ -49,8 +58,8 @@ $total=$trabajo->traerServicio();
     </div>
 
     <div style="text-align: center;">
-    <a href="../../../Usuarios/opciones.php" class="linkregreso">Regresar</a>
-    <?php
+    <a href="../opciones.php" class="linkregreso">Regresar</a>
+    <?php 
     
     $total_paginas=ceil($total/$resultado_pagina);
 

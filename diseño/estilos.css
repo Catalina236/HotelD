@@ -97,13 +97,13 @@ nav{
     height: 5vh;
     margin-top: 34px;
 }
-.inicio .fecha .boton{
-    width: 10%;
+.inicio .fecha form .boton{
+    width: 170px;
     background-color: deepskyblue;
     border: 2px solid dodgerblue;
     padding: 7px;
     font-weight: bold;
-    border-radius: 50px;
+    border-radius: 150px;
     cursor: pointer;
     /*margin-left: 4px;*/
 }
@@ -317,6 +317,7 @@ footer section i{
     position: relative;
     top: 105px;
 }
+
 @media (max-width: 360px) {
     .bloque-inicio{ 
         width: 100%;

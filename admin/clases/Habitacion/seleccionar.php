@@ -1,6 +1,14 @@
 <?php
 require_once('../class.php');
-
+session_start();
+if(!isset($_SESSION['cod_usuario'])){
+    header("Location:../../../index.php");
+}
+else{
+    if($_SESSION['cod_usuario']!=2){
+        header("Location:../../../index.php");
+    }
+}
 $trabajo = new Trabajo();
 $pagina_actual=isset($_GET['pagina'])? $_GET['pagina']:1;
 $resultados_por_pagina=10;

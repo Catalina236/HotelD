@@ -225,6 +225,6 @@ span a:hover{
     font-size: 23px;
     cursor: pointer;
 }
-#foto-perfil li:hover{
-    background-color: none;
+.fornmulario .fotop img{
+    width: 34px;
 }

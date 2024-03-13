@@ -71,13 +71,17 @@ session_start();
                 $mensaje .= $codigo_verificacion;
                 $mensaje .= "\n\nSaludos,\nTu Sitio Web";
             
-                $envio=mail($email, "Código restablecer pass: ",$mensaje);
+                $envio=mail($email, "Código restablecer contraseña: ",$mensaje);
                 if($envio){
                     $info="Ingresa el código que enviamos a tu email - $email";
                     $_SESSION['info'] = $info;
                     $_SESSION['correo_electronico'] = $email;
                     header('location: codigopass.php');
                     exit();
+                }
+                else
+                {
+                    echo "<div class='alerta'>Ocurrió un problema al momento de enviar el correo</div>";
                 }
             }else{
                 echo "<div class='alerta'>No se encontró ningún correo que coincida</div>";

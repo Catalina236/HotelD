@@ -1,3 +1,6 @@
+<?php
+require 'Bd/conexion.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,7 +26,7 @@
                     <li><a href="">Eliminar Reserva</a></li>
                     <li><a href="">Consultar Reservas</a></li>
                 </ul>
-                <li><a href="">Habitaciones</a>
+                <li><a href="habitaciones/confirmar_reserva.php">Habitaciones</a>
                     <ul class="submenu">
                         <li><a href="">Sencilla</a></li>
                         <li><a href="">Doble</a></li>
@@ -82,9 +85,11 @@
                     <h2>Tus vacaciones perfectas en nuestro hotel</h2>
                 </header>
                 <div class="fecha">
-                    <input class="casilla" type="date" name="" id="">
-                    <input class="casilla" type="date" name="" id="">
-                    <input class="boton" type="submit" value="Verificar">
+                    <form action="Reserva/reserva.php" method="post">
+                    <input class="casilla" type="date" name="fecha_inicio" id="">
+                    <input class="casilla" type="date" name="fecha_fin" id="">
+                    <input class="boton" type="submit" value="Verificar" name="filtrar">
+                    </form>
                 </div>
             </div>
         </section>

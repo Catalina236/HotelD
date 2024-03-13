@@ -36,14 +36,14 @@ $bd = conectar_db();
             <?php if(isset($_SESSION['cod_usuario']) && $_SESSION['cod_usuario']!=2):?>
             <li><a href="vercuenta.php">Mi Perfil</a>
                 <ul class="submenu">
-                    <li><a href="salir.php" onclick='return confirmacion()'>Salir</a></li>
+                    <li><a href="../Usuarios/salir.php" onclick='return confirmacion()'>Salir</a></li>
                 </ul>
             </li>
             <?php elseif(isset($_SESSION['cod_usuario']) && $_SESSION['cod_usuario']==2):?>
             <li><a href="vercuenta.php">Mi Perfil</a>
                 <ul class="submenu">
                     <li><a href="../Usuarios/opciones.php">Opciones</a></li>
-                    <li><a href="salir.php" onclick='return confirmacion()'>Salir</a></li>
+                    <li><a href="../Usuarios/salir.php" onclick='return confirmacion()'>Salir</a></li>
                 </ul>
                 </li>
             <?php else :?>
@@ -55,7 +55,7 @@ $bd = conectar_db();
             </li>
             <?php endif;?>
                 <li><a href="">Contáctenos</a></li>
-            <li><a href="Servicios/servicios.php">Servicios</a>
+            <li><a href="Servicios/servicios.html">Servicios</a>
             <ul class="submenu">
                 <li><a href="">Piscina</a></li>
                 <li><a href="">Restaurante</a></li>
@@ -92,12 +92,12 @@ $bd = conectar_db();
                         <h4><?php echo $habitacion['valor_base'];?></h4>
                         <h4><?php echo $habitacion['estado_hab'];?></h4>
                         <p><?php echo $habitacion['descripcion_hab'];?></p>
-                        <button class="botonre"><a href="reserva.php">Reservar></a></button>
+                        <button class="botonre"><a href="../habitaciones/confirmar_reserva.php?cod_tipo_hab=<?php echo $habitacion['cod_tipo_hab'];?>">Reservar></a></button>
                     </div>
                 </div>
             <?php }
             } else {
-                $sql="SELECT * FROM tipo_habitacion JOIN habitacion ON tipo_habitacion.cod_tipo_hab=habitacion.cod_tipo_hab WHERE estado_hab='Disponible'";
+                $sql="SELECT * FROM tipo_habitacion JOIN habitacion ON tipo_habitacion.cod_tipo_hab=habitacion.cod_tipo_hab";
                 $result=mysqli_query($bd, $sql);
                 while ($habitacion=mysqli_fetch_assoc($result)){
             ?>
@@ -109,7 +109,7 @@ $bd = conectar_db();
                         <h4><?php echo $habitacion['valor_base'];?></h4>
                         <h4><?php echo $habitacion['estado_hab'];?></h4>
                         <p><?php echo $habitacion['descripcion_hab'];?></p>
-                        <button class="botonre"><a href="reserva.php">Reservar></a></button>
+                        <button class="botonre"><a href="../habitaciones/confirmar_reserva.php?cod_tipo_hab=<?php echo $habitacion['cod_tipo_hab'];?>">Reservar></a></button>
                     </div>
                 </div>
             <?php 
