@@ -30,13 +30,9 @@ $resultadoVerCarrito = mysqli_query($bd, $queryVerCarrito);
 if ($resultadoVerCarrito) {
     $filasCarrito = mysqli_fetch_all($resultadoVerCarrito, MYSQLI_ASSOC);
 } else {
-    // Manejar el error si la consulta falla
     $errorConsulta = mysqli_error($bd);
     echo "Error al obtener los datos del carrito: $errorConsulta";
-    // Puedes redirigir o mostrar un mensaje de error según tus necesidades
 }
-
-// Cerrar la conexión a la base de datos
 mysqli_close($bd);
 ?>
 
@@ -46,15 +42,64 @@ mysqli_close($bd);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../diseño/estilocar.css">
-    <link rel="icon" href="../imagenes/playa.png">
+    <link rel="icon" href="../imagenes/logo.png">
     <title>Carrito</title>
 </head>
 <body>
-
+<header>
+        <a href="../index.php"><img src="../imagenes/logo.png" alt="" class="logo"></a>
+        <nav class="menu">
+            <ul class="menu-principal">
+                <li><a href="../Reserva/reserva.php">Reserva</a></li>
+                <ul class="submenu">
+                    <li><a href="">Crear Reserva</a></li>
+                    <li><a href="">Eliminar Reserva</a></li>
+                    <li><a href="">Consultar Reservas</a></li>
+                </ul>
+                <li><a href="../habitaciones/confirmar_reserva.php">Habitaciones</a>
+                    <ul class="submenu">
+                        <li><a href="">Sencilla</a></li>
+                        <li><a href="">Doble</a></li>
+                        <li><a href="">Triple</a></li>
+                        <li><a href="">Familiar</a></li>
+                    </ul>
+                </li>
+            <?php if(isset($_SESSION['cod_usuario']) && $_SESSION['cod_usuario']!=2):?>
+            <li><a href="../Usuarios/vercuenta.php">Mi Perfil</a>
+                <ul class="submenu">
+                    <li><a href="../Usuarios/salir.php" onclick='return confirmacion()'>Salir</a></li>
+                </ul>
+            </li>
+            <?php elseif(isset($_SESSION['cod_usuario']) && $_SESSION['cod_usuario']==2):?>
+            <li><a href="../Usuarios/vercuenta.php">Mi Perfil</a>
+                <ul class="submenu">
+                    <li><a href="../Usuarios/opciones.php">Opciones</a></li>
+                    <li><a href="../Usuarios/salir.php" onclick='return confirmacion()'>Salir</a></li>
+                </ul>
+                </li>
+            <?php else :?>
+            <li><a href="../Usuarios/iniciarsesion.php">Mi Perfil</a>
+                <ul class="submenu">
+                    <li><a href="../Usuarios/iniciarsesion.php">Iniciar sesión</a></li>
+                    <li><a href="../Usuarios/crear.php">Registrarse</a></li>
+                </ul>
+            </li>
+            <?php endif;?>
+            <li><a href="">Contáctenos</a></li>
+            <li><a href="servicios.php">Servicios</a>
+                <ul class="submenu">
+                    <li><a href="serviciores.php">Restaurante</a></li>
+                    <li><a href="serviciobar.php">Bar</a></li>
+                    <li><a href="serviciozona.php">Zonas húmedas</a></li>
+                </ul>
+            </li>
+    </ul>
+    </nav>
+    </header>
+    <div class="contenido">
     <h1 class="titulo-carrito">Contenido del Carrito</h1>
     
     <?php if (isset($filasCarrito) && !empty($filasCarrito)) : ?>
-        <!-- Mostrar la tabla solo si hay elementos en el carrito -->
         <table class="tabla-carrito">
             <thead>
                 <tr>
@@ -66,7 +111,7 @@ mysqli_close($bd);
                     <th>Nombre del Producto (Zonas Húmedas)</th>
                     <th>Cantidad</th>
                     <th>Subtotal</th>
-                    <th>Acciones</th>
+                    <th colspan="9">Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -82,11 +127,12 @@ mysqli_close($bd);
                         <td><?= $fila['subtotal'] ?></td>
                         <td>
                             <button class="eliminar-btn" onclick="eliminarProducto(<?= $fila['cod_carrito'] ?>)">
-                                <i class="fas fa-trash"></i> Eliminar
+                              <img src="../imagenes/dele.png" alt="">
                             </button>
-                            <button class="actualizar-cantidad-btn" onclick="mostrarFormularioActualizar(<?= $fila['cod_carrito'] ?>)">
-                                <i class="fas fa-edit"></i> Actualizar Cantidad
-                            </button>
+                        </td>
+                        <td>
+                        <button class="actualizar-cantidad-btn" onclick="mostrarFormularioActualizar(<?= $fila['cod_carrito'] ?>)"><img src="../imagenes/editar.png" alt="">
+                        </button>
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -107,6 +153,7 @@ mysqli_close($bd);
         <!-- Mensaje si no hay elementos en el carrito -->
         <p class="mensaje-carrito">No hay elementos en el carrito.</p>
     <?php endif; ?>
+    </div>
 
     <script>
         function eliminarProducto(idCarrito) {

@@ -1,4 +1,5 @@
-/* Contenido del archivo estilo_carrito.css */
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@500&display=swap');
 *{
     margin: 0;
     padding: 0;
@@ -6,26 +7,79 @@
 }
 body {
     font-family: 'Nunito', sans-serif;
-    background: #f4f4fd;
-    background-size: cover;
-    padding: 20px;
+    background-color: rgb(245, 245, 245);
 }
-
+.logo{
+    position: absolute;
+    max-width: 55px;
+    left: 23px;
+    top: 10px;
+    z-index: 2;
+}
+header{
+    align-items: center;
+    justify-content: center;
+}
+nav{
+    margin-top: 0;
+    left: 0;
+    width: 100%;
+    position: relative;
+    font-family: 'Nunito','sans-serif';
+    z-index: 1;
+    font-size: 18px;
+    background-color: white;
+    box-sizing: border-box;
+}
+.menu-principal{
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 79px;
+}
+.menu-principal>li>a{
+    display: block;
+    padding: 30px 15px;
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+}
+.menu-principal>li:hover{
+    background-color: deepskyblue;
+}
+.submenu{
+    position: absolute;
+    display: none;
+    list-style: none;
+    width: 200px;
+    background-color: rgba(0, 191, 255, 0.664);
+}
+.menu-principal li:hover .submenu{
+    display: block;
+}
+.submenu li:hover{
+    background-color: deepskyblue;
+}
+.submenu li a{
+    display: block;
+    color: black;
+    text-decoration: none;
+    padding: 15px 15px 15px 20px;
+}
 h1 {
     color: #1c1c1c;
     margin-bottom: 20px;
 }
-
-.titulo-carrito {
-    color: dodgerblue;
-    font-size: 24px;
-    margin-bottom: 20px;
+.contenido{
+    margin: 0px 20px 0px 20px;
 }
-
+.titulo-carrito {
+    font-size: 24px;
+    margin-top: 20px;
+}
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
 }
 
 th, td {
@@ -35,7 +89,7 @@ th, td {
 }
 
 th {
-    background-color: dodgerblue;
+    background-color: deepskyblue;
     color: rgb(0, 0, 0);
 }
 
@@ -45,4 +99,26 @@ tr:hover {
 
 .mensaje-carrito {
     color: #333;
+}
+.eliminar-btn img{
+    width: 34px;
+    margin-left: 19px;
+}
+.actualizar-cantidad-btn img{
+    width: 34px;
+    margin-left: -13px;
+}
+.eliminar-btn{
+    background-color: rgba(245, 245, 245, 0);
+    border: none;
+}
+.actualizar-cantidad-btn{   
+    background-color: rgba(245, 245, 245, 0);
+    border: none;
+}
+.eliminar-btn:hover{
+    cursor: pointer;
+}
+.actualizar-cantidad-btn:hover{   
+    cursor: pointer;
 }

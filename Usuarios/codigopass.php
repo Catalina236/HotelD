@@ -58,13 +58,11 @@ if(isset($_POST['Enviar'])){
                 </ul>
             </li>
                 <li><a href="">Contáctenos</a></li>
-                <li><a href="../Servicios/servicios.html">Servicios</a>
+                <li><a href="../Servicios/servicios.php">Servicios</a>
                     <ul class="submenu">
-                        <li><a href="#">Piscina</a></li>
-                        <li><a href="">Restaurante</a></li>
-                        <li><a href="">Gimnasio</a></li>
-                        <li><a href="">Bar</a></li>
-                        <li><a href="">Zonas húmedas</a></li>
+                        <li><a href="../Servicios/serviciores.php">Restaurante</a></li>
+                        <li><a href="../Servicios/serviciobar.php">Bar</a></li>
+                        <li><a href="../Servicios/serviciozona.php">Zonas húmedas</a></li>
                     </ul>
                 </li>
             </ul>

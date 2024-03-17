@@ -32,7 +32,7 @@ nav{
     list-style: none;
     display: flex;
     justify-content: flex-end;
-    margin-right: 94px;
+    margin-right: 79px;
 }
 .menu-principal>li>a{
     display: block;

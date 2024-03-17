@@ -13,13 +13,6 @@ body {
     background-attachment: fixed;
     font-family: 'Nunito';
 }
-.logo{
-    position: absolute;
-    max-width: 55px;
-    left: 23px;
-    top: 10px;
-    z-index: 2;
-}
 .logoi{
     position: absolute;
     max-width: 55px;
@@ -29,6 +22,13 @@ body {
     border-radius: 500px;
     width: 60px;
     height: 53px;
+}
+.logo{
+    position: absolute;
+    max-width: 55px;
+    left: 23px;
+    top: 10px;
+    z-index: 2;
 }
 nav{
     margin-top: 0px;
@@ -45,7 +45,7 @@ nav{
     list-style: none;
     display:flex;
     justify-content:flex-end;
-    margin-right: 139px;
+    margin-right: 79px;
 }
 .menu-principal >li>a{
     display: block;
@@ -57,15 +57,12 @@ nav{
 .menu-principal>li:hover{
     background-color:deepskyblue;
 }
-#foto-perfil:hover{
-    background-color: white;
-}
 .submenu{
     position: absolute;
     display: none;
     list-style: none;
     width: 200px;
-    background-color:rgba(0, 191, 255, 0.719);
+    background-color:rgba(0, 191, 255, 0.541);
 }
 .menu-principal li:hover .submenu{
     display: block;

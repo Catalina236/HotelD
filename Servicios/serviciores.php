@@ -70,114 +70,135 @@ mysqli_close($bd);
     <title>Restaurante</title>
 </head>
 <body>
-    <header>
-    <nav class="menu">
+<header>
         <a href="../index.php"><img src="../imagenes/logo.png" alt="" class="logo"></a>
-        <ul class="menu-principal">
-            <li><a href="../Reserva/reserva.php">Reserva</a></li>
-            <ul class="submenu">
-                <li><a href="">Crear Reserva</a></li>
-                <li><a href="">Eliminar Reserva</a></li>
-                <li><a href="">Consultar Reservas</a></li>
-            </ul>
-            <li><a href="">Habitaciones</a>
+        <nav class="menu">
+            <ul class="menu-principal">
+                <li><a href="../Reserva/reserva.php">Reserva</a></li>
                 <ul class="submenu">
-                    <li><a href="">Sencilla</a></li>
-                    <li><a href="">Doble</a></li>
-                    <li><a href="">Triple</a></li>
-                    <li><a href="">Familiar</a></li>
+                    <li><a href="">Crear Reserva</a></li>
+                    <li><a href="">Eliminar Reserva</a></li>
+                    <li><a href="">Consultar Reservas</a></li>
+                </ul>
+                <li><a href="../habitaciones/confirmar_reserva.php">Habitaciones</a>
+                    <ul class="submenu">
+                        <li><a href="">Sencilla</a></li>
+                        <li><a href="">Doble</a></li>
+                        <li><a href="">Triple</a></li>
+                        <li><a href="">Familiar</a></li>
+                    </ul>
+                </li>
+            <?php if(isset($_SESSION['cod_usuario']) && $_SESSION['cod_usuario']!=2):?>
+            <li><a href="Usuarios/vercuenta.php">Mi Perfil</a>
+                <ul class="submenu">
+                    <li><a href="Usuarios/salir.php" onclick='return confirmacion()'>Salir</a></li>
                 </ul>
             </li>
+            <?php elseif(isset($_SESSION['cod_usuario']) && $_SESSION['cod_usuario']==2):?>
             <li><a href="../Usuarios/vercuenta.php">Mi Perfil</a>
                 <ul class="submenu">
-                    <li><a href="">Eliminar cuenta</a></li>
-                    <li><a href="">Recuperar contraseña</a></li>
+                    <li><a href="../Usuarios/opciones.php">Opciones</a></li>
+                    <li><a href="../Usuarios/salir.php" onclick='return confirmacion()'>Salir</a></li>
+                </ul>
+                </li>
+            <?php else :?>
+            <li><a href="Usuarios/iniciarsesion.php">Mi Perfil</a>
+                <ul class="submenu">
+                    <li><a href="../Usuarios/iniciarsesion.php">Iniciar sesión</a></li>
+                    <li><a href="../Usuarios/crear.php">Registrarse</a></li>
                 </ul>
             </li>
+            <?php endif;?>
             <li><a href="">Contáctenos</a></li>
-            <li><a href="servicios.html">Servicios</a></li>
-        </ul>
+            <li><a href="servicios.php">Servicios</a>
+                <ul class="submenu">
+                    <li><a href="serviciores.php">Restaurante</a></li>
+                    <li><a href="serviciobar.php">Bar</a></li>
+                    <li><a href="serviciozona.php">Zonas húmedas</a></li>
+                    </ul>
+            </li>
+    </ul>
     </nav>
     </header>
     <div class="contenido">
         <section class="menu">
-            <div class="alimento 1">
-                <img src="../imagenes/bandeja.jpg" alt="">
+        <div class="carrito">
+                <a href="vercarrito.php" class="boton-ver-carrito"><img src="../imagenes/carrito.png" alt="" srcset=""></a>
+        </div>
+            <div class="serviciosa 1">
+                <img class="restaurante" src="../imagenes/bandeja.jpg" alt="">
                 <div class="info">
                     <h3>Bandeja Paisa</h3>
-                    <p>La Bandeja Paisa es un plato colombiano emblemático, especialmente asociado con la región de Antioquia. Es conocida por ser una comida abundante que combina una variedad de ingredientes. Incluye carne (molida o asada), arroz, frijoles, huevo frito, aguacate, plátano maduro frito, morcilla, arepas y hogao. Este plato representa la riqueza culinaria de Colombia y es apreciado por su mezcla de sabores y texturas. Es una opción popular para aquellos que buscan una experiencia gastronómica completa y satisfactoria.</p>
+                    <p>La Bandeja Paisa es un plato colombiano emblemático, especialmente asociado con la región de Antioquia. Incluye carne (molida o asada), arroz, frijoles, huevo frito, aguacate, plátano maduro frito, morcilla, arepas y hogao. Este plato representa la riqueza culinaria de Colombia y es apreciado por su mezcla de sabores y texturas.</p>
                     <h4>COP 40.000</h4>
-                </div><!-- ... (código del primer alimento) ... -->
+                </div>
                 <form class="formulario" method="POST" action="serviciores.php">
                     <input type="hidden" name="CodigoServicio" value="100">
                     <input type="hidden" name="id_agregadosrest" value="r1">
                     <label for="cantidad">Cantidad de Producto:</label> <!-- Puedes generar un ID único para cada item del carrito -->
-                    <input type="number" id="cantidad" name="cantidad" min="1" required>
+                    <input type="number" class="add-cantidad" id="cantidad" name="cantidad" min="1" required>
                     <button class="botonres" type="submit">Añadir al carrito</button>
                 </form>
             </div>
-            <div class="alimento 2">
-                <img src="../imagenes/arroz.jpg" alt="">
+            <div class="serviciosa 2">
+                <img class="restaurante" src="../imagenes/arroz.jpg" alt="">
                 <div class="info">
                     <h3>Arroz chino</h3>
                     <p>El arroz chino es un platillo de la cocina asiática que consiste en arroz frito en un wok con ingredientes como verduras, carne y huevo. Es conocido por su versatilidad y delicioso sabor, siendo popular en todo el mundo.</p>
                     <h4>COP 40.000</h4>
-                </div><!-- ... (código del primer alimento) ... -->
+                </div>
                 <form class="formulario" method="POST" action="serviciores.php">
+                    <input type="hidden" name="CodigoServicio" value="100">
                     <input type="hidden" name="id_agregadosrest" value="r2">
                     <label for="cantidad">Cantidad de Producto:</label> <!-- Puedes generar un ID único para cada item del carrito -->
-                    <input type="number" id="cantidad" name="cantidad" min="1" required>
+                    <input type="number" class="add-cantidad" id="cantidad" name="cantidad" min="1" required>
                     <button class="botonres" type="submit">Añadir al carrito</button>
                 </form>
             </div>
-            <div class="alimento 3">
-                <img src="../imagenes/ajiaco.jpg" alt="">
+            <div class="serviciosa 3">
+                <img class="restaurante" src="../imagenes/ajiaco.jpg" alt="">
                 <div class="info">
                     <h3>Sopa de Ajiaco</h3>
-                    <p>La sopa de ajiaco es un plato tradicional de la cocina colombiana. Se caracteriza por ser espesa y abundante, con ingredientes clave como papas, mazorcas de maíz, guascas (hierba aromática), pollo, y varios tipos de papas. Se le añade alcaparras y crema de leche al momento de servir, proporcionando un sabor único y reconfortante. La sopa de ajiaco es especialmente apreciada por su riqueza y la combinación de sabores que reflejan la diversidad culinaria de Colombia.</p>
+                    <p>La sopa de ajiaco es un plato tradicional de la cocina colombiana. Se caracteriza por ser espesa y abundante, con ingredientes como papas, mazorcas de maíz, guascas (hierba aromática), pollo, y varios tipos de papas. Se le añade alcaparras y crema de leche al momento de servir, proporcionando un sabor único y reconfortante.</p>
                     <h4>COP 15.000</h4>
-                </div><!-- ... (código del primer alimento) ... -->
+                </div>
                 <form class="formulario" method="POST" action="serviciores.php">
                     <input type="hidden" name="CodigoServicio" value="100">
                     <input type="hidden" name="id_agregadosrest" value="r3"> 
                     <label for="cantidad">Cantidad de Producto:</label><!-- Puedes generar un ID único para cada item del carrito -->
-                    <input type="number" id="cantidad" name="cantidad" min="1" required>
+                    <input type="number" class="add-cantidad" id="cantidad" name="cantidad" min="1" required>
                     <button class="botonres" type="submit">Añadir al carrito</button>
                 </form>
             </div>
-            <div class="alimento 4">
-                <img src="../imagenes/sancocho.jpg" alt="">
+            <div class="serviciosa 4">
+                <img class="restaurante" src="../imagenes/sancocho.jpg" alt="">
                 <div class="info">
                     <h3>Sancocho de Gallina</h3>
-                    <p> El sancocho de gallina es un plato tradicional latinoamericano, presente en diversas variantes en diferentes países. Se prepara con gallina, y a veces pollo, cocidos lentamente con una variedad de vegetales como yuca, plátano, mazorcas de maíz, papa, entre otros. El caldo resultante es abundante y muy sabroso, impregnado con los sabores de los ingredientes. Es un plato reconocido por su carácter reconfortante y su presencia en celebraciones familiares y eventos especiales.</p>
+                    <p> El sancocho de gallina es un plato tradicional latinoamericano, presente en diversas variantes en diferentes países. Se prepara con gallina, y a veces pollo, cocidos lentamente con una variedad de vegetales como yuca, plátano, mazorcas de maíz, papa, entre otros. El caldo resultante es abundante y muy sabroso, impregnado con los sabores de los ingredientes.</p>
                     <h4>COP 15.000</h4>
                 </div>
-                <!-- ... (código del primer alimento) ... -->
                 <form class="formulario" method="POST" action="serviciores.php">
                     <input type="hidden" name="CodigoServicio" value="100">
                     <input type="hidden" name="id_agregadosrest" value="r4"> 
                     <label for="cantidad">Cantidad de Producto:</label><!-- Puedes generar un ID único para cada item del carrito -->
-                    <input type="number" id="cantidad" name="cantidad" min="1" required>
+                    <input type="number" class="add-cantidad" id="cantidad" name="cantidad" min="1" required>
                     <button class="botonres" type="submit">Añadir al carrito</button>
                 </form>
             </div>
-            <div class="alimento 5">
-                <img src="../imagenes/pollo.jpg" alt="">
+            <div class="serviciosa 5">
+                <img class="restaurante" src="../imagenes/pollo.jpg" alt="">
                 <div class="info">
                     <h3>Pollo Asado</h3>
-                    <p>El pollo asado es un plato popular que se prepara asando pollo sazonado al horno, a la parrilla o a la brasa. Antes de la cocción, el pollo se adoba con especias, hierbas, aceite de oliva u otros condimentos para realzar su sabor. El resultado es una piel crujiente por fuera y una carne jugosa por dentro. El pollo asado es versátil y se sirve comúnmente como plato principal en comidas familiares o eventos. Puede acompañarse de diversas guarniciones, como patatas asadas, vegetales al vapor o ensaladas, según las preferencias culinarias.</p>
+                    <p>El pollo asado es un plato popular que se prepara asando pollo sazonado al horno, a la parrilla o a la brasa. Antes de la cocción, el pollo se adoba con especias, hierbas, aceite de oliva u otros condimentos para realzar su sabor. El resultado es una piel crujiente por fuera y una carne jugosa por dentro. El pollo asado es versátil y se sirve comúnmente como plato principal en comidas familiares o eventos.</p>
                     <h4>COP 30.000</h4>
-                </div><!-- ... (código del primer alimento) ... -->
+                </div>
                 <form class="formulario" method="POST" action="serviciores.php">
                     <input type="hidden" name="CodigoServicio" value="100">
                     <input type="hidden" name="id_agregadosrest" value="r5">
                     <label for="cantidad">Cantidad de Producto:</label> <!-- Puedes generar un ID único para cada item del carrito -->
-                    <input type="number" id="cantidad" name="cantidad" min="1" required>
+                    <input type="number" class="add-cantidad" id="cantidad" name="cantidad" min="1" required>
                     <button class="botonres" type="submit">Añadir al carrito</button>
                 </form>
-            </div>
-            <div class="botones-acciones">
-                <a href="vercarrito.php" class="boton-ver-carrito">Ver Carrito</a>
             </div>
         </section>
     </div>

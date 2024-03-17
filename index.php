@@ -56,11 +56,11 @@ require 'Bd/conexion.php';
             </li>
             <?php endif;?>
                 <li><a href="">Contáctenos</a></li>
-            <li><a href="Servicios/servicios.html">Servicios</a>
+            <li><a href="Servicios/servicios.php">Servicios</a>
             <ul class="submenu">
-                <li><a href="">Restaurante</a></li>
-                <li><a href="">Bar</a></li>
-                <li><a href="">Zonas húmedas</a></li>
+                <li><a href="Servicios/serviciores.php">Restaurante</a></li>
+                <li><a href="Servicios/serviciobar.php">Bar</a></li>
+                <li><a href="Servicios/serviciozona.php">Zonas húmedas</a></li>
                 </ul>
             </li>
         </ul>
@@ -102,7 +102,7 @@ require 'Bd/conexion.php';
                         <section class="section_caja"><img src="imagenes/Hotel.jpg" class="img_caja"></section>
                         <section class="section_caja"><img src="imagenes/habitacion.jpg" class="img_caja"></section>
                         <section class="section_caja"><img src="imagenes/Habitación.jpg" class="img_caja"></section>
-                        </div>
+                    </div>
                 </div>
             
                 <div id="btn_atras" class="btn_atras">&#60;</div>

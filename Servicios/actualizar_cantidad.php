@@ -34,5 +34,3 @@ if (isset($_GET['id_carrito']) && isset($_GET['nueva_cantidad']) && isset($_GET[
     echo "Error: No se proporcionó información completa para actualizar la cantidad y el subtotal.";
 }
 ?>
-
-
