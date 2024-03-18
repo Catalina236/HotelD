@@ -30,20 +30,11 @@ $row=mysqli_fetch_assoc($resultado);
         <a href="../index.php"><img src="../imagenes/logo.png" alt="" class="logo"></a>
         <nav class="menu">
             <ul class="menu-principal">
-                <li><a href="../Reserva/reserva.php">Reserva</a></li>
-                <ul class="submenu">
-                    <li><a href="">Crear Reserva</a></li>
-                    <li><a href="">Eliminar Reserva</a></li>
-                    <li><a href="">Consultar Reservas</a></li>
-                </ul>
-                <li><a href="">Habitaciones</a>
+            <li><a href="reserva.php">Reservas</a>
                     <ul class="submenu">
-                        <li><a href="">Sencilla</a></li>
-                        <li><a href="">Doble</a></li>
-                        <li><a href="">Triple</a></li>
-                        <li><a href="">Familiar</a></li>
+                        <li><a href="ver_reservas.php">Ver reservas</a></li>
                     </ul>
-                </li>
+           <li><a href="../Habitaciones/habitaciones.php">Habitaciones</a></li>
             <?php if(isset($_SESSION['cod_usuario']) && $_SESSION['cod_usuario']!=2):?>
             <li><a href="vercuenta.php">Mi Perfil</a>
                 <ul class="submenu">

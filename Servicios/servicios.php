@@ -18,18 +18,11 @@
                     <li><a href="">Eliminar Reserva</a></li>
                     <li><a href="">Consultar Reservas</a></li>
                 </ul>
-                <li><a href="../habitaciones/confirmar_reserva.php">Habitaciones</a>
-                    <ul class="submenu">
-                        <li><a href="">Sencilla</a></li>
-                        <li><a href="">Doble</a></li>
-                        <li><a href="">Triple</a></li>
-                        <li><a href="">Familiar</a></li>
-                    </ul>
-                </li>
+                <li><a href="../Habitaciones/habitaciones.php">Habitaciones</a></li>
             <?php if(isset($_SESSION['cod_usuario']) && $_SESSION['cod_usuario']!=2):?>
-            <li><a href="Usuarios/vercuenta.php">Mi Perfil</a>
+            <li><a href="../Usuarios/vercuenta.php">Mi Perfil</a>
                 <ul class="submenu">
-                    <li><a href="Usuarios/salir.php" onclick='return confirmacion()'>Salir</a></li>
+                    <li><a href="../Usuarios/salir.php" onclick='return confirmacion()'>Salir</a></li>
                 </ul>
             </li>
             <?php elseif(isset($_SESSION['cod_usuario']) && $_SESSION['cod_usuario']==2):?>
@@ -40,7 +33,7 @@
                 </ul>
                 </li>
             <?php else :?>
-            <li><a href="Usuarios/iniciarsesion.php">Mi Perfil</a>
+            <li><a href="../Usuarios/iniciarsesion.php">Mi Perfil</a>
                 <ul class="submenu">
                     <li><a href="../Usuarios/iniciarsesion.php">Iniciar sesión</a></li>
                     <li><a href="../Usuarios/crear.php">Registrarse</a></li>
@@ -53,7 +46,7 @@
                     <li><a href="serviciores.php">Restaurante</a></li>
                     <li><a href="serviciobar.php">Bar</a></li>
                     <li><a href="serviciozona.php">Zonas húmedas</a></li>
-                    </ul>
+                </ul>
             </li>
     </ul>
     </nav>

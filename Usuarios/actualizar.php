@@ -115,7 +115,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
                     <li><a href="">Consultar</a></li>
                 </ul>
                 </li>
-                <li><a href="../Habitaciones/index.php">Habitaciones</a>
+                <li><a href="../Habitaciones/habitaciones.php">Habitaciones</a></li>
                     <ul class="submenu">
                         <li><a href="">Doble</a></li>
                         <li><a href="">Sencilla</a></li>

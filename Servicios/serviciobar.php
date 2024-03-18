@@ -76,14 +76,7 @@ mysqli_close($bd);
                     <li><a href="">Eliminar Reserva</a></li>
                     <li><a href="">Consultar Reservas</a></li>
                 </ul>
-                <li><a href="../habitaciones/confirmar_reserva.php">Habitaciones</a>
-                    <ul class="submenu">
-                        <li><a href="">Sencilla</a></li>
-                        <li><a href="">Doble</a></li>
-                        <li><a href="">Triple</a></li>
-                        <li><a href="">Familiar</a></li>
-                    </ul>
-                </li>
+                <li><a href="../Habitaciones/habitaciones.php">Habitaciones</a></li>
             <?php if(isset($_SESSION['cod_usuario']) && $_SESSION['cod_usuario']!=2):?>
             <li><a href="../Usuarios/vercuenta.php">Mi Perfil</a>
                 <ul class="submenu">

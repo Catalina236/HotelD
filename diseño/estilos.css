@@ -17,6 +17,10 @@ header{
     align-items: center;
     justify-content: center;
 }
+.menu{
+    display: flex;
+    justify-content: flex-end;
+}
 nav{
     margin-top: 0;
     left: 0;
@@ -317,7 +321,50 @@ footer section i{
     position: relative;
     top: 105px;
 }
-
+.menu-toggle{
+    font-size: 30px;
+    float: right;
+    line-height: 80px;
+    margin-right: 40px;
+    cursor: pointer;
+    display: none;
+}
+#menu{
+    display: none;
+}
+@media(max-width:991px){
+    .menu-principal {
+        padding: 30px;
+      }
+      .menu-toggle {
+        display: block;
+        padding: 10px 20px;
+        cursor: pointer;
+      }
+      .menu-principal {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color:deepskyblue;
+        display: none;
+      }
+    
+      .menu-principal li {
+        width: 100%;
+      }
+      .menu-principal li a {
+        color: black;
+      }
+    
+      .menu-principal li a:hover {
+        color: black;
+      }
+    
+      #menu:checked ~ .menu-principal {
+        display: block;
+    }
+}
 @media (max-width: 360px) {
     .bloque-inicio{ 
         width: 100%;

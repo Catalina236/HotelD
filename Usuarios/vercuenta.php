@@ -31,38 +31,48 @@ if ($row['foto'] != null) {
 </head>
 <body>
 <header>
-    <a href="../index.php"><img src="../imagenes/logo.png" alt="" class="logo"></a>
-    <nav class="menu">
+        <a href="../index.php"><img src="../imagenes/logo.png" alt="" class="logo"></a>
+        <nav class="menu">
             <ul class="menu-principal">
-                <li><a href="../Reserva/reserva.php">Reserva</a>
-                <ul class="submenu">
-                    <li><a href="">Crear reserva</a></li>
-                    <li><a href="">Cancelar reserva</a></li>
-                    <li><a href="">Consultar</a></li>
-                </ul>
-                </li>
-                <li><a href="../Habitaciones/index.php">Habitaciones</a>
+            <li><a href="../Reserva/reserva.php">Reserva</a>
                     <ul class="submenu">
-                        <li><a href="">Doble</a></li>
-                        <li><a href="">Sencilla</a></li>
-                        <li><a href="">Triple</a></li>
-                        <li><a href="">Familiar</a></li>
+                        <li><a href="../Reserva/ver_reservas.php">Ver reservas</a></li>
                     </ul>
                 </li>
-                <li><a href="iniciarsesion.php">Mi Perfil</a>
+            <li><a href="../habitaciones/habitaciones.php">Habitaciones</a>
+                    <ul class="submenu">
+                    </ul>
+                </li>
+            <?php if(isset($_SESSION['cod_usuario']) && $_SESSION['cod_usuario']!=2):?>
+            <li><a href="vercuenta.php">Mi Perfil</a>
                 <ul class="submenu">
-                    <li><a href="salir.php" onclick="return salir()">Salir</a></li>
+                    <li><a href="salir.php" onclick='return salir()'>Salir</a></li>
+                </ul>
+            </li>
+            <?php elseif(isset($_SESSION['cod_usuario']) && $_SESSION['cod_usuario']==2):?>
+            <li><a href="vercuenta.php">Mi Perfil</a>
+                <ul class="submenu">
+                    <li><a href="opciones.php">Opciones</a></li>
+                    <li><a href="salir.php" onclick='return salir()'>Salir</a></li>
                 </ul>
                 </li>
+            <?php else :?>
+            <li><a href="iniciarsesion.php">Mi Perfil</a>
+                <ul class="submenu">
+                    <li><a href="iniciarsesion.php">Iniciar sesión</a></li>
+                    <li><a href="crear.php">Registrarse</a></li>
+                </ul>
+            </li>
+            <?php endif;?>
                 <li><a href="">Contáctenos</a></li>
-                <li><a href="../Servicios/servicios.php">Servicios</a>
-                    <ul class="submenu">
-                        <li><a href="../Servicios/serviciores.php">Restaurante</a></li>
-                        <li><a href="../Servicios/serviciobar.php">Bar</a></li>
-                        <li><a href="../Servicios/serviciozona.php">Zonas húmedas</a></li>
-                    </ul>
-                </li>
-            </ul>
+            <li><a href="../Servicios/servicios.php">Servicios</a>
+            <ul class="submenu">
+                <li><a href="../Servicios/serviciores.php">Restaurante</a></li>
+                <li><a href="../Servicios/serviciobar.php">Bar</a></li>
+                <li><a href="../Servicios/serviciozona.php">Zonas húmedas</a></li>
+                </ul>
+            </li>
+        </ul>
         </nav>
     </header>
     <div class="contenido">

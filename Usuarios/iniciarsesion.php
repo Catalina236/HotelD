@@ -21,14 +21,7 @@
                     <li><a href="">Consultar</a></li>
                 </ul>
                 </li>
-                <li><a href="../Habitaciones/index.php">Habitaciones</a>
-                    <ul class="submenu">
-                        <li><a href="">Doble</a></li>
-                        <li><a href="">Sencilla</a></li>
-                        <li><a href="">Triple</a></li>
-                        <li><a href="">Familiar</a></li>
-                    </ul>
-                </li>
+                <li><a href="../Habitaciones/habitaciones.php">Habitaciones</a></li>
                 <li><a href="iniciarsesion.php">Mi perfil</a>
                 <ul class="submenu">
                     <li><a href="crear.php">Registrarse</a></li>

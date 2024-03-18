@@ -19,19 +19,16 @@ require 'Bd/conexion.php';
     <header>
         <a href="index.php"><img src="imagenes/logo.png" alt="" class="logo"></a>
         <nav class="menu">
+        <input type="checkbox" id="menu">
+        <label for="menu" class="menu-toggle"><i class="fa-solid fa-bars"></i></label>
             <ul class="menu-principal">
-                <li><a href="Reserva/reserva.php">Reserva</a></li>
-                <ul class="submenu">
-                    <li><a href="">Crear Reserva</a></li>
-                    <li><a href="">Eliminar Reserva</a></li>
-                    <li><a href="">Consultar Reservas</a></li>
-                </ul>
-                <li><a href="habitaciones/confirmar_reserva.php">Habitaciones</a>
+            <li><a href="Reserva/reserva.php">Reserva</a>
                     <ul class="submenu">
-                        <li><a href="">Sencilla</a></li>
-                        <li><a href="">Doble</a></li>
-                        <li><a href="">Triple</a></li>
-                        <li><a href="">Familiar</a></li>
+                        <li><a href="Reserva/ver_reservas.php">Ver reservas</a></li>
+                    </ul>
+                </li>
+            <li><a href="habitaciones/habitaciones.php">Habitaciones</a>
+                    <ul class="submenu">
                     </ul>
                 </li>
             <?php if(isset($_SESSION['cod_usuario']) && $_SESSION['cod_usuario']!=2):?>
@@ -85,7 +82,7 @@ require 'Bd/conexion.php';
                     <h2>Tus vacaciones perfectas en nuestro hotel</h2>
                 </header>
                 <div class="fecha">
-                    <form action="Reserva/reserva.php" method="post">
+                    <form action="Habitaciones/habitaciones.php" method="post">
                     <input class="casilla" type="date" name="fecha_inicio" id="">
                     <input class="casilla" type="date" name="fecha_fin" id="">
                     <input class="boton" type="submit" value="Verificar" name="filtrar">
@@ -118,7 +115,7 @@ require 'Bd/conexion.php';
                     <img src="imagenes/images.jpg" alt="">
                     <div class="cont">
                         <h2 class="tpisicina">Piscina</h2>
-                        <button><a href="piscina.html">Ver más</a></button>
+                        <button><a href="Servicios/serviciozona.php">Ver más</a></button>
                     </div>
                 </div>
                 <div class="item servicio2">

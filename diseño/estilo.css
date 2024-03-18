@@ -243,14 +243,113 @@ form{
     margin-left: 40px; /* Elimina el margen izquierdo */
     padding-left: 40px; /* Elimina el relleno izquierdo */
 }
-/*input[type="submit"]{
-    width: 185px;
+.contenido h1{
     font-family: 'Nunito';
+    margin-right: 795px;
     font-weight: bold;
-    font-size: 17px;
-    padding: 2px;
-    border-radius: 5px;
+    margin-bottom: 34px;
 }
-input[type="submit"]:hover{
-    background-color: dodgerblue;
-}*/
+.btn_ver_detalles{
+    background-color:rgb(118, 221, 255);
+    width: 80%;
+    border: none;
+    padding: 20px;
+    box-shadow: 1px 1px 1px rgb(116, 112, 112);
+    border-radius: 13px;
+}
+.btn_ver_detalles a{
+    text-decoration: none;
+    font-family: 'Nunito';
+    color: black;
+    font-size: 19px;
+}
+.contenido-btn{
+    margin-right: 440px;
+    padding: 5px;
+}
+.contenido-btn img{
+    width: 140px;
+    margin-right: 440px;
+    border-radius: 7px;
+}
+.contenido-btn h4{
+    margin-top: -93px;
+    margin-bottom: 5px;
+}
+.contenido-btn h5{
+    margin-right: 74px;
+}
+.contenido-btn span{
+    position: relative;
+    top: -15px;
+    left: 117px;
+}
+footer{
+    position: relative;
+    top: 370px;
+    width: 100%;
+    left: 0;
+    font-family: 'Nunito';
+    background-color:rgb(240, 240, 240);
+    border-top: 1px solid #d7d7d7;
+    height: 220px;
+}
+footer section{
+    display: table-cell;
+    width: 300px;
+    position: relative;
+}
+footer section a{
+    color: black;
+}
+.informacion{
+    padding: 15px;
+}
+.informacion2{
+    padding: 15px;
+    position: relative;
+    left: 103px;
+}
+footer section i{
+    font-size: 33px;
+    padding-left: 20px;
+}
+.iconos{
+    position: relative;
+    top: 0px;
+    left: 290px;
+}
+.terminos{
+    text-align: center;
+    margin-top: 12px;
+}
+.terminos p{
+    position: relative;
+    top: 23px;
+    margin-bottom: 12px;
+}
+.datos{
+    position: relative;
+    top: 105px;
+}
+.mensaje-sin-reservas {
+    text-align: center;
+    width: 80%;
+    margin: 20px auto;
+    padding: 10px;
+    border: 0px solid #ddd;
+    border-radius: 5px;
+  }
+  .mensaje-sin-reservas p {
+    font-size: 26px;
+    margin-bottom: 10px;
+    font-family: 'Nunito';
+  }
+  .mensaje-sin-reservas a {
+    background-color: #0085cc;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-family: 'Nunito';
+  }
