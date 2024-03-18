@@ -23,15 +23,16 @@ $reservas=mysqli_fetch_assoc($resultado);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../imagenes/logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <link rel="stylesheet" href="../diseño/estilo.css">
-    <title>Document</title>
+    <title>Reservas</title>
 </head>
 <body>
 <header>
         <a href="../index.php"><img src="../imagenes/logo.png" alt="" class="logo"></a>
         <nav class="menu">
             <ul class="menu-principal">
-            <li><a href="reserva.php">Reservas</a>
+            <li><a href="reserva.php">Reserva</a>
                     <ul class="submenu">
                         <li><a href="ver_reservas.php">Ver reservas</a></li>
                     </ul>
@@ -59,7 +60,7 @@ $reservas=mysqli_fetch_assoc($resultado);
             </li>
             <?php endif;?>
             <li><a href="">Contáctenos</a></li>
-            <li><a href="servicios.php">Servicios</a>
+            <li><a href="../Servicios/servicios.php">Servicios</a>
                 <ul class="submenu">
                     <li><a href="serviciores.php">Restaurante</a></li>
                     <li><a href="serviciobar.php">Bar</a></li>
@@ -75,8 +76,9 @@ $reservas=mysqli_fetch_assoc($resultado);
     <?php
     if(isset($reservas)){ ?>
     <button class="btn_ver_detalles">
-            <div class="contenido-btn"><a href="ver_detalles_reserva.php">
-            <img src="../admin/clases/Habitacion/imagenes/<?php echo $reservas['imagen'];?>" alt="">
+    <img src="../admin/clases/Habitacion/imagenes/<?php echo $reservas['imagen'];?>" alt="">
+        <div class="contenido-btn">
+            <a href="ver_detalles_reserva.php">
             <br>
             <h4>Habitación <?php echo $reservas['nom_tipo_hab'];?></h4>
             <h5>COP <?php echo $reservas['precio'];?></h5>

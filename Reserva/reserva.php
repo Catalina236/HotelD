@@ -56,6 +56,7 @@
                 <h1>Detalles de reserva</h1>
                 <input type="date" class="control" name="fecha_inicio">
                 <input type="date" class="control" name="fecha_fin">
+                <br>
                 <input type="checkbox" name="" id=""><label for="">Todavía no he decidido las fechas</label>
                 <br>
                 <br>

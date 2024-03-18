@@ -122,6 +122,45 @@ nav{
     font-family: 'Nunito';
     margin: 8px 50px 40px 50px;
 }
+/*.habitaciones{
+    display: block;
+    align-items: flex-end;
+    height: 10px;
+}
+.habitacion img{
+    margin-top: 14px;
+    margin-bottom: 14px;
+    width: 230px;
+    height: 200px;
+    margin-left: 23px;
+    border-radius: 12px;
+}
+.habitacion{
+    display: flex;
+    flex-direction: row;
+    border: 1px solid rgb(184, 184, 184);
+    width: 963px;
+    margin: 12px;
+    margin-left: 123px;
+    border-radius: 12px;
+}
+.habitacion button{
+    width: 123px;
+    height: 34px;
+    background-color: deepskyblue;
+    border: 2px solid dodgerblue;
+    border-radius: 23px;
+    position: relative;
+    top: 150px;
+    left: 170px;
+}
+.habitacion button a{
+    font-family: 'Nunito';
+    font-size: 15px;
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+}*/
 .botonre{
     width: 123px;
     height: 34px;
@@ -249,40 +288,50 @@ form{
     font-weight: bold;
     margin-bottom: 34px;
 }
-.btn_ver_detalles{
-    background-color:rgb(118, 221, 255);
-    width: 80%;
-    border: none;
-    padding: 20px;
-    box-shadow: 1px 1px 1px rgb(116, 112, 112);
-    border-radius: 13px;
+.detalles img{
+    width: 134px;
 }
-.btn_ver_detalles a{
-    text-decoration: none;
+.detalles{
+    width: 900px;
+    background-color: rgb(155, 226, 250);
+    font-size: 25px;
     font-family: 'Nunito';
+    text-decoration: none;
     color: black;
-    font-size: 19px;
+}
+/*.detalles h4{
+    font-size: 35px;
+    font-family: 'Nunito';
+    text-decoration: none;
+    color: black;
+}*/
+.btn_ver_detalles img{
+    width: 130px;
+    margin-top: 14px;
+    margin-left: 23px;
+    border-radius: 12px;
+}
+.btn_ver_detalles{
+    background-color: #72add0;
+    display: flex;
+    flex-direction: row;
+    border: none;
+    width: 963px;
+    margin: 12px;
+    height: 130px;
+    margin-left: 13px;
+    border-radius: 12px;
 }
 .contenido-btn{
-    margin-right: 440px;
-    padding: 5px;
+    margin-left: 35px;
+    margin-top: -10px;
 }
-.contenido-btn img{
-    width: 140px;
-    margin-right: 440px;
-    border-radius: 7px;
-}
-.contenido-btn h4{
-    margin-top: -93px;
-    margin-bottom: 5px;
-}
-.contenido-btn h5{
-    margin-right: 74px;
-}
-.contenido-btn span{
-    position: relative;
-    top: -15px;
-    left: 117px;
+.contenido-btn a{
+    font-family: 'Nunito';
+    font-size: 17px;
+    color: black;
+    text-decoration:none ;
+    text-align: start;
 }
 footer{
     position: relative;
