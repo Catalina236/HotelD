@@ -25,8 +25,8 @@ $sql = "SELECT
     persona.nombres,
     persona.apellidos,
     detalle_factura.cod_det_factura,
-    /*carrito_persona.cod_carrito,
-    carrito_persona.subtotal,*/
+    carrito_persona.cod_carrito,
+    carrito_persona.subtotal,
     tipo_habitacion.nom_tipo_hab,
     tipo_habitacion.valor_base,
     DATEDIFF(reserva.fecha_fin, reserva.fecha_inicio) AS dias_reserva
@@ -38,8 +38,8 @@ FROM
     persona ON factura.num_doc = persona.num_doc
         INNER JOIN
     detalle_factura ON factura.cod_factura = detalle_factura.cod_factura
-        /*INNER JOIN
-    carrito_persona ON detalle_factura.cod_carrito = carrito_persona.cod_carrito*/
+        INNER JOIN
+    carrito_persona ON detalle_factura.cod_carrito = carrito_persona.cod_carrito
         INNER JOIN
     tipo_habitacion ON reserva.cod_tipo_hab = tipo_habitacion.cod_tipo_hab
 WHERE

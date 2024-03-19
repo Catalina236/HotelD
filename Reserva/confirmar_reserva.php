@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,25 +10,9 @@
 </head>
 <body class="bg-light">
     <?php
-
+    session_start();
     require '../Bd/conexion.php';
     $bd=conectar_db();
-    session_start();
-    if(!isset($_SESSION['cod_usuario'])){
-        $Nombres="";
-        $Telefono="";
-        $Direccion="";
-    }    
-    else{
-    $id=$_SESSION['correo_electronico'];
-    $sql="SELECT * FROM persona WHERE correo_electronico='$id'";
-    $resultado=mysqli_query($bd,$sql);
-    $datos=mysqli_fetch_assoc($resultado);
-    $Nombres=$datos['nombres'];
-    $Telefono=$datos['telefono'];
-    $Direccion=$datos['direccion'];
-    }
-
     $codigo = $_GET['cod_tipo_hab'];
     
     $sql2="SELECT * FROM tipo_habitacion JOIN habitacion ON tipo_habitacion.cod_tipo_hab=habitacion.cod_tipo_hab WHERE tipo_habitacion.cod_tipo_hab='$codigo'";
@@ -65,22 +50,6 @@
                             <h5 class="mb-3">Detalles de la reserva</h5>
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label class="form-label">Nombre</label>
-                                    <input name="nombre" type="text" class="form-control shadow-none" require value="<?php echo $Nombres;?>">
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Numero de telefono</label>
-                                    <input name="telefono" type="text" class="form-control shadow-none" require value="<?php echo $Telefono;?>">
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Direccion</label>
-                                    <textarea name="direccion" class="form-control shadow-none" rows="1" required><?php echo $Direccion;?></textarea>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Email</label>
-                                    <input name="telefono" type="text" class="form-control shadow-none" require value="<?php echo $id;?>">
-                                </div>
-                                <div class="col-md-6 mb-3">
                                     <label class="form-label">Check-in</label>
                                     <input name="checkin" onchange="check_availability()" type="date" class="form-control shadow-none" require>
                                 </div>
@@ -90,6 +59,15 @@
                                     <input name="checkout" type="date" class="form-control shadow-none" required>
                                 </div>
 
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Check-in</label>
+                                    <select name="metodo_pago" id="" class="form-control shadow-none" required>
+                                        <option value="">Seleccione método de pago</option>
+                                        <option value="Tarjeta de crédito">Tarjeta de crédito</option>
+                                        <option value="Tarjeta de débito">Tarjeta de débito</option>
+                                        <option value="Efectivo">Efectivo</option>
+                                    </select>
+                                </div>
                                 <div class="col-12">
                                     <div class="spinner-border text-info mb-3 d-none" id="info_loader" role="status">
                                         <span class="visually-hidden">Cargando...</span>
@@ -106,8 +84,7 @@
                         $Fechaf=$_POST['checkout'];
                         $Precio=$habitacion['valor_base'];
                         $codigo=$habitacion['cod_tipo_hab'];
-                        $num_doc=$datos['num_doc'];
-
+                        $MetodoPago=$_POST['metodo_pago'];
                         $sqlr = "SELECT * FROM reserva WHERE (fecha_inicio <= '$Fechaf' AND fecha_fin >= '$Fechai') AND cod_tipo_hab='$codigo'";
 
                         $resultado = mysqli_query($bd, $sqlr);
@@ -117,14 +94,71 @@
                             echo "Error: Ya hay una reserva existente para estas fechas. Seleccione una habitación o fecha diferente.";
                         }
                         else{
-                            $sql_insert = "INSERT INTO reserva (fecha_inicio, fecha_fin, precio, cod_tipo_hab, num_doc) VALUES ('$Fechai', '$Fechaf', '$Precio', '$codigo','$num_doc')";
-                            if(mysqli_query($bd, $sql_insert)){
-                                echo "<script type='text/javascript'>alert('Reserva generada exitosamente');
-                                window.location='ver_reservas.php';
+                            if(!isset($_SESSION['cod_usuario'])){
+                            echo "<script type='text/javascript'>alert('Para hacer una reserva, debe iniciar sesión');
+                                window.location='../Usuarios/iniciarsesion.php';
                                 </script>";
-                            } else {
-                                echo "Error al realizar la reserva: " . mysqli_error($bd);
-                            }}
+                        }    
+                        else{
+                        $id=$_SESSION['correo_electronico'];
+                        $sql="SELECT * FROM persona WHERE correo_electronico='$id'";
+                        $resultado=mysqli_query($bd,$sql);
+                        $datos=mysqli_fetch_assoc($resultado);
+                        $num_doc=$datos['num_doc'];
+                        $fecha_factura=date("Y/m/d");
+                        
+
+                            $sql_insert = "INSERT INTO reserva (fecha_inicio, fecha_fin, precio, cod_tipo_hab, num_doc) VALUES ('$Fechai', '$Fechaf', '$Precio', '$codigo','$num_doc')";
+                            $resultado=mysqli_query($bd, $sql_insert);
+
+                            $sqlc="SELECT * FROM reserva JOIN persona ON reserva.num_doc=persona.num_doc JOIN carrito_persona ON persona.num_doc=carrito_persona.num_doc";
+                            //$sqlc="SELECT * FROM reserva";
+                            $resultado=mysqli_query($bd,$sqlc);
+                            $datosr=mysqli_fetch_assoc($resultado);
+                            $cod_reserva=$datosr['cod_reserva'];
+                            $cod_carrito=$datosr['cod_carrito'];
+                            
+                            if($cod_carrito==""){
+                                $cod_reserva1 = mysqli_insert_id($bd);
+                                $sqlf="INSERT INTO factura(fecha_factura,metodo_pago,num_doc,cod_reserva) VALUES('$fecha_factura','$MetodoPago','$num_doc','$cod_reserva')";
+                                $cod_factura=$datosr['cod_factura'];
+                                var_dump($cod_factura);
+                                $sql_df="INSERT INTO detalle_factura(cod_factura,cod_carrito) VALUES('$cod_factura','$cod_carrito')";
+                                
+                                $resultado=mysqli_query($bd,$sqlf);
+                                $resultado=mysqli_query($bd,$sql_df);
+                                if($resultado){
+                                    echo "<script type='text/javascript'>alert('Reserva generada exitosamente');
+                                    window.location='ver_reservas.php';
+                                    </script>";
+                                } else {
+                                    echo "Error al realizar la reserva: " . mysqli_error($bd);
+                                }
+                                
+                            }
+                            else{
+                                $cod_reserva1 = mysqli_insert_id($bd);
+                                var_dump($cod_carrito);                           
+                                $sqlf="INSERT INTO factura(fecha_factura,metodo_pago,num_doc,cod_reserva,cod_carrito) VALUES('$fecha_factura','$MetodoPago','$num_doc','$cod_reserva','$cod_carrito')";
+                                $sqlbf="SELECT * FROM factura";
+                                $r=mysqli_query($bd,$sqlbf);
+                                $datos_r=mysqli_fetch_assoc($r);
+                                $cod_factura=$datos_r['cod_factura'];
+                                
+                                $sql_df="INSERT INTO detalle_factura(cod_factura,cod_carrito) VALUES('$cod_factura','$cod_carrito')";
+                                
+                                $resultado=mysqli_query($bd,$sqlf);
+                                $resultado=mysqli_query($bd,$sql_df);
+                                if($resultado){
+                                    echo "<script type='text/javascript'>alert('Reserva generada exitosamente');
+                                    window.location='ver_reservas.php';
+                                    </script>";
+                                } else {
+                                    echo "Error al realizar la reserva: " . mysqli_error($bd);
+                                }        
+                            }
+                        }
+                        }
         }
         ?>
         </div>

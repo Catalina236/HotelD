@@ -31,7 +31,7 @@ class Trabajo extends Conexion{
 
         if ($resultado>0){
             if($resultado2>0){
-                move_uploaded_file($temp, 'C:/xampp/htdocs/Reserva/clases/Habitacion/imagenes/'.$imagen);
+                move_uploaded_file($temp, 'C:/xampp/htdocs/HotelD/admin/clases/Habitacion/imagenes/'.$imagen);
                 echo "<script type='text/javascript'>
                     alert('Registro adicionado correctamente...');
                     window.location='seleccionar.php';

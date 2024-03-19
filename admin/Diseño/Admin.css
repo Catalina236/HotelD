@@ -1,5 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+
+/* En general estilos de la pagina del administrador*/
 *{
     margin: 0;
     padding: 0;
@@ -13,6 +16,59 @@ body{
     line-height: 1.6;
     background-color: rgb(245, 245, 245);
 }
+.logo{
+    position: absolute;
+    max-width: 55px;
+    left: 23px;
+    top: 10px;
+    z-index: 2;
+}
+nav{
+    margin-top: 0px;
+    left: 0;
+    width: 100%;
+    position: relative;
+    font-family: 'Nunito', sans-serif;
+    z-index: 1;
+    font-size: 18px;
+    background-color: white;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+}
+.menu-principal{
+    list-style: none;
+    display:flex;
+    justify-content:flex-end;
+    margin-right: 79px;
+     font-weight: bold;
+}
+.menu-principal >li>a{
+    display: block;
+    padding: 30px 15px;
+    color: black;
+    text-decoration: none;
+}
+.menu-principal>li:hover{
+    background-color:deepskyblue;
+}
+.submenu{
+    position: absolute;
+    display: none;
+    list-style: none;
+    width: 200px;
+    background-color:rgba(0, 191, 255, 0.541);
+}
+.menu-principal li:hover .submenu{
+    display: block;
+}
+.submenu li:hover{
+    background-color: deepskyblue;
+}
+.submenu li a{
+    display: block;
+    color: black;
+    text-decoration:none;
+    padding: 15px 15px 15px 20px;
+}
 html, body{
     margin: 0;
     padding: 0;
@@ -25,11 +81,12 @@ html, body{
     margin-top: 40px;
     font-weight: 100;
     font-size: 50px;
-    font-family: 'Nunito', sans-serif;
+    font-family: 'Montserrat', sans-serif;
 }
 .contenido{
     padding: 34px;
 }
+
 .contenido a{
     text-decoration: none;
     color: #333;
@@ -43,7 +100,6 @@ html, body{
     flex-wrap: wrap;
     justify-content: center;
     margin: auto;
-    margin-bottom: 534px;
 }
 .container .card{
     width: 330px;
@@ -91,6 +147,25 @@ input[type="button"]{
     font-size: 15px;
     font-family: 'Nunito', sans-serif;
 }
+footer{
+    position: relative;
+    top: 590px;
+    width: 100%;
+    left: 0;
+    font-family: 'Nunito';
+    background-color: #e2e2e2;
+    border-top: 1px solid #d7d7d7;
+    box-shadow: 0 2px 2px 2px black;
+    height: 220px;  
+}
+footer section{
+    display: table-cell;
+    width: 300px;
+    position: relative;
+}
+footer section a{
+    color: black;
+}
 .informacion{
     /*text-align: justify;*/
     padding: 15px;
@@ -100,6 +175,10 @@ input[type="button"]{
     padding: 15px;
     position: relative;
     left: 103px;
+}
+footer section i{
+    font-size: 33px;
+    padding-left: 20px;
 }
 .iconos{
     position: relative;

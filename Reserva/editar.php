@@ -105,12 +105,12 @@
                         $Precio=$habitacion['valor_base'];
                         $codigo=$habitacion['cod_tipo_hab'];
                         $num_doc=$datos['num_doc'];
-                        $sql = "UPDATE reserva SET 
+                        $sql_u = "UPDATE reserva SET 
                         fecha_inicio = '$Fechai',
                         fecha_fin= '$Fechaf'
                         WHERE cod_reserva = '$codigo'";
 
-                            if(mysqli_query($bd, $sql)){
+                            if(mysqli_query($bd, $sql_u)){
                                 /*echo "<script type='text/javascript'>alert('Reserva actualizada exitosamente');
                                 window.location='ver_reservas.php';
                                 </script>";*/
