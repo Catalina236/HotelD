@@ -40,11 +40,11 @@
             </li>
             <?php endif;?>
             <li><a href="">Contáctenos</a></li>
-            <li><a href="servicios.php">Servicios</a>
+            <li><a href="../Servicios/servicios.php">Servicios</a>
                 <ul class="submenu">
-                    <li><a href="serviciores.php">Restaurante</a></li>
-                    <li><a href="serviciobar.php">Bar</a></li>
-                    <li><a href="serviciozona.php">Zonas húmedas</a></li>
+                    <li><a href="../Servicios/serviciores.php">Restaurante</a></li>
+                    <li><a href="../Servicios/serviciobar.php">Bar</a></li>
+                    <li><a href="../Servicios/serviciozona.php">Zonas húmedas</a></li>
                 </ul>
             </li>
     </ul>

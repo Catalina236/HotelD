@@ -42,8 +42,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $resultadoInsertarCarrito = mysqli_query($bd, $queryInsertarCarrito);
 
             if ($resultadoInsertarCarrito) {    
-    // Enviar una respuesta clara
-            echo "Inserción exitosa";
+                echo "<script type='text/javascript'>alert('Producto añadido correctamente');
+                window.location='serviciozona.php';
+                </script>";
             exit(); // Terminar la ejecución del script después de enviar la respuesta
             } else {
             $errores[] = 'Error al insertar/actualizar en la tabla carrito_persona: ' . mysqli_error($bd);
@@ -78,9 +79,9 @@ mysqli_close($bd);
                 </ul>
                 <li><a href="../Habitaciones/habitaciones.php">Habitaciones</a></li>
             <?php if(isset($_SESSION['cod_usuario']) && $_SESSION['cod_usuario']!=2):?>
-            <li><a href="Usuarios/vercuenta.php">Mi Perfil</a>
+            <li><a href="../Usuarios/vercuenta.php">Mi Perfil</a>
                 <ul class="submenu">
-                    <li><a href="Usuarios/salir.php" onclick='return confirmacion()'>Salir</a></li>
+                    <li><a href="../Usuarios/salir.php" onclick='return confirmacion()'>Salir</a></li>
                 </ul>
             </li>
             <?php elseif(isset($_SESSION['cod_usuario']) && $_SESSION['cod_usuario']==2):?>
@@ -91,7 +92,7 @@ mysqli_close($bd);
                 </ul>
                 </li>
             <?php else :?>
-            <li><a href="Usuarios/iniciarsesion.php">Mi Perfil</a>
+            <li><a href="../Usuarios/iniciarsesion.php">Mi Perfil</a>
                 <ul class="submenu">
                     <li><a href="../Usuarios/iniciarsesion.php">Iniciar sesión</a></li>
                     <li><a href="../Usuarios/crear.php">Registrarse</a></li>
@@ -148,34 +149,6 @@ mysqli_close($bd);
             </div>
         </section>
     </div>
-    <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // Agrega este script para manejar la respuesta de inserción exitosa
-        const formulario = document.querySelector('.formulario');
-        formulario.addEventListener('submit', function (event) {
-            event.preventDefault();
-
-            // Utiliza Fetch API para realizar una solicitud POST asíncrona
-            fetch(this.action, {
-                method: this.method,
-                body: new FormData(this),
-            })
-            .then(response => response.text())  // Cambia a text() para manejar una respuesta de texto
-            .then(data => {
-                // Verifica si la inserción fue exitosa
-                if (data === 'Inserción exitosa') {
-                    alert('Inserción exitosa');
-                } else {
-                    alert('Error al insertar en la base de datos');
-                }
-            })
-            .catch(error => {
-                console.error('Error en la solicitud:', error);
-                alert('Error en la solicitud');
-            });
-        });
-    });
-</script>
 </body>
 </html> 
 

@@ -71,23 +71,25 @@ $reservas=mysqli_fetch_assoc($resultado);
     </nav>
     </header>
     <div class="contenido">
-    <h1>Detalles</h1>
+    <h1>Detalles de reserva</h1>
     <br>
     <?php
     if(isset($reservas)){ ?>
     <div class="detalles">
     <img src="../admin/clases/Habitacion/imagenes/<?php echo $reservas['imagen'];?>" alt="">
-        <br>
-        <h4>Habitación <?php echo $reservas['nom_tipo_hab'];?></h4>
-        <h5>Precio: COP <?php echo $reservas['precio'];?></h5>
-        <span><?php echo $reservas['fecha_inicio'];?></span>
-        <br>
-        <span><?php echo $reservas['fecha_fin'];?></span>
-        <br>
-        <span>Capacidad: <?php echo $reservas['capacidad'];?></span>
-</button>
-    <?php }?>
-    </div>
+    <h4>Habitación <?php echo $reservas['nom_tipo_hab'];?></h4>
+    <h5>Precio: COP <?php echo $reservas['precio'];?></h5>
+    <span><?php echo $reservas['fecha_inicio'];?></span>
+    <span><?php echo $reservas['fecha_fin'];?></span>
+    <br>
+    <span>Capacidad: <?php echo $reservas['capacidad'];?></span>
+    <br>
+    <span>Descripción: <?php echo $reservas['descripcion_hab'];?></span>
+    <br>
+    <button><a href="../factura/consulta_factura.php">Ver factura</a></button>
+    <button onclick="return confirmacion()"><a href="cancelar_reserva.php?cod_reserva=<?php echo $reservas['cod_reserva'];?>">Cancelar</a></button>
+</div>
+<?php }?>
     </div>
     <footer class="piepag">
          <section class="informacion">
@@ -113,5 +115,16 @@ $reservas=mysqli_fetch_assoc($resultado);
             All Rights Reserved | Hotel Aurora Oasis | Powered by Cloudbeds</p>
         </div>
         </footer>
+        <script>
+            function confirmacion(){
+            var respuesta=confirm("¿Desea cancelar la reserva?");
+            if(respuesta==true){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        </script>
 </body>
 </html>

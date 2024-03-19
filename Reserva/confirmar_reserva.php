@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../imagenes/logo.png">
-    <link rel="stylesheet" href="../diseño/estilo.css">
     <?php require('inc/links.php'); ?>
     <title>Confirmar reserva</title>
 </head>
@@ -120,7 +119,9 @@
                         else{
                             $sql_insert = "INSERT INTO reserva (fecha_inicio, fecha_fin, precio, cod_tipo_hab, num_doc) VALUES ('$Fechai', '$Fechaf', '$Precio', '$codigo','$num_doc')";
                             if(mysqli_query($bd, $sql_insert)){
-                                echo "La reserva se ha realizado correctamente.";
+                                echo "<script type='text/javascript'>alert('Reserva generada exitosamente');
+                                window.location='ver_reservas.php';
+                                </script>";
                             } else {
                                 echo "Error al realizar la reserva: " . mysqli_error($bd);
                             }}

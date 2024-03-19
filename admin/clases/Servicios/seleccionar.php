@@ -51,6 +51,8 @@ $total=$trabajo->VerServicios();
                         <td><?php echo $row['cod_servicio'];?></td>
                         <td><?php echo $row['nom_producto_rest'];?></td>
                         <td><?php echo $row['valor'];?></td>
+                        <td><img src="../../imagenes/editar.png" alt=""></td>
+                        <td><img src="../../imagenes/delete.png" alt=""></td>
                     </tr>
                 <?php }?>
             </tbody>
@@ -58,7 +60,7 @@ $total=$trabajo->VerServicios();
     </div>
 
     <div style="text-align: center;">
-    <a href="../opciones.php" class="linkregreso">Regresar</a>
+    <a href="../../../Usuarios/opciones.php" class="linkregreso">Regresar</a>
     <?php 
     
     $total_paginas=ceil($total/$resultado_pagina);

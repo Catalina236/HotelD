@@ -22,7 +22,7 @@ require 'Bd/conexion.php';
         <input type="checkbox" id="menu">
         <label for="menu" class="menu-toggle"><i class="fa-solid fa-bars"></i></label>
             <ul class="menu-principal">
-            <li><a href="Reserva/ver_reservas.php">Reserva</a>
+            <li><a href="Reserva/reserva.php">Reserva</a>
                     <ul class="submenu">
                         <li><a href="Reserva/ver_reservas.php">Ver reservas</a></li>
                     </ul>
@@ -129,14 +129,14 @@ require 'Bd/conexion.php';
                     <img src="imagenes/restaurante.jpg" alt="">
                     <div class="cont">
                         <h2 class="trestaurante">Restaurante</h2>
-                        <button><a href="">Ver más</a></button>
+                        <button><a href="Servicios/serviciores.php">Ver más</a></button>
                     </div>
                 </div>
                 <div class="item servicio4">
                     <img src="imagenes/spa3.png" alt="">
                     <div class="cont">
                         <h2 class="tspa">Spa</h2>
-                        <button><a href="">Ver más</a></button>
+                        <button><a href="Servicios/serviciozona.php">Ver más</a></button>
                     </div>
             </div>
             </div>
