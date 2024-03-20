@@ -6,6 +6,7 @@ function conectar_db(){
         exit;
     }
     else{
+        $db->set_charset("utf8");
         return $db;
     }
 }

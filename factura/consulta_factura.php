@@ -1,10 +1,12 @@
 <?php
+header('Content-Type: text/html; charset=utf-8');
 require_once("../Bd/conexion.php");
 
 // Verificar si hay una sesión iniciada
 session_start();
 
-$conn=conectar_db();
+$conn = conectar_db();
+
 // Verificar si el usuario está autenticado
 if (!isset($_SESSION['correo_electronico'])) {
     die("No hay un usuario logeado.");
@@ -131,6 +133,3 @@ if ($result->num_rows > 0) {
 
 // Cerrar conexión
 $conn->close();
-?>
-</body>
-</html>

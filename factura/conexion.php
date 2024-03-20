@@ -18,8 +18,11 @@ $servicios_adicionales = "servicios_adicionales";
 $conn = new mysqli($servername, $username, $password, $database);
 
 
-
+$conn->set_charset("utf8");
 // Verificar conexión
 if ($conn->connect_error) {
     die("Error de conexión: " . $conn->connect_error);
 } else{echo('');}
+
+// Después de conectar a la base de datos, establece el conjunto de caracteres UTF-8
+$conn->set_charset("utf8");
