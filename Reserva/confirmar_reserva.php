@@ -18,7 +18,6 @@
     $sql2="SELECT * FROM tipo_habitacion JOIN habitacion ON tipo_habitacion.cod_tipo_hab=habitacion.cod_tipo_hab WHERE tipo_habitacion.cod_tipo_hab='$codigo'";
     $resultado2=mysqli_query($bd,$sql2);
     $habitacion=mysqli_fetch_assoc($resultado2);
-
     
     ?>
     <div class="container">
@@ -101,82 +100,83 @@
                             }    
                             else{
                                 $id=$_SESSION['correo_electronico'];
-                                $sql="SELECT * FROM persona WHERE correo_electronico='$id'";
-                                $resultado=mysqli_query($bd,$sql);
-                                $datos=mysqli_fetch_assoc($resultado);
-                                $num_doc=$datos['num_doc'];
-                                
-
-                                $sql_insert = "INSERT INTO reserva (fecha_inicio, fecha_fin, precio, cod_tipo_hab, num_doc) VALUES ('$Fechai', '$Fechaf', '$Precio', '$codigo','$num_doc')";
-                                $resultado=mysqli_query($bd, $sql_insert);
-                                
-                                //$sqlc="SELECT * FROM reserva";
-                                //$sqlc="SELECT * FROM reserva JOIN persona ON reserva.num_doc=persona.num_doc";
-                                $cod_reserva1 = mysqli_insert_id($bd);
-                                $sqlc="SELECT * FROM reserva JOIN persona ON reserva.num_doc=persona.num_doc JOIN carrito_persona ON persona.num_doc=carrito_persona.num_doc";
+                               
+                                $sqlc="SELECT * FROM reserva JOIN persona ON reserva.num_doc=persona.num_doc JOIN carrito_persona ON persona.num_doc=carrito_persona.num_doc WHERE correo_electronico='$id'";
                                 $resultado=mysqli_query($bd,$sqlc);
                                 $datosr=mysqli_fetch_assoc($resultado);
-                                //$cod_reserva=$datosr['cod_reserva'];
-                                $cod_carrito=$datosr['cod_carrito'];
+                                $num_doc=$datosr['num_doc'];
                                 
-                                if($cod_carrito==""){
-                                    $fecha_factura=date("Y/m/d");
-                                    $sqlf="INSERT INTO factura(fecha_factura,metodo_pago,num_doc,cod_reserva) VALUES('$fecha_factura','$MetodoPago','$num_doc','$cod_reserva1')";
-                                    $resultado=mysqli_query($bd,$sqlf);
-                                    if ($resultado) {
-                                        $cod_factura = mysqli_insert_id($bd);
-                                        var_dump($cod_factura);
-                                        $sql_df="INSERT INTO detalle_factura(cod_factura) VALUES ('$cod_factura')";
-                                        
-                                        $resultado=mysqli_query($bd,$sql_df);
-                                        if($resultado){
-                                            echo "<script type='text/javascript'>alert('Reserva generada exitosamente');
-                                            window.location='ver_reservas.php';
-                                            </script>";
-                                        } else {
-                                            echo "Error al realizar la reserva: " . mysqli_error($bd);
-                                        }
-                                        
-                                        } else {
-                                            echo "Error al insertar la factura: " . mysqli_error($bd);
-                                        }
+
+                                if($Fechai>$Fechaf || $Fechaf<$Fechai){
+                                    echo 'No se puede hacer una reserva con una fecha de inicio mayor a la final...Seleccione una fecha diferente e intente nuevamente';
                                 }
+
                                 else{
-                                    $fecha_factura=date("Y/m/d");
-                                    $sqlf="INSERT INTO factura(fecha_factura,metodo_pago,num_doc,cod_reserva,cod_carrito) VALUES('$fecha_factura','$MetodoPago','$num_doc','$cod_reserva1','$cod_carrito')";
-                                    $resultado=mysqli_query($bd,$sqlf);
-                                    if ($resultado) {
-                                        $cod_factura = mysqli_insert_id($bd);
-                                        $sql_cantidad="SELECT COUNT(*) FROM persona JOIN carrito_persona ON persona.num_doc=carrito_persona.num_doc WHERE persona.num_doc='$num_doc'";
-                                        $rconsulta=mysqli_query($bd,$sql_cantidad);
-                                        $cantidad=mysqli_fetch_assoc($rconsulta);
-                                        $cantidad=$cantidad["COUNT(*)"];
-                                        
-                                        $sql_df="INSERT INTO detalle_factura(cod_factura,cod_carrito,cantidad_serv_adquiridos) VALUES ('$cod_factura','$cod_carrito','$cantidad')";
-                                        
-                                        $resultado=mysqli_query($bd,$sql_df);
-                                        if($resultado){
-                                            echo "<script type='text/javascript'>alert('Reserva generada exitosamente. Los servicios del carrito fueron añadidos. Puede consultar el valor total en ver factura');
-                                            window.location='ver_reservas.php';
-                                            </script>";
-                                        } else {
-                                            echo "Error al realizar la reserva: " . mysqli_error($bd);
-                                        }
-                                        
-                                        } else {
-                                            echo "Error al insertar la factura: " . mysqli_error($bd);
-                                        }      
+                                    $sql_insert = "INSERT INTO reserva (fecha_inicio, fecha_fin, precio, cod_tipo_hab, num_doc) VALUES ('$Fechai', '$Fechaf', '$Precio', '$codigo','$num_doc')";
+                                    $resultado=mysqli_query($bd, $sql_insert);
+                                    
+                                    $cod_reserva1 = mysqli_insert_id($bd);
+                                    $cod_carrito=$datosr['cod_carrito'];
+                                    
+                                    if($cod_carrito==""){
+                                        $fecha_factura=date("Y/m/d");
+                                        $sqlf="INSERT INTO factura(fecha_factura,metodo_pago,num_doc,cod_reserva) VALUES('$fecha_factura','$MetodoPago','$num_doc','$cod_reserva1')";
+                                        $resultado=mysqli_query($bd,$sqlf);
+                                        if ($resultado) {
+                                            $cod_factura = mysqli_insert_id($bd);
+                                            var_dump($cod_factura);
+                                            $sql_df="INSERT INTO detalle_factura(cod_factura) VALUES ('$cod_factura')";
+                                            
+                                            $resultado=mysqli_query($bd,$sql_df);
+                                            if($resultado){
+                                                echo "<script type='text/javascript'>alert('Reserva generada exitosamente');
+                                                window.location='ver_reservas.php';
+                                                </script>";
+                                            } else {
+                                                echo "Error al realizar la reserva: " . mysqli_error($bd);
+                                            }
+                                            
+                                            } else {
+                                                echo "Error al insertar la factura: " . mysqli_error($bd);
+                                            }
+                                    }
+                                    else{
+                                        $fecha_factura=date("Y/m/d");
+                                        $sqlf="INSERT INTO factura(fecha_factura,metodo_pago,num_doc,cod_reserva,cod_carrito) VALUES('$fecha_factura','$MetodoPago','$num_doc','$cod_reserva1','$cod_carrito')";
+                                        $resultado=mysqli_query($bd,$sqlf);
+                                        if ($resultado) {
+                                            $cod_factura = mysqli_insert_id($bd);
+                                            $sql_cantidad="SELECT COUNT(*) FROM persona JOIN carrito_persona ON persona.num_doc=carrito_persona.num_doc WHERE persona.num_doc='$num_doc'";
+                                            $rconsulta=mysqli_query($bd,$sql_cantidad);
+                                            $cantidad=mysqli_fetch_assoc($rconsulta);
+                                            $cantidad=$cantidad["COUNT(*)"];
+                                            
+                                            $sql_df="INSERT INTO detalle_factura(cod_factura,cod_carrito,cantidad_serv_adquiridos) VALUES ('$cod_factura','$cod_carrito','$cantidad')";
+                                            
+                                            $resultado=mysqli_query($bd,$sql_df);
+                                            if($resultado){
+                                                echo "<script type='text/javascript'>alert('Reserva generada exitosamente. Los servicios del carrito fueron añadidos. Puede consultar el valor total en ver factura');
+                                                window.location='ver_reservas.php';
+                                                </script>";
+                                            } else {
+                                                echo "Error al realizar la reserva: " . mysqli_error($bd);
+                                            }
+                                            
+                                            } else {
+                                                echo "Error al insertar la factura: " . mysqli_error($bd);
+                                            }      
+                                    }
                                 }
-                            }
-                            }
+                                }
+                }
             }
 
-            ?>
-</div>
-        </div>
+                ?>
     </div>
+            </div>
+        </div>
 
-</div>
-</div>    
-</body>
-</html>
+    </div>
+    </div>    
+    </body>
+    </html>

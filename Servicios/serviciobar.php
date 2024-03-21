@@ -72,7 +72,7 @@ mysqli_close($bd);
             <ul class="menu-principal">
             <li><a href="../Reserva/reserva.php">Reserva</a>
                     <ul class="submenu">
-                        <li><a href="Reserva/ver_reservas.php">Ver reservas</a></li>
+                        <li><a href="../Reserva/ver_reservas.php">Ver reservas</a></li>
                     </ul>
                 </li>
                 <li><a href="../Habitaciones/habitaciones.php">Habitaciones</a></li>
