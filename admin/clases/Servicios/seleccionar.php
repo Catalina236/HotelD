@@ -51,8 +51,8 @@ $total=$trabajo->VerServicios();
                         <td><?php echo $row['cod_servicio'];?></td>
                         <td><?php echo $row['nom_producto_rest'];?></td>
                         <td><?php echo $row['valor'];?></td>
-                        <td><img src="../../imagenes/editar.png" alt=""></td>
-                        <td><img src="../../imagenes/delete.png" alt=""></td>
+                        <td><a href="editar_serv.php?cod=<?php echo $row['cod_servicio'];?>"><img src="../../imagenes/editar.png" alt=""></a></td>
+                        <td><a href="eliminar.php?cod=<?php echo $row['cod_servicio'];?>"><img src="../../imagenes/delete.png" alt=""></a></td>
                     </tr>
                 <?php }?>
             </tbody>

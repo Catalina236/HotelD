@@ -185,5 +185,16 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
     </form>
     <?php endif;?>
 </div>
+<script>
+    window.onbeforeunload = function() {
+        return "¿Estás seguro de que quieres abandonar la página sin actualizar los datos?";
+    };
+
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelector('form').addEventListener('submit', function(e) {
+            window.onbeforeunload = null;
+        });
+    });
+</script>
 </body>
 </html>

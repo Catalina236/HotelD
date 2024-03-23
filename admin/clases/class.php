@@ -31,7 +31,7 @@ class Trabajo extends Conexion{
 
         if ($resultado>0){
             if($resultado2>0){
-                move_uploaded_file($temp, 'C:/xampp/htdocs/HotelD/admin/clases/Habitacion/imagenes/'.$imagen);
+                move_uploaded_file($temp, 'C:/xampp/htdocs/Reserva/clases/Habitacion/imagenes/'.$imagen);
                 echo "<script type='text/javascript'>
                     alert('Registro adicionado correctamente...');
                     window.location='seleccionar.php';
@@ -71,10 +71,44 @@ class Trabajo extends Conexion{
         }
         else{
             echo "<script type='text/javascript'>
-            alert('Servicio adicionado correctamente...');
+            alert('Error en registrar el servicio...');
             window.location='../opciones.php';
             </script>";
         }
+    }
+    public function insertarUsuario(string $correo, string $contraseña, string $foto, string $num_doc, string $tipo_doc, string $nombres, string $apellidos, string $telefono, string $direccion, string $tipo_usuario):int{
+        $password=PASSWORD_HASH($contraseña,PASSWORD_DEFAULT,array("cost"=>14));
+        $sql="INSERT INTO usuarios VALUES (:em, :pass, :foto)";
+        $sql2="INSERT INTO persona VALUES(:num,:tip_doc,:nom,:ap,:em,:tel,:dir,:tip)";
+        $consult=$this->conexion->prepare($sql);
+        $consult2=$this->conexion->prepare($sql2);
+        $consult->bindValue(":em",$correo);
+        $consult->bindValue(":pass",$password);
+        $consult->bindValue(":foto", $foto);
+        $consult2->bindValue(":num",$num_doc);
+        $consult2->bindValue(":tip_doc",$tipo_doc);
+        $consult2->bindValue(":nom",$nombres);
+        $consult2->bindValue(":ap",$apellidos); 
+        $consult2->bindValue(":em",$correo);
+        $consult2->bindValue(":tel",$telefono);
+        $consult2->bindValue(":dir",$direccion);
+        $consult2->bindValue(":tip",$tipo_usuario);
+        $resultado=$consult->execute();
+        $resultado2=$consult2->execute();
+        if($resultado>0){
+            if($resultado2>0){
+            echo "<script type='text/javascript'>
+            alert('Usuario adicionado correctamente...');
+            window.location='seleccionar.php';
+            </script>";
+        }
+        }
+            else{
+                echo "<script type='text/javascript'>
+                echo ('error En la asignacion del registro.....');
+                window.location='seleccionar.php';
+                </script>";
+            }
     }
     public function registrarReserva(string $fecha_inicio, string $fecha_fin, string $precio, string $cod_tipo, string $num_doc):int{
         $sql="INSERT INTO reserva(fecha_inicio, fecha_fin, precio, cod_tipo_hab, num_doc) VALUES (:fecha_ini, :fecha_f, :pre, :cod_tip, :num)";
@@ -124,6 +158,15 @@ class Trabajo extends Conexion{
         $total_resultados=$consult->fetchColumn(); // Recuperar los resultados después de ejecutar la consulta
         return $total_resultados;
     }
+
+    public function traer_servicios($serv1){
+        $sql="SELECT * FROM servicios_adicionales JOIN restaurante ON servicios_adicionales.cod_servicio=restaurante.cod_servicio JOIN bar ON restaurante.cod_servicio=bar.cod_servicio WHERE servicios_adicionales.cod_servicio=:cod";
+        $consult=$this->conexion->prepare($sql);
+        $consult->bindParam(":cod",$serv1, PDO::PARAM_STR);
+        $consult->execute();
+        $result=$consult->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
     
         public function traerDatos($inicio,$resultados_por_pagina){
         //$pagina_actual
@@ -141,6 +184,22 @@ class Trabajo extends Conexion{
         $total_resultados=$consult->fetchColumn();
         return $total_resultados;
     }
+    public function eliminarUsuario(string $email){
+        $sql="DELETE FROM usuarios WHERE correo_electronico= :em";
+        $consult=$this->conexion->prepare($sql);
+        $consult->BindValue(':em',$email);
+        $resultado=$consult->execute();
+
+        if ($resultado) {
+            echo "<script type='text/javascript'>
+			alert ('Usuario Eliminado Correctamente...');
+			window.location='seleccionar.php';
+		    </script>";
+        } else {
+            echo "Error al eliminar el usuario.";
+        }
+        }
+
     public function traerDatosReserva($inicio,$resultados_por_pagina){
         //$pagina_actual
         $sql="SELECT * FROM reserva LIMIT :inicio,:resultados";
@@ -176,6 +235,37 @@ class Trabajo extends Conexion{
 		    </script>";
             }
     }
+    public function actualizar_servicio(string $cod_servicio, string $s1, string $s2, string $s3):int{
+        $sql = "UPDATE restaurante SET id_rest=:id, cod_servicio=:cod_serv, nom_producto_rest=:nom_pro,valor=:valor_rest WHERE cod_servicio=:cod_serv";
+        $consult=$this->conexion->prepare($sql);
+        $consult->bindParam(":cod_serv",$cod_servicio);
+        $consult->bindParam(":id",$s1);
+        $consult->bindParam(":nom_pro",$s2);
+        $consult->bindParam(":valor_rest",$s3);
+        $resultado=$consult->execute();
+        if($resultado>0){
+            echo "<script type='text/javascript'>
+			alert ('Servicio actualizado correctamente...');
+			window.location='seleccionar.php';
+		    </script>";
+        }
+    }
+
+    public function eliminar_servicio(string $cod_serv){
+        $sql="DELETE FROM restaurante WHERE cod_servicio=:cod_serv";
+        $consult=$this->conexion->prepare($sql);
+        $consult->BindValue(':cod_serv',$cod_serv);
+        $resultado=$consult->execute();
+        if ($resultado) {
+            echo "<script type='text/javascript'>
+            alert ('Servicio Eliminado D:...');
+            window.location='seleccionar.php';
+            </script>";
+        } else {
+            echo "Error al eliminar.";
+        }
+    }
+    
     public function eliminarReserva(string $cod){
         $sql="DELETE FROM reserva WHERE cod_reserva= :cod";
         $consult=$this->conexion->prepare($sql);
@@ -295,6 +385,14 @@ class Trabajo extends Conexion{
 		$result=$consult->fetchAll(PDO::FETCH_ASSOC);
 		return $result;
 	}
+
+    /*public function traer_un_servicio($serv1){
+        $sql = "SELECT * FROM servicios_adicionales JOIN restaurante ON servicios_adicionales.cod_servicio=restaurante.cod_servicio  WHERE restaurante.cod_servicio=:cod_serv";
+        $consult=$this->conexion->prepare($sql);
+        $consult->bindParam(':cod_serv', $serv1, PDO::FETCH_ASSOC);
+        $result=$consult->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }*/
     public function traerTipodoc($v1){
         $sql="SELECT tipo_doc FROM persona WHERE correo_electronico=:correo";
         $consult=$this->conexion->prepare($sql);
@@ -304,7 +402,51 @@ class Trabajo extends Conexion{
         return $result;
     }
 
-    
+    public function actualizar_usuario(string $d1, string $d2, string $d3, string $d4, string $d5, string $d6, string $d7, string $d8, string $id):int{
+        $sql="UPDATE usuarios SET correo_electronico=:em, contraseña=:pass WHERE correo_electronico=:correo";
+        $sql2="UPDATE persona SET num_doc=:num, tipo_doc=:tip, nombres=:nom, apellidos=:ape, correo_electronico=:em, telefono=:tel, direccion=:dir, cod_usuario=:cod WHERE num_doc=:num";
+        $consult=$this->conexion->prepare($sql);
+        $consult2=$this->conexion->prepare($sql2);
+        $consult->bindParam(":em",$d1);
+        $consult->bindParam(':correo', $v1, PDO::PARAM_STR);
+        $consult->bindParam(":pass",$d2);
+        $consult2->bindParam(":num",$d3);
+        $consult2->bindParam(":tip",$d4);
+        $consult2->bindParam(":nom",$d5);
+        $consult2->bindParam(":ape",$d6);
+        $consult2->bindParam(":em",$d1);
+        $consult2->bindParam(":tel",$d7);
+        $consult2->bindParam(":dir",$d8);
+        $consult2->bindParam(":cod",$id);
+        $resultado=$consult->execute();
+        $resultado2=$consult2->execute();
+        if($resultado>0){
+            if($resultado2>0){
+            echo "<script type='text/javascript'>
+			alert ('Usuario Actualizado Correctamente...');
+			window.location='seleccionar.php';
+		    </script>";
+            }
+    }
+}
+    public function iniciar_sesion($email, $contraseña) {
+        $consult = $this->conexion->prepare("SELECT * FROM usuarios WHERE correo_electronico=:em");
+        $consult->bindParam(":em",$email);
+        $consult->execute();
+        $resultado=$consult->fetch(PDO::FETCH_ASSOC);
+            if(!$resultado){
+                echo '<center><h3 class="mensaje">Usuario o contraseña incorrectos</h3></center>';
+            }
+            else{
+                $pass=$resultado['contraseña'];
+                if (password_verify($contraseña,$pass)){
+                    $_SESSION['correo_electronico']=$resultado['correo_electronico'];
+                    header('location: clases/opciones.php');
+                }else{
+                    echo '<center><h3 class="mensaje">Usuario o contraseña incorrectos</h3></center>';
+                }   
+            }
+    }
 }
 ?>
 <style>

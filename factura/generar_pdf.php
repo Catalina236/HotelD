@@ -29,6 +29,10 @@ $sql = "SELECT
     persona.apellidos,
     detalle_factura.cod_det_factura,
     carrito_persona.cod_carrito,
+    carrito_persona.id_agregadosrest,
+    carrito_persona.id_agregadosbar,
+    carrito_persona.id_agregadoszonas,
+    carrito_persona.cantidad,
     carrito_persona.subtotal,
     tipo_habitacion.nom_tipo_hab,
     tipo_habitacion.valor_base,
@@ -58,14 +62,12 @@ if ($result === false) {
 }
 
 if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc(); // Obtener la primera fila de resultados
-
     // Crear una clase extendida de FPDF para personalizar el diseño
     class PDF extends FPDF {
         // Cabecera de página
         function Header() {
             $this->SetFont('Arial','B',15);
-            $this->Cell(190, 10, 'Factura Electronica', 0, 1, 'C');
+            $this->Cell(190, 10, 'Factura Electrónica', 0, 1, 'C');
             $this->Cell(190, 10, 'Fecha: ' . date("d/m/Y"), 0, 1, 'C');
             $this->Ln(10); // Saltar línea
         }
@@ -88,37 +90,49 @@ if ($result->num_rows > 0) {
     // Establecer fuente y tamaño de texto
     $pdf->SetFont('Arial','',12);
 
-    // Información del Cliente
-    $pdf->Cell(0,10,'Informacion del Cliente:',0,1);
-    $pdf->Cell(0,10,'Nombre: ' . utf8_decode($row["nombres"]) . ' ' . utf8_decode($row["apellidos"]),0,1);
-    $pdf->Ln(10); // Saltar línea
+    while ($row = $result->fetch_assoc()) {
+        // Información del Cliente
+        $pdf->Cell(0,10,'Informacion del Cliente:',0,1);
+        $pdf->Cell(0,10,'Nombre: ' . utf8_decode($row["nombres"]) . ' ' . utf8_decode($row["apellidos"]),0,1);
+        $pdf->Ln(10); // Saltar línea
 
-    // Detalle de la Reserva
-    $pdf->Cell(0,10,'Detalle de la Reserva:',0,1);
-    $pdf->Cell(35,10,'Codigo Reserva',1,0, 'C');
-    $pdf->Cell(45,10,'Fecha de inicio',1,0, 'C');
-    $pdf->Cell(45,10,'Fecha fin',1,0, 'C');
-    $pdf->Cell(40,10,'Tipo de Habitacion',1,0, 'C');
-    $pdf->Cell(30,10,'Total reserva',1,1, 'C');
-    $pdf->Cell(35,10,$row["cod_reserva"],1,0);
-    $pdf->Cell(45,10,$row["fecha_inicio"],1,0, 'C');
-    $pdf->Cell(45,10,$row["fecha_fin"],1,0, 'C');
-    $pdf->Cell(40,10,utf8_decode($row["nom_tipo_hab"]),1,0, 'C');
-    $pdf->Cell(30,10,'$' . $row["valor_base"] * $row['dias_reserva'],1,1, 'C'); // Agregado el total de la reserva
+        // Detalle de la Reserva
+        $pdf->Cell(0,10,'Detalle de la Reserva:',0,1);
+        $pdf->Cell(35,10,'Codigo Reserva',1,0, 'C');
+        $pdf->Cell(45,10,'Fecha de inicio',1,0, 'C');
+        $pdf->Cell(45,10,'Fecha fin',1,0, 'C');
+        $pdf->Cell(40,10,'Tipo de Habitacion',1,0, 'C');
+        $pdf->Cell(30,10,'Total reserva',1,1, 'C');
+        $pdf->Cell(35,10,$row["cod_reserva"],1,0);
+        $pdf->Cell(45,10,$row["fecha_inicio"],1,0, 'C');
+        $pdf->Cell(45,10,$row["fecha_fin"],1,0, 'C');
+        $pdf->Cell(40,10,utf8_decode($row["nom_tipo_hab"]),1,0, 'C');
+        $pdf->Cell(30,10,'$' . $row["valor_base"] * $row['dias_reserva'],1,1, 'C'); // Agregado el total de la reserva
 
-    
+        // Detalle del Carrito
+        $pdf->Ln();
+        $pdf->Cell(0,10,'Detalle del Carrito:',0,1);
+        $pdf->Cell(35,10,'Producto',1,0);
+        $pdf->Cell(45,10,'Cantidad',1,0);
+        $pdf->Cell(40,10,'Subtotal',1,1);
+        $pdf->Cell(35,10,'Restaurante',1,0);
+        $pdf->Cell(45,10,$row["cantidad"],1,0);
+        $pdf->Cell(40,10,'$' . $row["subtotal"],1,1);
+        $pdf->Cell(35,10,'Bar',1,0);
+        $pdf->Cell(45,10,$row["cantidad"],1,0);
+        $pdf->Cell(40,10,'$' . $row["subtotal"],1,1);
+        $pdf->Cell(35,10,'Zonas Comunes',1,0);
+        $pdf->Cell(45,10,$row["cantidad"],1,0);
+        $pdf->Cell(40,10,'$' . $row["subtotal"],1,1);
     // Detalle de la Factura
-    $pdf->Ln();
-    $pdf->Cell(0,10,'Detalle de la Factura:',0,1);
-    $pdf->Cell(35,10,'Codigo factura',1,0);
-    $pdf->Cell(45,10,'Descripcion',1,0);
-    $pdf->Cell(40,10,'Precios Totales',1,1);
-    $pdf->Cell(35,10,$row["cod_factura"],1,0);
+        $pdf->Ln();
+        $pdf->Cell(0,10,'Detalle de la Factura:',0,1);
+        $pdf->Cell(35,10,$row["cod_factura"],1,0);
     $pdf->Cell(45,10,'Servicio',1,0);
     $pdf->Cell(40,10,'$' . $row["subtotal"],1,1);
     $pdf->Cell(35,10,$row["cod_factura"],1,0);
     $pdf->Cell(45,10,'Reserva',1,0);
-    $pdf->Cell(40,10,'$' . $row["valor_base"] * $row['dias_reserva'],1,1);
+    $pdf->Cell(40,10,'$' . ($row["valor_base"] * $row['dias_reserva']),1,1);
 
     // Total Factura
     $pdf->SetFont('Arial','B',14);
@@ -126,10 +140,11 @@ if ($result->num_rows > 0) {
 
     // Salida del PDF
     $pdf->Output('factura.pdf','I'); // 'I' para ver el archivo directamente en el navegador, 'D' para descargar directamente
+    } // Cierre del while
+
 } else {
     echo "No se encontraron detalles de factura.";
 }
 
 // Cerrar conexión
 $conn->close();
-?>

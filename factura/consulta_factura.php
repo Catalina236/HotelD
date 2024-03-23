@@ -28,6 +28,10 @@ $sql = "SELECT
     persona.apellidos,
     detalle_factura.cod_det_factura,
     carrito_persona.cod_carrito,
+    carrito_persona.id_agregadosrest,
+    carrito_persona.id_agregadosbar,
+    carrito_persona.id_agregadoszonas,
+    carrito_persona.cantidad,
     carrito_persona.subtotal,
     tipo_habitacion.nom_tipo_hab,
     tipo_habitacion.valor_base,
@@ -57,74 +61,49 @@ if ($result->num_rows > 0) {
     $row = $result->fetch_assoc(); // Obtener la primera fila de resultados
     ?>
 
-    <div class="factura">
-        <div class="factura-header">
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Factura Electrónica</title>
+        <link rel="stylesheet" href="../factura/style.css">
+    </head>
+    <body>
+
+    <div class="factura-container">
+        <div class="header">
             <h2>Factura Electrónica</h2>
             <p>Fecha: <?php echo date("d/m/Y"); ?></p>
         </div>
         
-        <div class="factura-cliente">
+        <div class="info-cliente">
             <h3>Información del Cliente</h3>
             <p>Nombre: <?php echo $row["nombres"] . " " . $row["apellidos"]; ?></p>
         </div>
         
 
-        <div class="factura-detalle">
-        <h3>Detalle de la Reserva</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Código Reserva</th>
-                        <th>Fecha de inicio</th>
-                        <th>Fecha fin</th>
-                        <th>Tipo de Habitacion</th>
-                        <th>Valor total de la reserva</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><?php echo $row["cod_reserva"]; ?></td>
-                        <td><?php echo $row["fecha_inicio"]; ?></td>
-                        <td><?php echo $row["fecha_fin"]; ?></td>
-                        <td><?php echo $row["nom_tipo_hab"]; ?></td>
-                        <td><?php echo $row["valor_base"] * $row['dias_reserva']?></td>
-                    </tr> 
-                    <!-- Aquí puedes agregar más filas si hay más servicios -->
-                </tbody>
-            </table>
-            <h3>Detalle de la Factura</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Código factura</th>
-                        <th>Descripción</th>
-                        <th>Precios Totales</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><?php echo $row["cod_factura"]; ?></td>
-                        <td>Servicio</td>
-                        <td>$<?php echo $row["subtotal"]; ?></td>
-                    </tr> <br>
-                    <tr>
-                        <td><?php echo $row["cod_factura"]; ?></td>
-                        <td>Reserva</td>
-                        <td>$<?php echo $row["valor_base"] * $row['dias_reserva']?></td>
-                    </tr>
-                    <!-- Aquí puedes agregar más filas si hay más servicios -->
-                </tbody>
-            </table>
+        <div class="detalle-factura">
+            <h3>Detalle de la Reserva</h3>
+            <!-- Aquí va el código para la tabla de detalle de reserva -->
         </div>
         
-        <div class="factura-total">
-            <h3>Total FACTURA: $<?php echo $row["subtotal"] + $row["valor_base"] * $row['dias_reserva'] ?></h3>
+        <div class="detalle-factura">
+            <h3>Detalle del Carrito</h3>
+            <!-- Aquí va el código para la tabla de detalle del carrito -->
+        </div>
+        
+        <div class="total">
+            <h3>Total FACTURA: $<?php echo $row["subtotal"] + $row["valor_base"] * $row['dias_reserva']; ?></h3>
         </div>
         <form action="generar_pdf.php" method="POST">
             <input type="hidden" name="cod_factura" value="<?php echo $row["cod_factura"]; ?>">
             <button type="submit">Descargar Factura en PDF</button>
         </form>
     </div>
+
+    </body>
+    </html>
 
 <?php
 } else {
@@ -133,3 +112,4 @@ if ($result->num_rows > 0) {
 
 // Cerrar conexión
 $conn->close();
+?>
