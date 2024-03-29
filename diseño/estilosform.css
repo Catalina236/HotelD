@@ -156,9 +156,9 @@ fieldset{
 .boton:hover{
     cursor: pointer;
 }
-.volver img{
+/*.volver img{
     width: 8px;
-}
+}*/
 p{
     font-family: 'Nunito';
     color: rgb(63, 63, 63);
@@ -200,8 +200,13 @@ span a:hover{
     color: rgb(21, 114, 206);
     text-decoration: underline;
 }
-.formulario img{
-    width: 123px;
+.formulario .foto-p .foto-perfil .avatar{
+    width: 113px;
+    border-radius: 990px;
+    height: 115px;
+}
+.formulario .foto-perfil .avatar{
+    width: 103px;
     border-radius: 990px;
     height: 115px;
 }
@@ -222,6 +227,9 @@ span a:hover{
     font-size: 23px;
     cursor: pointer;
 }
-.fornmulario .fotop img{
-    width: 34px;
+.formulario .datos .avatar{
+    width: 64px;
+    height: 67px;  
+    border-radius: 5px;
+    margin-left: 13px;
 }

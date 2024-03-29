@@ -35,14 +35,21 @@ $consulta = mysqli_query($db, $sql);
                 <th>Email</th>
                 <th>Teléfono</th>
                 <th>Dirección</th>
-                <th>Codigo de usuario</th>
                 <th>Tipo de usuario</th>
+                <th>Avatar</th>
             </thead>
             <tbody>
                 </tr>
                 
                 <?php while($persona = mysqli_fetch_assoc($consulta)) 
-                {?>
+                {
+                    if ($persona['foto'] != null) {
+                        $foto = "imagenesbd/" . $persona['foto'];
+                    } else {
+                        // Si la foto está nula o no se encuentra, usar una imagen predeterminada
+                        $foto = "imagenesbd/usuario.png";
+                    }
+                    ?>
                 <tr>
                     <td><?php echo $persona['num_doc'];?></td>
                     <td><?php echo $persona['tipo_doc'];?></td>
@@ -51,8 +58,8 @@ $consulta = mysqli_query($db, $sql);
                     <td><?php echo $persona['correo_electronico'];?></td>
                     <td><?php echo $persona['telefono'];?></td>
                     <td><?php echo $persona['direccion'];?></td>
-                    <td><?php echo $persona['cod_usuario'];?></td>
                     <td><?php echo $persona['nom_tipo_usuario'];?></td>
+                    <td><img class="avatar" src="<?php echo $foto;?>" alt=""></td>
                     <td><a href="actualizar.php?correo_electronico=<?php echo $persona['correo_electronico'];?>&num_doc=<?php echo $persona['num_doc'];?>">Actualizar</a></td>
                     <td><a href="eliminar.php?correo_electronico=<?php echo $persona['correo_electronico'];?>" onclick="return confirmacion()">Eliminar</a></td>
 

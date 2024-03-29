@@ -15,10 +15,8 @@ $resultado=mysqli_query($bd,$sql);
 $datos=mysqli_fetch_assoc($resultado);
 $num=$datos['num_doc'];
 
-//$numDoc = "1111"; // Reemplaza con el número de documento específico que estás utilizando
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    //$numDoc = "1111";
 
     $codigoServicio = $_POST['CodigoServicio'];
     $id_agregadosrest = $_POST['id_agregadosrest'];

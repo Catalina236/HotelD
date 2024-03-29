@@ -83,11 +83,18 @@ if ($row['foto'] != null) {
                 <fieldset id="datos_usuario">
                 <h2>Mi Perfil</h2>
             <?php if($foto!=null):?>
-                <span class="datos"><img class="avatar" src="<?php echo $foto;?>" alt=""></span>
+                <div class="foto-p">
+                    <span class="foto-perfil">
+                        <img class="avatar" src="<?php echo $foto;?>" alt="">
+                    </span>
+                    </div>
             <br>
             <?php else:?>
-                <span class="datos">
-                    <img class="avatar" src="<?php echo $foto;?>" alt=""></span>
+                    <div class="foto-p">
+                    <span class="foto-perfil">
+                        <img class="avatar" src="<?php echo $foto;?>" alt="">
+                    </span>
+                    </div>
             <br>
             <?php endif; ?>
             <span class="datos"><?php echo($row['nombres'] ." ".$row['apellidos']);?></span>

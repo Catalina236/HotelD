@@ -31,9 +31,9 @@ $row=mysqli_fetch_assoc($resultado);
         <nav class="menu">
             <ul class="menu-principal">
             <li><a href="../Reserva/reserva.php">Reservas</a>
-                    <ul class="submenu">
-                        <li><a href="../Reserva/ver_reservas.php">Ver reservas</a></li>
-                    </ul>
+            <ul class="submenu">
+                <li><a href="../Reserva/ver_reservas.php">Ver reservas</a></li>
+            </ul>
            <li><a href="../Habitaciones/habitaciones.php">Habitaciones</a></li>
             <?php if(isset($_SESSION['cod_usuario']) && $_SESSION['cod_usuario']!=2):?>
             <li><a href="vercuenta.php">Mi Perfil</a>

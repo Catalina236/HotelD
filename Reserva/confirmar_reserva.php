@@ -101,10 +101,13 @@
                             else{
                                 $id=$_SESSION['correo_electronico'];
                                
-                                $sqlc="SELECT * FROM reserva JOIN persona ON reserva.num_doc=persona.num_doc JOIN carrito_persona ON persona.num_doc=carrito_persona.num_doc WHERE correo_electronico='$id'";
+                                $sqlc="SELECT * FROM persona left JOIN reserva ON reserva.num_doc=persona.num_doc left JOIN carrito_persona ON persona.num_doc=carrito_persona.num_doc WHERE correo_electronico='$id'";
+
                                 $resultado=mysqli_query($bd,$sqlc);
                                 $datosr=mysqli_fetch_assoc($resultado);
+                                echo $datosr;
                                 $num_doc=$datosr['num_doc'];
+                                var_dump($num_doc);
                                 
 
                                 if($Fechai>$Fechaf || $Fechaf<$Fechai){

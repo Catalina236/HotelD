@@ -21,7 +21,13 @@ $Contraseña=$usuario['contraseña'];
 $Telefono=$usuario['telefono'];
 $Direccion=$usuario['direccion'];
 $TipoPersona=$usuario['cod_usuario'];
-
+$FotoActual = $usuario['foto'];
+if ($usuario['foto'] != null) {
+    $FotoB = "imagenesbd/" . $usuario['foto'];
+} else {
+    // Si la foto está nula o no se encuentra, usar una imagen predeterminada
+    $FotoB = "imagenesbd/usuario.png";
+}
 
 if ($_SERVER['REQUEST_METHOD']=='POST'){
     $Documento=$_POST['num_doc'];
@@ -33,66 +39,87 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
     $Telefono=$_POST['telefono'];
     $Direccion=$_POST['direccion'];
     $TipoPersona=$_POST['cod_usuario'];
-
+    //$Foto=$_FILES['foto']['name'];
     if(empty($errores)){
-
-        if ($_SESSION['cod_usuario']==2){
-        $sql="UPDATE usuarios SET 
-        correo_electronico='$Email',
-        contraseña='$Contraseña'
-        WHERE correo_electronico='$codigo2';";
-    
-        $sql2 = "UPDATE persona SET 
-        num_doc = '$Documento',
-        tipo_doc = '$TipoDocumento',
-        nombres = '$Nombre',
-        apellidos = '$Apellido',
-        correo_electronico = '$Email',
-        telefono='$Telefono',
-        direccion='$Direccion'
-        WHERE correo_electronico = '$codigo2'";
         
-        echo $sql;
-        echo $sql2;
+        if(isset($_POST['contraseña'])&&!empty($_POST['contraseña'])){
 
-        $resultado = mysqli_query($bd, $sql);
-        $resultado = mysqli_query($bd, $sql2);
-
-        if($resultado){
-            header('location: verusuarios.php');
-
-        }   
+            $Password=mysqli_real_escape_string($bd,$Contraseña);
+            $password_encriptada=sha1($Password);
         }
         else{
-            $sql="UPDATE usuarios SET
-            contraseña='$Contraseña'
+            $password_encriptada=$usuario['contraseña'];
+        }
+        if (!empty($_FILES['foto']['name'])) {
+            $Foto = $_FILES['foto']['name'];
+            $tipo = $_FILES['foto']['type'];
+            $temp = $_FILES['foto']['tmp_name'];
+        } else {
+            $Foto = $FotoActual;
+        }
+        }      
+            
+        if ($_SESSION['cod_usuario']==2){
+            $sql="UPDATE usuarios SET 
+            correo_electronico='$Email',
+            contraseña='$password_encriptada',
+            foto='$Foto'
             WHERE correo_electronico='$codigo2';";
         
             $sql2 = "UPDATE persona SET 
+            num_doc = '$Documento',
+            tipo_doc = '$TipoDocumento',
             nombres = '$Nombre',
             apellidos = '$Apellido',
+            correo_electronico = '$Email',
             telefono='$Telefono',
-            direccion='$Direccion'
+            direccion='$Direccion',
+            cod_usuario='$TipoPersona'
             WHERE correo_electronico = '$codigo2'";
-            
-            echo $sql;
-            echo $sql2;
-    
+
             $resultado = mysqli_query($bd, $sql);
             $resultado = mysqli_query($bd, $sql2);
-    
+
             if($resultado){
-                header('location: vercuenta.php');
-    
+                if (!empty($_FILES['foto']['name'])) {
+                move_uploaded_file($temp, 'imagenesbd/' . $Foto);
+                }
+                echo "<script type='text/javascript'>
+                alert ('Usuario actualizado exitosamente...');
+                window.location='verusuarios.php';
+                </script>";
+            }
             }   
-        }
-        }
-        else{
-            foreach($errores as $error){
-                echo '<br>' . $error;
+            else{
+                $sql="UPDATE usuarios SET
+                contraseña='$password_encriptada',
+                foto='$Foto'
+                WHERE correo_electronico='$codigo2';";
+            
+                $sql2 = "UPDATE persona SET 
+                nombres = '$Nombre',
+                apellidos = '$Apellido',
+                telefono='$Telefono',
+                direccion='$Direccion'
+                WHERE correo_electronico = '$codigo2'";
+        
+                $resultado = mysqli_query($bd, $sql);
+                $resultado = mysqli_query($bd, $sql2);
+        
+                if($resultado){
+                    move_uploaded_file($temp, 'imagenesbd/'.$Foto);
+                    /*echo "<script type='text/javascript'>
+                    alert ('Usuario actualizado exitosamente...');
+                    window.location='vercuenta.php';
+                    </script>";*/
+                }   
+                else{
+                    foreach($errores as $error){
+                        echo '<br>' . $error;
+                }
+            }
             }
         }  
-    }        
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -105,29 +132,35 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
 </head>
 <body>
 <header>
-    <a href="../index.php"><img src="../imagenes/logo.png" alt="" class="logo"></a>
-    <nav class="menu">
+        <a href="../index.php"><img src="../imagenes/logo.png" alt="" class="logo"></a>
+        <nav class="menu">
             <ul class="menu-principal">
-                <li><a href="../Reserva/reserva.php">Reserva</a>
-                <ul class="submenu">
-                    <li><a href="">Crear reserva</a></li>
-                    <li><a href="">Cancelar reserva</a></li>
-                    <li><a href="">Consultar</a></li>
-                </ul>
-                </li>
-                <li><a href="../Habitaciones/habitaciones.php">Habitaciones</a></li>
+            <li><a href="../Reserva/reserva.php">Reservas</a>
                     <ul class="submenu">
-                        <li><a href="">Doble</a></li>
-                        <li><a href="">Sencilla</a></li>
-                        <li><a href="">Triple</a></li>
-                        <li><a href="">Familiar</a></li>
+                        <li><a href="../Reserva/ver_reservas.php">Ver reservas</a></li>
                     </ul>
-                </li>
-                <li><a href="iniciarsesion.php">Mi perfil</a>
+           <li><a href="../Habitaciones/habitaciones.php">Habitaciones</a></li>
+            <?php if(isset($_SESSION['cod_usuario']) && $_SESSION['cod_usuario']!=2):?>
+            <li><a href="vercuenta.php">Mi Perfil</a>
                 <ul class="submenu">
-                    <li><a href="salir.php">Salir</a></li>
+                    <li><a href="salir.php" onclick='return confirmacion()'>Salir</a></li>
                 </ul>
             </li>
+            <?php elseif(isset($_SESSION['cod_usuario']) && $_SESSION['cod_usuario']==2):?>
+            <li><a href="vercuenta.php">Mi Perfil</a>
+                <ul class="submenu">
+                    <li><a href="opciones.php">Opciones</a></li>
+                    <li><a href="salir.php" onclick='return confirmacion()'>Salir</a></li>
+                </ul>
+                </li>
+            <?php else :?>
+            <li><a href="iniciarsesion.php">Mi Perfil</a>
+                <ul class="submenu">
+                    <li><a href="iniciarsesion.php">Iniciar sesión</a></li>
+                    <li><a href="crear.php">Registrarse</a></li>
+                </ul>
+            </li>
+            <?php endif;?>
                 <li><a href="">Contáctenos</a></li>
                 <li><a href="../Servicios/servicios.php">Servicios</a>
                     <ul class="submenu">
@@ -136,11 +169,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
                         <li><a href="../Servicios/serviciozona.php">Zonas húmedas</a></li>
                     </ul>
                 </li>
-            </ul>
+        </ul>
         </nav>
     </header>
     <?php if(isset($_SESSION['cod_usuario']) && $_SESSION['cod_usuario']!=2):?>
-    <form class="formulario" method="POST">
+    <form class="formulario" method="POST" enctype="multipart/form-data">
     <div>
         <h1>Actualización persona</h1>
         <fieldset>
@@ -153,14 +186,26 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
             <input class ="control" type="text" name="nombres" id="Nombre" value="<?php echo $Nombre;?>">
             <input class ="control" type="text" name="apellidos" id="Apellido" value="<?php echo $Apellido;?>">
             <input class="control" type="text" name="email" id="email" value="<?php echo $Email;?>" disabled>
-            <input class="control" type="password" name="contraseña" id="contraseña" value="<?php echo $Contraseña;?>">
+            <input class="control" type="password" name="contraseña" id="contraseña" placeholder="Contraseña nueva si lo requiere">
             <input class="control" type="text" name="telefono" id="telefono" value="<?php echo $Telefono;?>">
             <input class="control" type="text" name="direccion" id="direccion" value="<?php echo $Direccion;?>">
+            <br>
+            <?php if($FotoB!=null):?>
+                <span class="datos"><img class="avatar" src="<?php echo $FotoB;?>" alt=""></span>
+            <br>
+            <?php else:?>
+                <span class="datos">
+                    <img class="avatar" src="<?php echo $FotoB;?>" alt=""></span>
+            <br>
+            <?php endif; ?>
+            <br>
+            <input class="archivo" type="file" name="foto" id="">
+            <br>    
             <input class ="boton" type="submit" id="Enviar" name="Enviar" value="Actualizar">
         </fieldset>
     </form>
     <?php else:?>
-        <form class="formulario" method="POST">
+        <form class="formulario" method="POST" enctype="multipart/form-data">
     <div>
         <h1>Actualización persona</h1>
         <fieldset>
@@ -173,13 +218,25 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
             <input class ="control" type="text" name="nombres" id="Nombre" value="<?php echo $Nombre;?>">
             <input class ="control" type="text" name="apellidos" id="Apellido" value="<?php echo $Apellido;?>">
             <input class="control" type="text" name="email" id="email" value="<?php echo $Email;?>">
-            <input class="control" type="password" name="contraseña" id="contraseña" value="<?php echo $Contraseña;?>">
+            <input class="control" type="password" name="contraseña" id="contraseña" placeholder="Contraseña nueva si lo requiere">
             <input class="control" type="text" name="telefono" id="telefono" value="<?php echo $Telefono;?>">
             <input class="control" type="text" name="direccion" id="direccion" value="<?php echo $Direccion;?>">
-            <select class="control" name="nombre_tipo" id="nombre_tipo">
-                <option <?php echo $TipoPersona==='1'? "selected='selected'":""?> value="Cliente">Cliente</option>
-                <option <?php echo $TipoPersona==='2'? "selected='selected'":""?> value="Empleado">Empleado</option>
+            <select class="control" name="cod_usuario" id="nombre_tipo">
+                <option <?php echo $TipoPersona==='1'? "selected='selected'":""?> value="1">Cliente</option>
+                <option <?php echo $TipoPersona==='2'? "selected='selected'":""?> value="2">Empleado</option>
             </select>
+            <br>
+            <?php if($FotoB!=null):?>
+                <span class="datos" name="foto"><img class="avatar" src="<?php echo $FotoB;?>" alt=""></span>
+            <br>
+            <?php else:?>
+                <span class="datos">
+                    <img class="avatar" src="<?php echo $FotoB;?>" alt=""></span>
+            <br>
+            <?php endif; ?>
+            <br>
+            <input class="archivo" type="file" name="foto" id="">
+            <br>    
             <input class ="boton" type="submit" id="Enviar" name="Enviar" value="Actualizar">
         </fieldset>
     </form>

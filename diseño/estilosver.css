@@ -43,3 +43,6 @@ tbdoy tr{
 tbody tr:hover{
     background-color: rgb(169, 255, 255);
 }
+td .avatar{
+    width: 43px;
+}

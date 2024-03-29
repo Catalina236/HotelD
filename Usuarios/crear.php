@@ -104,53 +104,73 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
     }
     
     if(empty($errores)){
-        //$email = 'usuario@example.com';
 
-        // Extraer el dominio de correo electrónico
-        $domain = substr(strrchr($Email, "@"), 1);
+        if(filter_var($Email, FILTER_VALIDATE_EMAIL)){
+            $domain = substr(strrchr($Email, "@"), 1);
 
         // Verificar si el dominio termina en ".com"
         if (substr($domain, -4) === ".com" || ".es") {
             //echo "El dominio del correo electrónico termina en '.com'.";
             $sqlv="SELECT * FROM usuarios JOIN persona ON usuarios.correo_electronico=persona.correo_electronico WHERE usuarios.correo_electronico='$Email' OR num_doc='$Documento'";
             $usuario=mysqli_query($bd,$sqlv);
-        
+
+            if(isset($Foto)){
+                $tipo=$_FILES['foto']['type'];
+                $temp=$_FILES['foto']['tmp_name'];
+
+                $Password=mysqli_real_escape_string($bd,$Contraseña);
+                $password_encriptada=sha1($Password);
+
+                if (isset($_SESSION['cod_usuario']) && $_SESSION['cod_usuario']==2){
+                $CodigoTipo=$_POST['nombre_tipo'];
+    
+                    $sql="INSERT INTO usuarios (correo_electronico, contraseña, foto) VALUES('$Email','$password_encriptada','$Foto')";
+                    $sql3="INSERT INTO persona VALUES ('$Documento','$TipoDocumento','$Nombre','$Apellido','$Email','$Telefono','$Direccion','$CodigoTipo')";
+
+                    $resultado=mysqli_query($bd,$sql);
+                    $resultado=mysqli_query($bd,$sql3);
+
+                    if($resultado){
+                        move_uploaded_file($temp, 'imagenesbd/'.$Foto);
+                        echo "<script type='text/javascript'>
+                        alert ('Usuario registrado exitosamente...');
+                        window.location='../index.php';
+                        </script>";
+                    }
+                }
+                
+                else{
+                    $sql="INSERT INTO usuarios (correo_electronico, contraseña, foto) VALUES('$Email','$password_encriptada','$Foto')";
+                    $sql3="INSERT INTO persona VALUES ('$Documento','$TipoDocumento','$Nombre','$Apellido','$Email','$Telefono','$Direccion',1)";
+
+                    $resultado=mysqli_query($bd,$sql);
+                    $resultado=mysqli_query($bd,$sql3);
+
+                    if($resultado){
+                        move_uploaded_file($temp, 'imagenesbd/'.$Foto);
+                        echo "<script type='text/javascript'>
+                        alert ('Usuario registrado exitosamente...');
+                        window.location='../index.php';
+                        </script>";
+                    }
+                }
+            }
+
         if($usuario){
             echo '<div class="alerta">El usuario ya se encuentra registrado</div>';
-        }    
-
-        if(isset($Foto)){
-            $tipo=$_FILES['foto']['type'];
-            $temp=$_FILES['foto']['tmp_name'];
-
-            $Password=mysqli_real_escape_string($bd,$Contraseña);
-            $password_encriptada=sha1($Password);
-
-            $sql="INSERT INTO usuarios (correo_electronico, contraseña, foto) VALUES('$Email','$password_encriptada','$Foto')";
-            $sql3="INSERT INTO persona VALUES ('$Documento','$TipoDocumento','$Nombre','$Apellido','$Email','$Telefono','$Direccion',1)";
-
-            $resultado=mysqli_query($bd,$sql);
-            $resultado=mysqli_query($bd,$sql3);
-
-            if($resultado){
-                move_uploaded_file($temp, 'imagenesbd/'.$Foto);
-                echo "<script type='text/javascript'>
-			    alert ('Usuario registrado exitosamente...');
-                window.location='../index.php';
-                </script>";
-            }
         }
-            else{
+        else{
                 foreach($errores as $error){
                     echo '<br>' .$error;
                 }
             }
             }
-            else {
-                echo '<div class="alerta">El correo ingresado no es válido</div>';
         }
+        else {
+            echo '<div class="alerta">El correo ingresado no es válido</div>';
         }
     }
+        }
 ?>
         <fieldset>
             <input class ="control" type="text" name="num_doc" id="Documento" placeholder="Ingrese su número de documento" required>

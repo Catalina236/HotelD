@@ -18,7 +18,7 @@
                     </ul>
                 </li>
                 <li><a href="../Habitaciones/habitaciones.php">Habitaciones</a></li>
-            <?php if(isset($_SESSION['cod_usuario']) && $_SESSION['cod_usuario']!=2):?>
+           <?php if(isset($_SESSION['cod_usuario'])&&$_SESSION['cod_usuario']!=2):?>
             <li><a href="../Usuarios/vercuenta.php">Mi Perfil</a>
                 <ul class="submenu">
                     <li><a href="../Usuarios/salir.php" onclick='return confirmacion()'>Salir</a></li>
@@ -32,7 +32,7 @@
                 </ul>
                 </li>
             <?php else :?>
-            <li><a href="../Usuarios/iniciarsesion.php">Mi Perfil</a>
+                <li><a href="../Usuarios/iniciarsesion.php">Mi Perfil</a>
                 <ul class="submenu">
                     <li><a href="../Usuarios/iniciarsesion.php">Iniciar sesión</a></li>
                     <li><a href="../Usuarios/crear.php">Registrarse</a></li>

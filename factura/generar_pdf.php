@@ -2,7 +2,7 @@
 // Incluir el archivo fpdf.php desde la carpeta fpdf
 require_once('fpdf/fpdf.php');
 require_once("../Bd/conexion.php");
-
+header('Content-Type: text/html; charset=utf-8');
 // Verificar si hay una sesión iniciada
 session_start();
 

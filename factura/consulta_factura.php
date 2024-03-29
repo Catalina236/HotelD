@@ -66,6 +66,7 @@ if ($result->num_rows > 0) {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="../imagenes/logo.png">
         <title>Factura Electrónica</title>
         <link rel="stylesheet" href="../factura/style.css">
     </head>
@@ -96,7 +97,7 @@ if ($result->num_rows > 0) {
         <div class="total">
             <h3>Total FACTURA: $<?php echo $row["subtotal"] + $row["valor_base"] * $row['dias_reserva']; ?></h3>
         </div>
-        <form action="generar_pdf.php" method="POST">
+        <form action="generar_pdf.php" method="POST" target="_blank">
             <input type="hidden" name="cod_factura" value="<?php echo $row["cod_factura"]; ?>">
             <button type="submit">Descargar Factura en PDF</button>
         </form>
