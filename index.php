@@ -22,10 +22,9 @@ require 'Bd/conexion.php';
         <input type="checkbox" id="menu">
         <label for="menu" class="menu-toggle"><i class="fa-solid fa-bars"></i></label>
             <ul class="menu-principal">
-            <li><a href="Reserva/reserva.php">Reserva</a>
-                    <ul class="submenu">
-                        <li><a href="Reserva/ver_reservas.php">Ver reservas</a></li>
-                    </ul>
+            <li><a href="Reserva/ver_reservas.php">Reserva</a>
+            <ul class="submenu">
+            </ul>
                 </li>
             <li><a href="habitaciones/habitaciones.php">Habitaciones</a>
                     <ul class="submenu">

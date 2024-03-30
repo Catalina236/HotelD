@@ -3,7 +3,6 @@ require '../Bd/conexion.php';
 
 $bd=conectar_db();
 
-// Extraer el dominio de correo electrónico
 session_start();
 //if(isset($_SESSION['cod_usuario']) && $_SESSION['cod_usuario']==2)
 if(isset($_SESSION['cod_usuario']) && $_SESSION['cod_usuario']!=2){
@@ -26,11 +25,8 @@ if(isset($_SESSION['cod_usuario']) && $_SESSION['cod_usuario']!=2){
         <a href="../index.php"><img src="../imagenes/logo.png" alt="" class="logo"></a>
         <nav class="menu">
             <ul class="menu-principal">
-                <li><a href="Reserva/reserva.php">Reserva</a></li>
+                <li><a href="../Reserva/ver_reservas.php">Reservas</a></li>
                 <ul class="submenu">
-                    <li><a href="">Crear Reserva</a></li>
-                    <li><a href="">Eliminar Reserva</a></li>
-                    <li><a href="">Consultar Reservas</a></li>
                 </ul>
                 <li><a href="../Habitaciones/habitaciones.php">Habitaciones</a></li>
             <?php if(isset($_SESSION['cod_usuario']) && $_SESSION['cod_usuario']!=2):?>

@@ -31,10 +31,9 @@ $resultado = mysqli_query($bd, $sql);
     <a href="../index.php"><img src="../imagenes/logo.png" alt="" class="logo"></a>
     <nav class="menu">
         <ul class="menu-principal">
-            <li><a href="reserva.php">Reserva</a>
-                <ul class="submenu">
-                    <li><a href="ver_reservas.php">Ver reservas</a></li>
-                </ul>
+        <li><a href="../Reserva/ver_reservas.php">Reserva</a>
+            <ul class="submenu">
+            </ul>
             </li>
             <li><a href="../habitaciones/habitaciones.php">Habitaciones</a></li>
             <?php if (isset($_SESSION['cod_usuario']) && $_SESSION['cod_usuario'] != 2) : ?>
@@ -104,7 +103,7 @@ $resultado = mysqli_query($bd, $sql);
     <?php if (mysqli_num_rows($resultado) == 0) : ?>
         <div class="mensaje-sin-reservas">
             <p>Aún no tienes reservas activas.</p>
-            <a href="reserva.php" class="btn-reservar">¡Reserva ahora!</a>
+            <a href="../Habitaciones/habitaciones.php" class="btn-reservar">¡Reserva ahora!</a>
         </div>
     <?php endif; ?>
 </div>

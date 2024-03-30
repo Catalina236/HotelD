@@ -9,7 +9,7 @@ body{
 }
 form{
     background-color:white;
-    width: 30%;
+    width: 33%;
     margin: auto;
     padding: 14px;
     margin-top: 23px;
@@ -131,4 +131,11 @@ input[type="submit"]{
     padding-left: 12px;
     font-family: 'Popins', sans-serif;
     font-size: bold;
+}
+.imagen_hab img{
+    width: 84px;
+    margin-left: 34px;
+}
+input[type="file"]{
+    margin-left: 33px;
 }

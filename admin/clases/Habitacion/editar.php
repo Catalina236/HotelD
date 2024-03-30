@@ -11,17 +11,6 @@ else{
 }
 $valo=new Trabajo();
 
-if(isset($_POST['Enviar'])){
-    $id=$_POST['codigo'];
-    $d2=$_POST['numero'];
-    $d3=$_POST['tipo'];
-    $d4=$_POST['capacidad'];
-    $d5=$_POST['precio'];
-    $d6=$_POST['estado'];
-    $d7=$_POST['descripcion'];
-    $d8=$_POST['imagen'];
-    $valor=$valo->actualizar_habitacion($id,$d2,$d3,$d4,$d5,$d6,$d7,$d8);
-}
 if(isset($_GET['cod'])){
     $v1=$_GET['cod'];
     $tipos=$valo->traerTipoHabitacion();
@@ -35,7 +24,26 @@ if(isset($_GET['cod'])){
     $d5=$datos[0]["nro_hab"];
     $d6=$datos[0]["estado_hab"];
     $d7=$datos[0]["descripcion_hab"];
-    $d8=$datos[0]["imagen"];
+    $ImgActual=$datos[0]['imagen'];
+}
+if(isset($_POST['Enviar'])){
+    $id=$_POST['codigo'];
+    $d2=$_POST['numero'];
+    $d3=$_POST['tipo'];
+    $d4=$_POST['capacidad'];
+    $d5=$_POST['precio'];
+    $d6=$_POST['estado'];
+    $d7=$_POST['descripcion'];
+    $d8=$_FILES['imagen']['name'];
+    //$d8=$_POST['imagen'];
+    if(!empty($_FILES['imagen']['name'])){
+        $tipo=$_FILES['imagen']['type'];
+        $temp=$_FILES['imagen']['tmp_name'];
+    }
+    else{
+        $d8=$ImgActual;
+    }
+    $valor=$valo->actualizar_habitacion($id,$d2,$d3,$d4,$d5,$d6,$d7,$d8);
 }
 ?>
 <!DOCTYPE html>
@@ -57,7 +65,7 @@ if(isset($_GET['cod'])){
     <title>Ingresar habitación</title>
 </head>
 <body>
-    <form method="POST" class="form_hab">
+    <form method="POST" class="form_hab" enctype="multipart/form-data">
     <div class="contenedor">
         <h1>Registro de habitación</h1>
         <label for="">Código tipo de habitación</label>
@@ -110,7 +118,8 @@ if(isset($_GET['cod'])){
         <label for="">Descripción</label>
         <input class="casilla" name="descripcion" type="text" value="<?php echo $d7;?>">
         <label for="">Imagen</label>
-        <input type="file" name="imagen" class="casilla" value="<?php echo $d8;?>">
+        <input type="file" name="imagen" class="casilla">
+        <span class="imagen_hab"><img src="imagenes/<?php echo $ImgActual;?>" alt=""></span>
         <input class="casilla" type="submit" value="Enviar" name="Enviar">
         </div>
     </form>

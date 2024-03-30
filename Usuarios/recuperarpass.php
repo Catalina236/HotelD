@@ -18,12 +18,9 @@ session_start();
     <a href="../index.php"><img src="../imagenes/logo.png" alt="" class="logo"></a>
     <nav class="menu">
             <ul class="menu-principal">
-                <li><a href="../Reserva/reserva.php">Reserva</a>
-                <ul class="submenu">
-                    <li><a href="">Crear reserva</a></li>
-                    <li><a href="">Cancelar reserva</a></li>
-                    <li><a href="">Consultar</a></li>
-                </ul>
+            <li><a href="../Reserva/ver_reservas.php">Reserva</a>
+            <ul class="submenu">
+            </ul>
                 </li>
                 <li><a href="../Habitaciones/habitaciones.php">Habitaciones</a></li>
                 <li><a href="iniciarsesion.php">Mi perfil</a>

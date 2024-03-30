@@ -33,6 +33,12 @@ $sql = "SELECT
     carrito_persona.id_agregadoszonas,
     carrito_persona.cantidad,
     carrito_persona.subtotal,
+    bar.nom_producto_bar,
+    bar.valor AS valor_bar,
+    restaurante.nom_producto_rest,
+    restaurante.valor AS valor_restaurante,
+    zonas_humedas.nom_servicio_zh,
+    zonas_humedas.valor AS valor_zonas_humedas,
     tipo_habitacion.nom_tipo_hab,
     tipo_habitacion.valor_base,
     DATEDIFF(reserva.fecha_fin, reserva.fecha_inicio) AS dias_reserva
@@ -46,8 +52,26 @@ FROM
     detalle_factura ON factura.cod_factura = detalle_factura.cod_factura
         INNER JOIN
     carrito_persona ON detalle_factura.cod_carrito = carrito_persona.cod_carrito
+        LEFT JOIN
+    bar ON carrito_persona.id_agregadosbar = bar.id_bar
+        LEFT JOIN
+    restaurante ON carrito_persona.id_agregadosrest = restaurante.id_rest
+        LEFT JOIN
+    zonas_humedas ON carrito_persona.id_agregadoszonas = zonas_humedas.id_zon_hum
         INNER JOIN
     tipo_habitacion ON reserva.cod_tipo_hab = tipo_habitacion.cod_tipo_hab
+WHERE
+    persona.correo_electronico = '$user_id'";
+
+$sql2= "SELECT
+    SUM(restaurante.valor) AS total_restaurante,
+    SUM(bar.valor) AS total_bar,
+    SUM(zonas_humedas.valor) AS total_zonas_humedas
+FROM
+    carrito_persona
+    INNER JOIN servicios_adicionales AS restaurante ON carrito_persona.id_agregadosrest = restaurante.id_producto
+    INNER JOIN servicios_adicionales AS bar ON carrito_persona.id_agregadosbar = bar.id_producto
+    INNER JOIN servicios_adicionales AS zonas_humedas ON carrito_persona.id_agregadoszonas = zonas_humedas.id_servicio
 WHERE
     persona.correo_electronico = '$user_id'";
 
@@ -86,17 +110,88 @@ if ($result->num_rows > 0) {
 
         <div class="detalle-factura">
             <h3>Detalle de la Reserva</h3>
-            <!-- Aquí va el código para la tabla de detalle de reserva -->
+            <table>
+                <thead>
+                    <tr>
+                        <th>Código Reserva</th>
+                        <th>Fecha de inicio</th>
+                        <th>Fecha fin</th>
+                        <th>Tipo de Habitacion</th>
+                        <th>Valor total de la reserva</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><?php echo $row["cod_reserva"]; ?></td>
+                        <td><?php echo $row["fecha_inicio"]; ?></td>
+                        <td><?php echo $row["fecha_fin"]; ?></td>
+                        <td><?php echo $row["nom_tipo_hab"]; ?></td>
+                        <td><?php echo $row["valor_base"] * $row['dias_reserva']; ?></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
         
         <div class="detalle-factura">
             <h3>Detalle del Carrito</h3>
-            <!-- Aquí va el código para la tabla de detalle del carrito -->
+            <table>
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Valor</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Restaurante</td>
+                        <td><?php echo $row["nom_producto_rest"]; ?></td>
+                        <td><?php echo $row["cantidad"]; ?></td>
+                        <td><?php echo $row["valor_restaurante"]; ?></td>
+                        <td><?php echo $row["cantidad"] * $row["valor_restaurante"]; ?></td>
+                    </tr>
+                    <tr>
+                        <td>Bar</td>
+                        <td><?php echo $row["nom_producto_bar"]; ?></td>
+                        <td><?php echo $row["cantidad"]; ?></td>
+                        <td><?php echo $row["valor_bar"]; ?></td>
+                        <td><?php echo $row["cantidad"] * $row["valor_bar"]; ?></td>
+                    </tr>
+                    <tr>
+                        <td>Zonas Húmedas</td>
+                        <td><?php echo $row["nom_servicio_zh"]; ?></td>
+                        <td><?php echo $row["cantidad"]; ?></td>
+                        <td><?php echo $row["valor_zonas_humedas"]; ?></td>
+                        <td><?php echo $row["cantidad"] * $row["valor_zonas_humedas"]; ?></td>
+                    </tr>
+                    <tr>
+                        <td>Zonas Húmedas</td>
+                        <td><?php echo $row["nom_servicio_zh"]; ?></td>
+                        <td><?php echo $row["cantidad"]; ?></td>
+                        <td><?php echo $row["valor_zonas_humedas"]; ?></td>
+                        <td><?php echo $row["cantidad"] * $row["valor_zonas_humedas"]; ?></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="total_servicios">
+            <?php 
+            $total_servicios_ads = $row["cantidad"] * $row["valor_restaurante"] + 
+                       $row["cantidad"] * $row["valor_bar"] + 
+                       $row["cantidad"] * $row["valor_zonas_humedas"];
+            ?>
+            <h2>Total SERVICIOS ADICIONALES: $<?php echo $total_servicios_ads; ?></h2>
         </div>
         
         <div class="total">
-            <h3>Total FACTURA: $<?php echo $row["subtotal"] + $row["valor_base"] * $row['dias_reserva']; ?></h3>
+            <?php 
+                $total_factura = $row["valor_base"] * $row['dias_reserva'] + $total_servicios_ads;
+            ?>
+            <h3>Total FACTURA: $<?php echo $total_factura; ?></h3>
         </div>
+        
         <form action="generar_pdf.php" method="POST" target="_blank">
             <input type="hidden" name="cod_factura" value="<?php echo $row["cod_factura"]; ?>">
             <button type="submit">Descargar Factura en PDF</button>
@@ -114,3 +209,6 @@ if ($result->num_rows > 0) {
 // Cerrar conexión
 $conn->close();
 ?>
+
+
+

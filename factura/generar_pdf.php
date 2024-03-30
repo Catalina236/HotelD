@@ -2,7 +2,7 @@
 // Incluir el archivo fpdf.php desde la carpeta fpdf
 require_once('fpdf/fpdf.php');
 require_once("../Bd/conexion.php");
-header('Content-Type: text/html; charset=utf-8');
+
 // Verificar si hay una sesión iniciada
 session_start();
 
@@ -124,22 +124,24 @@ if ($result->num_rows > 0) {
         $pdf->Cell(35,10,'Zonas Comunes',1,0);
         $pdf->Cell(45,10,$row["cantidad"],1,0);
         $pdf->Cell(40,10,'$' . $row["subtotal"],1,1);
-    // Detalle de la Factura
+
+        // Detalle de la Factura
         $pdf->Ln();
         $pdf->Cell(0,10,'Detalle de la Factura:',0,1);
+        $pdf->Cell(35,10,'Código Factura',1,0);
+        $pdf->Cell(45,10,'Servicio',1,0);
+        $pdf->Cell(40,10,'Subtotal',1,1);
         $pdf->Cell(35,10,$row["cod_factura"],1,0);
-    $pdf->Cell(45,10,'Servicio',1,0);
-    $pdf->Cell(40,10,'$' . $row["subtotal"],1,1);
-    $pdf->Cell(35,10,$row["cod_factura"],1,0);
-    $pdf->Cell(45,10,'Reserva',1,0);
-    $pdf->Cell(40,10,'$' . ($row["valor_base"] * $row['dias_reserva']),1,1);
+        $pdf->Cell(45,10,'Reserva',1,0);
+        $pdf->Cell(40,10,'$' . ($row["valor_base"] * $row['dias_reserva']),1,1);
 
-    // Total Factura
-    $pdf->SetFont('Arial','B',14);
-    $pdf->Cell(0,10,'Total FACTURA: $' . ($row["subtotal"] + $row["valor_base"] * $row['dias_reserva']),0,1,'R');
+        // Total Factura
+        $pdf->SetFont('Arial','B',14);
+        $total_factura = $row["subtotal"] + $row["valor_base"] * $row['dias_reserva'];
+        $pdf->Cell(0,10,'Total FACTURA: $' . $total_factura,0,1,'R');
 
-    // Salida del PDF
-    $pdf->Output('factura.pdf','I'); // 'I' para ver el archivo directamente en el navegador, 'D' para descargar directamente
+        // Salida del PDF
+        $pdf->Output('factura.pdf','I'); // 'I' para ver el archivo directamente en el navegador, 'D' para descargar directamente
     } // Cierre del while
 
 } else {
