@@ -16,9 +16,23 @@ if(isset($_GET['cod'])){
     //$servcio=$valo->traer_servicios($serv1);
     $datos=$valo->traer_servicios($serv1);
     $cod_servicio=$datos[0]["cod_servicio"];
-    $s1=$datos[0]["id_rest"];
-    $s2=$datos[0]["nom_producto_rest"];
-    $s3=$datos[0]["valor"];
+    $s1_rest = $datos[0]['id_rest'];
+    $s1_bar = $datos[0]['id_bar'];
+    $s1_zon_hum = $datos[0]['id_zon_hum'];
+    if (!empty($s1_rest)) {
+        $s1=$s1_rest;
+        $s2=$datos[0]["nom_producto_rest"];
+        $s3=$datos[0]["valorR"];
+    } elseif (!empty($s1_bar)) {
+        $s1=$s1_bar;
+        $s2=$datos[0]["nom_producto_bar"];
+        $s3=$datos[0]["valor_bar"];
+    } elseif (!empty($s1_zon_hum)) {
+        $s1=$s1_zon_hum;
+        $s2=$datos[0]["nom_servicio_zh"];
+        $s3=$datos[0]["valor_zh"];
+    }
+    
 }
 ?>
 <!DOCTYPE html>
@@ -27,6 +41,8 @@ if(isset($_GET['cod'])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../Diseño/estilos.css">
+    <link rel="icon" href="../../imagenes/logo.png">
+    
     <title>Actualizar datos</title>
 </head>
 <body>

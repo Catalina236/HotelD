@@ -10,6 +10,7 @@ if (isset($_GET['id_carrito']) && isset($_GET['nueva_cantidad']) && isset($_GET[
     // Conectar a la base de datos
     $bd = conectar_db();
 
+    
     // Actualizar la cantidad y el subtotal en la base de datos
     $queryActualizarCantidad = "UPDATE carrito_persona SET cantidad = $nuevaCantidad, subtotal = $nuevoSubtotal WHERE cod_carrito = $idCarrito";
     $resultadoActualizarCantidad = mysqli_query($bd, $queryActualizarCantidad);

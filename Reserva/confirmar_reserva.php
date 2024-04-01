@@ -5,9 +5,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../imagenes/logo.png">
+    <link rel="stylesheet" href="../diseño/estilosverusuario.css">
     <?php require('inc/links.php'); ?>
     <title>Confirmar reserva</title>
 </head>
+<header>
+        <a href="../index.php"><img src="../imagenes/logo.png" alt="" class="logo"></a>
+        <nav class="menu">
+        <ul class="menu-principal">
+            <li><a href="../Reserva/ver_reservas.php">Reserva</a>
+            <ul class="submenu">
+            </ul>
+            </li>
+                <li><a href="../Habitaciones/habitaciones.php">Habitaciones</a></li>
+            <?php if(isset($_SESSION['cod_usuario']) && $_SESSION['cod_usuario']!=2):?>
+            <li><a href="../Usuarios/vercuenta.php">Mi Perfil</a>
+                <ul class="submenu">
+                    <li><a href="../Usuarios/salir.php" onclick='return confirmacion()'>Salir</a></li>
+                </ul>
+            </li>
+            <?php elseif(isset($_SESSION['cod_usuario']) && $_SESSION['cod_usuario']==2):?>
+            <li><a href="../Usuarios/vercuenta.php">Mi Perfil</a>
+                <ul class="submenu">
+                    <li><a href="../Usuarios/opciones.php">Opciones</a></li>
+                    <li><a href="../Usuarios/salir.php" onclick='return confirmacion()'>Salir</a></li>
+                </ul>
+                </li>
+            <?php else :?>
+            <li><a href="../Usuarios/iniciarsesion.php">Mi Perfil</a>
+                <ul class="submenu">
+                    <li><a href="../Usuarios/iniciarsesion.php">Iniciar sesión</a></li>
+                    <li><a href="../Usuarios/crear.php">Registrarse</a></li>
+                </ul>
+            </li>
+            <?php endif;?>
+                <li><a href="">Contáctenos</a></li>
+            <li><a href="../Servicios/servicios.php">Servicios</a>
+            <ul class="submenu">
+                <li><a href="../Servicios/serviciores.php">Restaurante</a></li>
+                <li><a href="../Servicios/serviciobar.php">Bar</a></li>
+                <li><a href="../Servicios/serviciozona.php">Zonas húmedas</a></li>
+                </ul>
+            </li>
+        </ul>
+        </nav>
+    </header>
+
 <body class="bg-light">
     <?php
     session_start();
@@ -24,13 +67,6 @@
         <div class="row">
             <div class="col-12 my-5 mb-4 px-4">
                 <h2 class="fw-bold">RESERVA CONFIRMADA</h2>
-                <div style="font-size: 14px;">
-                    <a href="../index.php" class="text-secondary text-decoration-none">INICIO</a>
-                    <span class="text-secondary"></span>
-                    <a href="../Reserva/reserva.php" class="text-secondary text-decoration-none">HABITACIONES</a>
-                    <span class="text-secondary"></span>
-                    <a href="#" class="text-secondary text-decoration-none">CONFIRMAR</a>
-                </div>
             </div>
 
             <div class="col-lg-7 col-md-12 px-4">

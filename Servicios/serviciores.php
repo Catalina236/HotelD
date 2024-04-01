@@ -72,11 +72,9 @@ mysqli_close($bd);
         <a href="../index.php"><img src="../imagenes/logo.png" alt="" class="logo"></a>
         <nav class="menu">
             <ul class="menu-principal">
-            <li><a href="../Reserva/reserva.php">Reserva</a>
-                    <ul class="submenu">
-                        <li><a href="../Reserva/ver_reservas.php">Ver reservas</a></li>
-                    </ul>
-                </li>
+                <li><a href="../Reserva/ver_reservas.php">Reserva</a></li>
+                <ul class="submenu">
+                </ul>
                 <li><a href="../Habitaciones/habitaciones.php">Habitaciones</a></li>
             <?php if(isset($_SESSION['cod_usuario']) && $_SESSION['cod_usuario']!=2):?>
             <li><a href="Usuarios/vercuenta.php">Mi Perfil</a>
@@ -138,7 +136,7 @@ mysqli_close($bd);
                     <h4>COP 40.000</h4>
                 </div>
                 <form class="formulario" method="POST" action="serviciores.php">
-                    <input type="hidden" name="CodigoServicio" value="100">
+                    <input type="hidden" name="CodigoServicio" value="101">
                     <input type="hidden" name="id_agregadosrest" value="r2">
                     <label for="cantidad">Cantidad de Producto:</label> <!-- Puedes generar un ID único para cada item del carrito -->
                     <input type="number" class="add-cantidad" id="cantidad" name="cantidad" min="1" required>
@@ -153,7 +151,7 @@ mysqli_close($bd);
                     <h4>COP 15.000</h4>
                 </div>
                 <form class="formulario" method="POST" action="serviciores.php">
-                    <input type="hidden" name="CodigoServicio" value="100">
+                    <input type="hidden" name="CodigoServicio" value="102">
                     <input type="hidden" name="id_agregadosrest" value="r3"> 
                     <label for="cantidad">Cantidad de Producto:</label><!-- Puedes generar un ID único para cada item del carrito -->
                     <input type="number" class="add-cantidad" id="cantidad" name="cantidad" min="1" required>
@@ -168,7 +166,7 @@ mysqli_close($bd);
                     <h4>COP 15.000</h4>
                 </div>
                 <form class="formulario" method="POST" action="serviciores.php">
-                    <input type="hidden" name="CodigoServicio" value="100">
+                    <input type="hidden" name="CodigoServicio" value="103">
                     <input type="hidden" name="id_agregadosrest" value="r4"> 
                     <label for="cantidad">Cantidad de Producto:</label><!-- Puedes generar un ID único para cada item del carrito -->
                     <input type="number" class="add-cantidad" id="cantidad" name="cantidad" min="1" required>
@@ -183,7 +181,7 @@ mysqli_close($bd);
                     <h4>COP 30.000</h4>
                 </div>
                 <form class="formulario" method="POST" action="serviciores.php">
-                    <input type="hidden" name="CodigoServicio" value="100">
+                    <input type="hidden" name="CodigoServicio" value="104">
                     <input type="hidden" name="id_agregadosrest" value="r5">
                     <label for="cantidad">Cantidad de Producto:</label> <!-- Puedes generar un ID único para cada item del carrito -->
                     <input type="number" class="add-cantidad" id="cantidad" name="cantidad" min="1" required>

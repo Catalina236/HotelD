@@ -11,12 +11,11 @@ if(!$codigo_eliminar){
 
 $bd = conectar_db();
 $sql = "DELETE FROM usuarios WHERE correo_electronico = '$codigo_eliminar'";
-echo $sql;
 $resultado = mysqli_query($bd, $sql);
 
 if($resultado){
     echo "<script type='text/javascript'>
     alert ('Usuario eliminado correctamente...');
-    window.location='../index.php';
+    window.location='verusuarios.php';
     </script>";
 }

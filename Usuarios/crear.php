@@ -25,7 +25,7 @@ if(isset($_SESSION['cod_usuario']) && $_SESSION['cod_usuario']!=2){
         <a href="../index.php"><img src="../imagenes/logo.png" alt="" class="logo"></a>
         <nav class="menu">
             <ul class="menu-principal">
-                <li><a href="../Reserva/ver_reservas.php">Reservas</a></li>
+                <li><a href="../Reserva/ver_reservas.php">Reserva</a></li>
                 <ul class="submenu">
                 </ul>
                 <li><a href="../Habitaciones/habitaciones.php">Habitaciones</a></li>
@@ -110,15 +110,19 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
             $sqlv="SELECT * FROM usuarios JOIN persona ON usuarios.correo_electronico=persona.correo_electronico WHERE usuarios.correo_electronico='$Email' OR num_doc='$Documento'";
             $usuario=mysqli_query($bd,$sqlv);
 
+            /*if($usuario){
+                echo '<div class="alerta">El usuario ya se encuentra registrado</div>';
+            }*/
+            
             if(isset($Foto)){
                 $tipo=$_FILES['foto']['type'];
                 $temp=$_FILES['foto']['tmp_name'];
 
                 $Password=mysqli_real_escape_string($bd,$Contraseña);
                 $password_encriptada=sha1($Password);
-
                 if (isset($_SESSION['cod_usuario']) && $_SESSION['cod_usuario']==2){
-                $CodigoTipo=$_POST['nombre_tipo'];
+                
+                    $CodigoTipo=$_POST['nombre_tipo'];
     
                     $sql="INSERT INTO usuarios (correo_electronico, contraseña, foto) VALUES('$Email','$password_encriptada','$Foto')";
                     $sql3="INSERT INTO persona VALUES ('$Documento','$TipoDocumento','$Nombre','$Apellido','$Email','$Telefono','$Direccion','$CodigoTipo')";
@@ -133,8 +137,12 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
                         window.location='../index.php';
                         </script>";
                     }
+                    else{
+                        foreach($errores as $error){
+                            echo '<br>' .$error;
+                        }
                 }
-                
+            }
                 else{
                     $sql="INSERT INTO usuarios (correo_electronico, contraseña, foto) VALUES('$Email','$password_encriptada','$Foto')";
                     $sql3="INSERT INTO persona VALUES ('$Documento','$TipoDocumento','$Nombre','$Apellido','$Email','$Telefono','$Direccion',1)";
@@ -149,18 +157,14 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
                         window.location='../index.php';
                         </script>";
                     }
+                    else{
+                        foreach($errores as $error){
+                            echo '<br>' .$error;
+                        }
                 }
-            }
-
-        if($usuario){
-            echo '<div class="alerta">El usuario ya se encuentra registrado</div>';
+                }
         }
-        else{
-                foreach($errores as $error){
-                    echo '<br>' .$error;
-                }
-            }
-            }
+        }
         }
         else {
             echo '<div class="alerta">El correo ingresado no es válido</div>';
@@ -188,8 +192,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
             <div class="contenido-oculto">
             <select class="control" name="nombre_tipo" id="nombre_tipo">
                 <option value="">Seleccione su tipo de usuario</option>
-                <option value="Cliente">Cliente</option>
-                <option value="Empleado">Empleado</option>
+                <option value="1">Cliente</option>
+                <option value="2">Empleado</option>
             </select>
             </div>
             <?php endif;?>

@@ -57,7 +57,7 @@ $bd = conectar_db();
         </nav>
     </header>
 
-    <div class="contenido">
+    <div class="contenidor">
         <section class="busqueda">
             <form action="habitaciones.php" method="post">
                 <input type="date" name="fecha_inicio" id="" class="fecha" value="<?php if(isset($_POST['fecha_inicio'])) echo $_POST['fecha_inicio']; ?>">
@@ -68,8 +68,6 @@ $bd = conectar_db();
         <section class="habitaciones">
             <?php
             if(isset($_POST['filtrar'])){
-                //$capacidad=$_POST['capacidad'];
-                //$tipo=$_POST['tipo_hab'];
                 $fechai = $_POST['fecha_inicio'];
                 $fechaf = $_POST['fecha_fin'];
 
@@ -86,16 +84,15 @@ $bd = conectar_db();
                 <img src="../admin/clases/Habitacion/imagenes/<?php echo $habitacion['imagen'];?>" alt="Imagen de habitación">
                     <div class="info">
                         <h3>Habitación <?php echo $habitacion['nom_tipo_hab'];?></h3>
+                        <p><?php echo $habitacion['descripcion_hab'];?></p>
                         <p><?php echo $habitacion['capacidad'];?></p>
                         <h4><?php echo $habitacion['valor_base'];?></h4>
-                        <h4><?php echo $habitacion['estado_hab'];?></h4>
-                        <p><?php echo $habitacion['descripcion_hab'];?></p>
                         <button class="botonre"><a href="../Reserva/confirmar_reserva.php?cod_tipo_hab=<?php echo $habitacion['cod_tipo_hab'];?>">Reservar</a></button>
                     </div>
                 </div>
             <?php }
             } else {
-                $sql="SELECT * FROM tipo_habitacion JOIN habitacion ON tipo_habitacion.cod_tipo_hab=habitacion.cod_tipo_hab";
+                $sql="SELECT * FROM tipo_habitacion JOIN habitacion ON tipo_habitacion.cod_tipo_hab=habitacion.cod_tipo_hab WHERE estado_hab='Disponible' OR estado_hab='Ocupada'";
                 $result=mysqli_query($bd, $sql);
                 while ($habitacion=mysqli_fetch_assoc($result)){
             ?>
@@ -103,10 +100,9 @@ $bd = conectar_db();
                 <img class="habitaciones" src="../admin/clases/Habitacion/imagenes/<?php echo $habitacion['imagen'];?>" alt="Imagen de habitación">
                     <div class="info">
                         <h3>Habitación <?php echo $habitacion['nom_tipo_hab'];?></h3>
-                        <p><?php echo $habitacion['capacidad'];?></p>
-                        <h4><?php echo $habitacion['valor_base'];?></h4>
-                        <h4><?php echo $habitacion['estado_hab'];?></h4>
                         <p><?php echo $habitacion['descripcion_hab'];?></p>
+                        <p><strong>Capacidad</strong> <?php echo $habitacion['capacidad'];?></p>
+                        <h4>COP <?php echo $habitacion['valor_base'];?></h4>
                         <button class="botonre"><a href="../Reserva/confirmar_reserva.php?cod_tipo_hab=<?php echo $habitacion['cod_tipo_hab'];?>">Reservar</a></button>
                     </div>
                 </div>

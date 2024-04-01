@@ -23,15 +23,20 @@
     $sql="SELECT * FROM persona WHERE correo_electronico='$id'";
     $resultado=mysqli_query($bd,$sql);
     $datos=mysqli_fetch_assoc($resultado);
-    $Nombres=$datos['nombres'];
+    /*$Nombres=$datos['nombres'];
     $Telefono=$datos['telefono'];
-    $Direccion=$datos['direccion'];
+    $Direccion=$datos['direccion'];*/
     }
     $codigo = $_GET['cod_reserva'];
     
-    $sql2="SELECT * FROM tipo_habitacion JOIN habitacion ON tipo_habitacion.cod_tipo_hab=habitacion.cod_tipo_hab JOIN reserva ON habitacion.cod_tipo_hab=reserva.cod_tipo_hab WHERE cod_reserva='$codigo'";
+    $sql2="SELECT * FROM reserva JOIN factura ON reserva.cod_reserva=factura.cod_reserva JOIN tipo_habitacion ON reserva.cod_tipo_hab=tipo_habitacion.cod_tipo_hab JOIN habitacion ON tipo_habitacion.cod_tipo_hab=habitacion.cod_tipo_hab WHERE reserva.cod_reserva='$codigo'";
     $resultado2=mysqli_query($bd,$sql2);
     $habitacion=mysqli_fetch_assoc($resultado2);
+    $Fechai=$habitacion['fecha_inicio'];
+    $Fechaf=$habitacion['fecha_fin'];
+    $TipoHab=$habitacion['nom_tipo_hab'];
+    $Precio=$habitacion['valor_base'];
+    
     //$code=$habitacion['cod_tipo_hab'];
     ?>
     <div class="container">
@@ -51,8 +56,8 @@
                     <div class="card p-3 shadow-sm rounded">
                     <img src="../admin/clases/Habitacion/imagenes/<?php echo $habitacion['imagen'];?>" alt="">
                     <br>
-                    <h4>Habitación <?php echo $habitacion['nom_tipo_hab'];?></h4>
-                    <h5>COP <?php echo $habitacion['valor_base'];?> por noche</h5>
+                    <h4>Habitación <?php echo $TipoHab;?></h4>
+                    <h5>COP <?php echo $Precio;?> por noche</h5>
                     </div>
                 </div>
             
@@ -63,31 +68,23 @@
                             <h5 class="mb-3">Detalles de la reserva</h5>
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label class="form-label">Nombre</label>
-                                    <input name="nombre" type="text" class="form-control shadow-none" require value="<?php echo $Nombres;?>">
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Numero de telefono</label>
-                                    <input name="telefono" type="text" class="form-control shadow-none" require value="<?php echo $Telefono;?>">
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Direccion</label>
-                                    <textarea name="direccion" class="form-control shadow-none" rows="1" required><?php echo $Direccion;?></textarea>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Email</label>
-                                    <input name="telefono" type="text" class="form-control shadow-none" require value="<?php echo $id;?>">
-                                </div>
-                                <div class="col-md-6 mb-3">
                                     <label class="form-label">Check-in</label>
-                                    <input name="checkin" onchange="check_availability()" type="date" class="form-control shadow-none" require value="<?php echo $habitacion['fecha_inicio'];?>">
+                                    <input name="checkin" onchange="check_availability()" type="date" class="form-control shadow-none" require value="<?php echo $Fechai;?>">
                                 </div>
 
                                 <div class="col-md-6 mb-4">
                                     <label class="form-label">Check-out</label>
-                                    <input name="checkout" type="date" class="form-control shadow-none" required value="<?php echo $habitacion['fecha_fin'];?>">
+                                    <input name="checkout" type="date" class="form-control shadow-none" required value="<?php echo $Fechaf;?>">
                                 </div>
 
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Método de pago</label>
+                                    <select class="form-control shadow-none" name="metodo_pago" id="tipo_doc">
+                                        <option <?php echo $habitacion['metodo_pago']==='Tarjeta de crédito'? "selected='selected'":""?> value="Tarjeta de crédito">Tarjeta de crédito</option>
+                                        <option <?php echo $habitacion['metodo_pago']==='Tarjeta de débito'? "selected='selected'":""?> value="Tarjeta de débito">Tarjeta de débito</option>
+                                        <option <?php echo $habitacion['metodo_pago']==='Efectivo'? "selected='selected'":""?> value="Efectivo">Efectivo</option>
+                                    </select>
+                                </div>
                                 <div class="col-12">
                                     <div class="spinner-border text-info mb-3 d-none" id="info_loader" role="status">
                                         <span class="visually-hidden">Cargando...</span>
@@ -103,19 +100,32 @@
                         $Fechai=$_POST['checkin'];
                         $Fechaf=$_POST['checkout'];
                         $Precio=$habitacion['valor_base'];
-                        $codigo=$habitacion['cod_tipo_hab'];
+                        $codigo_hab=$habitacion['cod_tipo_hab'];
                         $num_doc=$datos['num_doc'];
+                        $MetodoPago=$_POST['metodo_pago'];
+
                         $sql_u = "UPDATE reserva SET 
                         fecha_inicio = '$Fechai',
-                        fecha_fin= '$Fechaf'
+                        fecha_fin= '$Fechaf',
+                        Precio='$Precio',
+                        cod_tipo_hab='$codigo_hab',
+                        num_doc='$num_doc'
                         WHERE cod_reserva = '$codigo'";
 
-                            if(mysqli_query($bd, $sql_u)){
-                                /*echo "<script type='text/javascript'>alert('Reserva actualizada exitosamente');
+                        $sql_u = "UPDATE factura SET 
+                        metodo_pago='$MetodoPago',
+                        num_doc='$num_doc',
+                        cod_reserva='$codigo'
+                        WHERE cod_reserva = '$codigo'";
+
+                        $resultado=mysqli_query($bd,$sql_u);
+
+                            if($resultado){
+                                echo "<script type='text/javascript'>alert('Reserva actualizada exitosamente');
                                 window.location='ver_reservas.php';
-                                </script>";*/
+                                </script>";
                             } else {
-                                echo "Error al realizar la reserva: " . mysqli_error($bd);
+                                echo "Error al actualizar la reserva: " . mysqli_error($bd);
                             }}
         ?>
         </div>

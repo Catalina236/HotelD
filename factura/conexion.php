@@ -22,9 +22,9 @@ $conn = new mysqli($servername, $username, $password, $database);
 
 // Verificar conexión
 if ($conn->connect_error) {
+    // Termina la ejecución del script y muestra un mensaje si hay un error de conexión
     die("Error de conexión: " . $conn->connect_error);
 }
 
 // Después de conectar a la base de datos, establecer el conjunto de caracteres UTF-8
 $conn->set_charset("utf8");
-

@@ -21,25 +21,33 @@ $total=$trabajo->VerServicios();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Servicios</title>
     <link rel="stylesheet" href="../../Diseño/estile.css">
+    <link rel="icon" href="../../imagenes/logo.png">
+    <title>Servicios</title>
+    
 </head>
 <body>
     <div class="contenedor-tabla">
         <table>
             <thead bgcolor=#8CAAF8>
                 <tr>
-                    <th colspan="5">
+                    <th colspan="11">
                         <h2>Servicios</h2>
                     </th>
                     <th><a href="registrar_serv.php"><img src="../../imagenes/restaurante.png" alt=""></a></th> 
                 </tr>
 
                 <tr>
-                    <th>ID restaurante</th>
-                    <th>Codigo Servicio</th>
-                    <th>Nombre del producto</th>
-                    <th>Valor</th>
+                    <th>Código servicio</th>
+                    <th>Id bar</th>
+                    <th>Producto bar</th>
+                    <th>Valor bar</th>
+                    <th>Id zonas humedas</th>
+                    <th>Zonas húmedas</th>
+                    <th>Valor zonas húmedas</th>
+                    <th>Id restaurante</th>
+                    <th>Producto restaurante</th>
+                    <th>Valor restaurante</th>
                     <th>Editar</th>
                     <th>Eliminar</th>
                 </tr>
@@ -47,12 +55,20 @@ $total=$trabajo->VerServicios();
             <tbody>
                 <?php foreach($datos as $row) { ?>
                     <tr>
-                        <td><?php echo $row['id_rest'];?></td>
                         <td><?php echo $row['cod_servicio'];?></td>
+                        <td><?php echo $row['id_bar'];?></td>
+                        <td><?php echo $row['nom_producto_bar'];?></td>
+                        <td><?php echo $row['valor_bar'];?></td>
+                        <td><?php echo $row['id_zon_hum'];?></td>
+                        <td><?php echo $row['nom_servicio_zh'];?></td>
+                        <td><?php echo $row['valor_zh'];?></td>
+                        
+                        <td><?php echo $row['id_rest'];?></td>
                         <td><?php echo $row['nom_producto_rest'];?></td>
-                        <td><?php echo $row['valor'];?></td>
+                        <td><?php echo $row['valorR'];?></td>
                         <td><a href="editar_serv.php?cod=<?php echo $row['cod_servicio'];?>"><img src="../../imagenes/editar.png" alt=""></a></td>
-                        <td><a href="eliminar.php?cod=<?php echo $row['cod_servicio'];?>"><img src="../../imagenes/delete.png" alt=""></a></td>
+                        <td>
+                        <a class="eliminar" id="eliminar" onclick='return confirmacion()' href="eliminar.php?cod=<?php echo $row['cod_servicio'];?>"><img src="../../imagenes/eliminar.png" alt=""></a></td>
                     </tr>
                 <?php }?>
             </tbody>
@@ -82,5 +98,16 @@ $total=$trabajo->VerServicios();
     }
     ?>
 </div>
+<script>
+        function confirmacion(){
+            var respuesta=confirm('¿Desea borrar el registro?');
+            if(respuesta==true){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+    </script>
 </body>
 </html>

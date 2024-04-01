@@ -50,11 +50,8 @@ mysqli_close($bd);
         <a href="../index.php"><img src="../imagenes/logo.png" alt="" class="logo"></a>
         <nav class="menu">
             <ul class="menu-principal">
-                <li><a href="../Reserva/reserva.php">Reserva</a></li>
+                <li><a href="../Reserva/ver_reservas.php">Reserva</a></li>
                 <ul class="submenu">
-                    <li><a href="">Crear Reserva</a></li>
-                    <li><a href="">Eliminar Reserva</a></li>
-                    <li><a href="">Consultar Reservas</a></li>
                 </ul>
                 <li><a href="../Habitaciones/habitaciones.php">Habitaciones</a></li>
             <?php if(isset($_SESSION['cod_usuario']) && $_SESSION['cod_usuario']!=2):?>
@@ -117,7 +114,7 @@ mysqli_close($bd);
                         <td><?= $fila['nombre_producto_bar'] ?></td>
                         <td><?= $fila['nombre_producto_zh'] ?></td>
                         <td id="cantidad<?= $fila['cod_carrito'] ?>"><?= $fila['cantidad'] ?></td>
-                        <td><?= $fila['subtotal'] ?></td>
+                        <td id="valorProducto<?= $fila['subtotal'] ?>"></td>
                         <td>
                             <button class="eliminar-btn" onclick="eliminarProducto(<?= $fila['cod_carrito'] ?>)">
                               <img src="../imagenes/dele.png" alt="">

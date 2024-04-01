@@ -75,34 +75,34 @@ $row=mysqli_fetch_assoc($resultado);
             <img src="../admin/imagenes/usuarios.png" alt="">
             <h4>Usuarios</h4>
             <p>Aquí podrás gestionar a todos los usuarios del sistema, empleados, clientes etc.</p>
-            <a href="verusuarios.php"><input type="button" value="Registrar"></a>
+            <a href="verusuarios.php"><input type="button" value="Gestionar"></a>
         </div>
        
         <div class="card">
             <img src="../admin/imagenes/calendario.png" alt="">
             <h4>Reservas</h4>
             <p>Aquí registras las reservas del hotel y puedes actualizarlas y eliminarlas</p>
-            <a href="../admin/clases/Reserva/seleccionar.php"><input type="button" value="Registrar"></a>
+            <a href="../admin/clases/Reserva/seleccionar.php"><input type="button" value="Gestionar"></a>
         </div>
 
         <div class="card">
             <img src="../admin/imagenes/habitaciones.png" alt="">
             <h4>Habitaciones</h4>
             <p>Podrás registrar habitaciones nuevas, actualizarlas según su estado y también su descripción.</p>
-            <a href="../admin/clases/Habitacion/seleccionar.php"><input type="button" value="Registrar"></a>
+            <a href="../admin/clases/Habitacion/seleccionar.php"><input type="button" value="Gestionar"></a>
         </div>
         <div class="card">
             <img src="../admin/imagenes/restaurante.png" alt="">
             <h4>Servicios</h4>
             <p>Registrar y Consultar los servicios que van a estar disponibles dentro del hotel</p>
-            <a href="../admin/clases/Servicios/seleccionar.php"><input type="button" value="Registrar"></a>
+            <a href="../admin/clases/Servicios/seleccionar.php"><input type="button" value="Gestionar"></a>
         </div>
         
         <div class="card">
             <img src="../admin/imagenes/factura.png" alt="">
             <h4>Facturas</h4>
             <p>Aquí estarán los detalles de cada factura con su respectiva política de privacidad de datos.</p>
-            <a href=""><input type="button" value="Ver"></a>
+            <a href=""><input type="button" value="Gestionar"></a>
         </div>
     </div> 
 </body>

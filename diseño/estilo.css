@@ -70,7 +70,19 @@ nav{
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
-    padding-top: 115px;
+    padding-top: 113px;
+}
+.contenidor{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding-top: 95px;
+}
+.contenido .boton_r button a{
+    width: 340px;
+    margin: 13px 13px;
+    background-color: white;
 }
 .fecha{
     width: 395px;
@@ -108,9 +120,9 @@ nav{
 }
 .habitacion{
     display: flex;
-    background-color: white;
+    /*background-color: white;*/
     flex-direction: row;
-    /*border: 1px solid rgb(184, 184, 184);*/
+    border: 1px solid rgb(184, 184, 184);
     width: 963px;
     margin: 12px;
     margin-left: 13px;

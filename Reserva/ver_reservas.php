@@ -70,7 +70,7 @@ $resultado = mysqli_query($bd, $sql);
 </header>
 
 <div class="contenido">
-    <h1>Tus reservas</h1>
+    <h1>Tus reservas</h1>   
     <br>
     <?php
     while ($reservas = mysqli_fetch_assoc($resultado)) {

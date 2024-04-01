@@ -31,7 +31,7 @@ class Trabajo extends Conexion{
 
         if ($resultado>0){
             if($resultado2>0){
-                move_uploaded_file($temp, 'C:/xampp/htdocs/Reserva/clases/Habitacion/imagenes/'.$imagen);
+                move_uploaded_file($temp, 'C:/xampp/htdocs/HotelD/admin/clases/Habitacion/imagenes/'.$imagen);
                 echo "<script type='text/javascript'>
                     alert('Registro adicionado correctamente...');
                     window.location='seleccionar.php';
@@ -49,7 +49,15 @@ class Trabajo extends Conexion{
 }
     public function insertarServicio(string $cod_servicio, string $num_doc_cliente, string $id_rest,string $nom_producto, string $valor_rest){
         $sql = "INSERT INTO servicios_adicionales VALUES(:cod_serv, :doc_cli)";
-        $sql2 = "INSERT INTO restaurante VALUES(:cod_serv, :id_res, :nom_pro_serv, :valor)";
+        if (strpos($id_rest, 'r') === 0) {
+            $sql2 = "INSERT INTO restaurante VALUES(:id_res, :cod_serv,:nom_pro_serv, :valor)";
+        }
+        elseif (strpos($id_rest, 'b') === 0) {
+            $sql2 = "INSERT INTO bar VALUES(:id_res, :cod_serv,:nom_pro_serv, :valor)";
+        }
+        else{
+            $sql2 = "INSERT INTO zonas_humedas VALUES(:id_res, :cod_serv,:nom_pro_serv, :valor)";
+        }
         $consult=$this->conexion->prepare($sql);
         $consult2=$this->conexion->prepare($sql2);
         $consult->bindValue(":cod_serv",$cod_servicio);
@@ -60,12 +68,11 @@ class Trabajo extends Conexion{
         $consult2->bindValue(":valor",$valor_rest);
         $resultado=$consult->execute();
         $resultado2=$consult2->execute();
-
         if($resultado>0){
             if($resultado2>0){
                 echo "<script type='text/javascript'>
                 alert('Servicio adicionado correctamente...');
-                window.location='../opciones.php';
+                window.location='seleccionar.php';
                 </script>";
             }
         }
@@ -143,7 +150,7 @@ class Trabajo extends Conexion{
     }
     
     public function DatoServicios($inicio, $resultado_pagina){
-        $sql="SELECT * FROM servicios_adicionales JOIN restaurante ON servicios_adicionales.cod_servicio=restaurante.cod_servicio ORDER BY id_rest LIMIT :inic, :result";
+        $sql="SELECT servicios_adicionales.*,id_zon_hum,nom_servicio_zh, zonas_humedas.valor as valor_zh, id_bar, nom_producto_bar,bar.valor as valor_bar, id_rest,nom_producto_rest,restaurante.valor as valorR FROM servicios_adicionales LEFT JOIN restaurante ON servicios_adicionales.cod_servicio=restaurante.cod_servicio LEFT JOIN bar ON servicios_adicionales.cod_servicio=bar.cod_servicio LEFT JOIN zonas_humedas ON servicios_adicionales.cod_servicio=zonas_humedas.cod_servicio ORDER BY id_rest LIMIT :inic, :result";
         $consult=$this->conexion->prepare($sql);
         $consult->bindValue(':inic',$inicio,PDO::PARAM_INT);
         $consult->bindValue(':result',$resultado_pagina,PDO::PARAM_INT);
@@ -160,7 +167,7 @@ class Trabajo extends Conexion{
     }
 
     public function traer_servicios($serv1){
-        $sql="SELECT * FROM servicios_adicionales JOIN restaurante ON servicios_adicionales.cod_servicio=restaurante.cod_servicio JOIN bar ON restaurante.cod_servicio=bar.cod_servicio WHERE servicios_adicionales.cod_servicio=:cod";
+        $sql="SELECT servicios_adicionales.*,id_zon_hum,nom_servicio_zh, zonas_humedas.valor as valor_zh, id_bar, nom_producto_bar,bar.valor as valor_bar, id_rest,nom_producto_rest,restaurante.valor as valorR FROM servicios_adicionales LEFT JOIN restaurante ON servicios_adicionales.cod_servicio=restaurante.cod_servicio LEFT JOIN bar ON servicios_adicionales.cod_servicio=bar.cod_servicio LEFT JOIN zonas_humedas ON servicios_adicionales.cod_servicio=zonas_humedas.cod_servicio WHERE servicios_adicionales.cod_servicio=:cod";
         $consult=$this->conexion->prepare($sql);
         $consult->bindParam(":cod",$serv1, PDO::PARAM_STR);
         $consult->execute();
@@ -252,7 +259,7 @@ class Trabajo extends Conexion{
     }
 
     public function eliminar_servicio(string $cod_serv){
-        $sql="DELETE FROM restaurante WHERE cod_servicio=:cod_serv";
+        $sql="DELETE FROM servicios_adicionales WHERE cod_servicio=:cod_serv";
         $consult=$this->conexion->prepare($sql);
         $consult->BindValue(':cod_serv',$cod_serv);
         $resultado=$consult->execute();
@@ -335,16 +342,16 @@ class Trabajo extends Conexion{
         return $result;
     }
 
-    public function actualizar_habitacion(string $id, string $d2, string $d3, string $d4, string $d5, string $d6, string $d7, string $d8):int{
+    public function actualizar_habitacion(string $id, string $d2, string $d3, string $d4, string $d5, string $d6, string $d7, string $d8, string $temp):int{
         $sql="UPDATE tipo_habitacion SET cod_tipo_hab=:cod, nom_tipo_hab=:nom, capacidad=:cap, valor_base=:valor WHERE cod_tipo_hab=:cod";
         $sql2="UPDATE habitacion SET nro_hab=:nro, cod_tipo_hab=:cod, estado_hab=:estado, descripcion_hab=:descp, imagen=:img WHERE nro_hab=:nro";
         $consult=$this->conexion->prepare($sql);
         $consult2=$this->conexion->prepare($sql2);
         $consult->bindParam(":cod",$id);
-        $consult->bindParam(':nom', $d3);
-        $consult->bindParam(":cap",$d4);
-        $consult->bindParam(":valor",$d5);
-        $consult2->bindParam(":nro",$d2);
+        $consult->bindParam(':nom', $d2);
+        $consult->bindParam(":cap",$d3);
+        $consult->bindParam(":valor",$d4);
+        $consult2->bindParam(":nro",$d5);
         $consult2->bindParam(":cod",$id);
         $consult2->bindParam(":estado",$d6);
         $consult2->bindParam(":descp",$d7);
@@ -354,10 +361,11 @@ class Trabajo extends Conexion{
         $resultado2=$consult2->execute();
         if($resultado>0){
             if($resultado2>0){
-            echo "<script type='text/javascript'>
-			alert ('Habitacion Actualizada Correctamente...');
-			window.location='seleccionar.php';
-		    </script>";
+                move_uploaded_file($temp, 'C:/xampp/htdocs/HotelD/admin/clases/Habitacion/imagenes/'.$d8);    
+                echo "<script type='text/javascript'>
+                alert ('Habitacion Actualizada Correctamente...');
+                window.location='seleccionar.php';
+                </script>";
             }
     }
 }
@@ -386,13 +394,13 @@ class Trabajo extends Conexion{
 		return $result;
 	}
 
-    /*public function traer_un_servicio($serv1){
+    public function traer_un_servicio($serv1){
         $sql = "SELECT * FROM servicios_adicionales JOIN restaurante ON servicios_adicionales.cod_servicio=restaurante.cod_servicio  WHERE restaurante.cod_servicio=:cod_serv";
         $consult=$this->conexion->prepare($sql);
         $consult->bindParam(':cod_serv', $serv1, PDO::FETCH_ASSOC);
         $result=$consult->fetchAll(PDO::FETCH_ASSOC);
         return $result;
-    }*/
+    }
     public function traerTipodoc($v1){
         $sql="SELECT tipo_doc FROM persona WHERE correo_electronico=:correo";
         $consult=$this->conexion->prepare($sql);

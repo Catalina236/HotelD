@@ -41,6 +41,8 @@ if(isset($_GET['cod'])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../Diseño/estilos.css">
+    <link rel="icon" href="../../imagenes/logo.png">
+    
     <title>Registrar reserva</title>
 </head>
 <body>

@@ -1,10 +1,19 @@
 <?php
 require_once('../class.php');
+session_start();
+if(!isset($_SESSION['cod_usuario'])){
+    header("Location:../index.php");
+}
+else{
+    if($_SESSION['cod_usuario']!=2){
+        header("Location:../index.php");
+    }
+}
 $dato=new Trabajo();
 if(isset($_GET['cod'])){
-    $cod_serv=$_GET['cod'];
-    $codigo=$dato->eliminar_servicio($cod_serv);
+    $cod=$_GET['cod'];
+    $codigo=$dato->eliminar_servicio($cod);
 
-    echo 'El usuario se borró exitosamente...';
+    //echo 'La reserva se canceló exitosamente...';
 }
 ?>

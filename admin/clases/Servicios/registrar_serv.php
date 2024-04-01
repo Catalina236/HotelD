@@ -24,8 +24,9 @@ if(isset($_POST['Enviar'])){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Servicio</title>
     <link rel="stylesheet" href="../../Diseño/estilos.css">
+    <link rel="icon" href="../../imagenes/logo.png">
+    <title>Servicio</title>
 </head>
 <body>
     <form action="" method="POST">
@@ -34,7 +35,7 @@ if(isset($_POST['Enviar'])){
         <input type="text" name="cod_servicio" id="" class="casilla">
         <label for="">Numero de Documento</label>
         <input type="text" name="num_doc_cliente" id="" class="casilla"><br>
-        <label for="">Id Restaurante</label>
+        <label for="">Id Servicio</label>
         <input ztype="text" name="id_rest" id="" class="casilla">
         <label for="">Nombre del Producto</label>
         <input type="text" name="nom_producto" class="casilla">
