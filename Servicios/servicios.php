@@ -8,6 +8,7 @@
     <title>Document</title>
 </head>
 <body>
+    
     <div class="carrusel">
         <div class="atras">
             <img id="atras" src="../imagenes/atras.png" alt="atras" loading="lazy">
@@ -18,8 +19,8 @@
                 <img class="img" src="../imagenes/restaurante.jpg" alt="imagen 1" loading="lazy">
             </div>
             <div class="texto" id="texto">
-                <h3>Proyecto 01</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit, aspernatur eos sint architecto sunt optio, provident sapiente, numquam laboriosam amet quisquam dolorem. Optio voluptatem hic dolorem tempora! Laboriosam, sint repudiandae.</p>
+                <h3>Restaurante</h3>
+                <p>¡Bienvenido al restaurante Gloria en Oasis! Sumérgete en una experiencia gastronómica excepcional donde la elegancia se encuentra con los sabores exquisitos. Nuestro espacio sofisticado ofrece una variedad de platos cuidadosamente elaborados, desde opciones locales auténticas hasta creaciones culinarias internacionales. Con un servicio atento y un ambiente acogedor, es el lugar perfecto para disfrutar de momentos culinarios inolvidables.</p>
             </div>
         </div>
         <div class="adelante" id="adelante">
