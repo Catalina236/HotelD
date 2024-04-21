@@ -1,6 +1,6 @@
 <?php
 // Establece el tipo de contenido y codificación de caracteres para la respuesta HTTP
-header('Content-Type: text/html; charset=utf-8');
+//header('Content-Type: text/html; charset=utf-8');
 // Incluye el archivo de conexión a la base de datos
 require_once("../Bd/conexion.php");
 
@@ -18,6 +18,7 @@ if (!isset($_SESSION['correo_electronico'])) {
 
 // Obtiene el ID del usuario logeado
 $user_id = $_SESSION['correo_electronico'];
+$cod_reserva=$_GET['cod_reserva'];
 
 // Consulta SQL para obtener las facturas del usuario logeado
 $sql = "SELECT 
@@ -51,13 +52,13 @@ $sql = "SELECT
     DATEDIFF(reserva.fecha_fin, reserva.fecha_inicio) AS dias_reserva
 FROM
     factura
-        INNER JOIN
+        LEFT JOIN
     reserva ON factura.cod_reserva = reserva.cod_reserva
-        INNER JOIN
+        LEFT JOIN
     persona ON factura.num_doc = persona.num_doc
-        INNER JOIN
+        LEFT JOIN
     detalle_factura ON factura.cod_factura = detalle_factura.cod_factura
-        INNER JOIN
+        LEFT JOIN
     carrito_persona ON detalle_factura.cod_carrito = carrito_persona.cod_carrito
         LEFT JOIN
     bar ON carrito_persona.id_agregadosbar = bar.id_bar
@@ -68,7 +69,7 @@ FROM
         INNER JOIN
     tipo_habitacion ON reserva.cod_tipo_hab = tipo_habitacion.cod_tipo_hab
 WHERE
-    persona.correo_electronico = '$user_id'";
+    persona.correo_electronico = '$user_id' AND reserva.cod_reserva='$cod_reserva'";
 
 // Ejecuta la consulta SQL
 $result = $conn->query($sql);
@@ -87,8 +88,8 @@ if ($result === false) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../imagenes/logo.png">
+    <link rel="stylesheet" href="style.css">
     <title>Factura Electrónica</title>
-    <link rel="stylesheet" href="../factura/style.css">
 </head>
 <body>
 
@@ -131,20 +132,7 @@ if ($result === false) {
 
             <!-- Agrega la sección de detalle del carrito -->
             <div class="detalle-factura">
-                <h3>Detalle del Carrito</h3>
-                <table class="tabla-carrito">
-                    <thead>
-                        <tr>
-                            <th>ID Carrito</th>
-                            <th>Número de Documento</th>
-                            <th>Código de Servicio</th>
-                            <th>Nombre del Producto</th>
-                            <th>Cantidad</th>
-                            <th>Subtotal</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
+            <?php
                         // Consulta SQL para obtener el contenido del carrito
                         $carrito_sql = "SELECT 
                             carrito_persona.*,
@@ -158,12 +146,27 @@ if ($result === false) {
                             WHERE num_doc = '{$row['num_doc']}'";
                         $carrito_result = $conn->query($carrito_sql);
 
+                        $total_servicios_ads = 0; // Inicializar el total de servicios adicionales
+                            
                         if ($carrito_result->num_rows > 0) :
-                            $total_servicios_ads = 0; // Inicializar el total de servicios adicionales
                             while ($carrito_row = $carrito_result->fetch_assoc()) :
                                 // Sumar el subtotal al total de servicios adicionales
                                 $total_servicios_ads += $carrito_row['subtotal'];
                         ?>
+                        
+                <h3>Detalle del Carrito</h3>
+                <table class="tabla-carrito">
+                    <thead>
+                        <tr>
+                            <th>ID Carrito</th>
+                            <th>Número de Documento</th>
+                            <th>Código de Servicio</th>
+                            <th>Nombre del Producto</th>
+                            <th>Cantidad</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                                 <tr>
                                     <td><?= $carrito_row['cod_carrito'] ?></td>
                                     <td><?= $carrito_row['num_doc'] ?></td>
@@ -192,8 +195,12 @@ if ($result === false) {
             <!-- Fin de la sección de detalle del carrito -->
 
             <div class="total_servicios">
+                <?php 
+
+                if($total_servicios_ads){?>
                 <!-- Mostrar el total de servicios adicionales -->
                 <h2>Total SERVICIOS ADICIONALES: $<?php echo $total_servicios_ads; ?></h2>
+                <?php }?>
             </div>
             
             <div class="total">
@@ -204,10 +211,7 @@ if ($result === false) {
             </div>
             
             <!-- Formulario para descargar la factura en PDF -->
-            <form action="generar_pdf.php" method="POST" target="_blank">
-                <input type="hidden" name="cod_factura" value="<?php echo $row["cod_factura"]; ?>">
-                <button type="submit">Descargar Factura en PDF</button>
-            </form>
+                <center><button type="submit"><a target="_blank" href="generar_pdf.php?cod_factura=<?php echo $row['cod_factura'];?>">Descargar Factura en PDF</a></button></center>
         <?php endwhile; ?>
     <?php else : ?>
         <!-- Muestra un mensaje si no se encontraron detalles de factura -->
@@ -223,14 +227,3 @@ if ($result === false) {
 // Cierra la conexión a la base de datos
 $conn->close();
 ?>
-
-
-
-
-
-
-
-
-
-
-

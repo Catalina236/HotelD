@@ -17,6 +17,5 @@ if ($conn->query($sql) === TRUE) {
 } else {
     echo "Error al cancelar reserva: " . $conn->error;
 }
-
 $conn->close();
 ?>

@@ -60,9 +60,9 @@ $resultado = mysqli_query($bd, $sql);
             <li><a href="">Contáctenos</a></li>
             <li><a href="../Servicios/servicios.php">Servicios</a>
                 <ul class="submenu">
-                    <li><a href="serviciores.php">Restaurante</a></li>
-                    <li><a href="serviciobar.php">Bar</a></li>
-                    <li><a href="serviciozona.php">Zonas húmedas</a></li>
+                    <li><a href="../Servicios/serviciores.php">Restaurante</a></li>
+                    <li><a href="../Servicios/serviciobar.php">Bar</a></li>
+                    <li><a href="../Servicios/serviciozona.php">Zonas húmedas</a></li>
                 </ul>
             </li>
         </ul>
@@ -172,7 +172,7 @@ $resultado = mysqli_query($bd, $sql);
         document.getElementById("frame2").classList.add("style2");
     }
 
-    function cancelarReserva() {
+    /*function cancelarReserva() {
         let xhr = new XMLHttpRequest();
         xhr.open("GET", "cancelar_reserva.php", true);
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -183,7 +183,7 @@ $resultado = mysqli_query($bd, $sql);
             }
         };
         xhr.send();
-    }
+    }*/
 </script>
 </body>
 </html>

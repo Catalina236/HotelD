@@ -1,136 +1,86 @@
-/* Estilos generales */
-* {
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+/* Estilos para el cuerpo de la página */
+body {
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
 
-body {
-    font-family: 'Nunito', sans-serif;
-    background-color: rgb(245, 245, 245);
+/* Estilos para el contenedor de la factura */
+.factura-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.logo {
-    position: absolute;
-    max-width: 55px;
-    left: 23px;
-    top: 10px;
-    z-index: 2;
+/* Estilos para el encabezado */
+.header {
+    text-align: center;
 }
 
-header {
-    align-items: center;
-    justify-content: center;
-}
-
-nav {
-    margin-top: 0;
-    left: 0;
-    width: 100%;
-    position: relative;
-    font-family: 'Nunito', 'sans-serif';
-    z-index: 1;
-    font-size: 18px;
-    background-color: white;
-    box-sizing: border-box;
-}
-
-.menu-principal {
-    list-style: none;
-    display: flex;
-    justify-content: flex-end;
-    margin-right: 79px;
-}
-
-.menu-principal>li>a {
-    display: block;
-    padding: 30px 15px;
-    color: black;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.menu-principal>li:hover {
-    background-color: deepskyblue;
-}
-
-.submenu {
-    position: absolute;
-    display: none;
-    list-style: none;
-    width: 200px;
-    background-color: rgba(0, 191, 255, 0.664);
-}
-
-.menu-principal li:hover .submenu {
-    display: block;
-}
-
-.submenu li:hover {
-    background-color: deepskyblue;
-}
-
-.submenu li a {
-    display: block;
-    color: black;
-    text-decoration: none;
-    padding: 15px 15px 15px 20px;
-}
-
-h1 {
-    color: #1c1c1c;
-    margin-bottom: 20px;
-}
-
-.contenido {
-    margin: 0px 20px 0px 20px;
-}
-
-.titulo-carrito {
-    font-size: 24px;
+/* Estilos para la información del cliente */
+.info-cliente {
     margin-top: 20px;
 }
 
-/* Estilos específicos para la tabla de carrito */
-.tabla-carrito {
+/* Estilos para el detalle de la reserva y el carrito */
+.detalle-factura {
     margin-top: 20px;
+}
+
+/* Estilos para las tablas */
+table {
     width: 100%;
     border-collapse: collapse;
+    margin-top: 10px;
 }
 
-.tabla-carrito th,
-.tabla-carrito td {
-    padding: 12px;
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 8px;
     text-align: left;
-    border-bottom: 2px solid #000000;
 }
 
-.tabla-carrito th {
-    background-color: deepskyblue;
-    color: rgb(0, 0, 0);
+/* Estilos para los encabezados de las tablas */
+th {
+    background-color: #f2f2f2;
 }
 
-.tabla-carrito tr:hover {
-    background-color: #ffffff;
+/* Estilos para el total de la factura */
+.total {
+    margin-top: 20px;
+    text-align: right;
 }
 
-.eliminar-btn img {
-    width: 34px;
-    margin-left: 19px;
+.total h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
 }
 
-.actualizar-cantidad-btn img {
-    width: 34px;
-    margin-left: -13px;
-}
-
-.eliminar-btn,
-.actualizar-cantidad-btn {
-    background-color: rgba(245, 245, 245, 0);
+button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
     border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+}
+button a{
+    color: white;
+    text-decoration: none;
 }
 
-.eliminar-btn:hover,
-.actualizar-cantidad-btn:hover {
-    cursor: pointer;
+button:hover {
+    background-color: #45a049;
 }

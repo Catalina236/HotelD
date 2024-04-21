@@ -2,20 +2,20 @@
 require '../Bd/conexion.php';
 $bd=conectar_db();
 session_start();
-if(!isset($_SESSION['correo_electronico'])){  echo "<script type='text/javascript'>alert('Para ver sus reservas, debe iniciar sesión');
+if(!isset($_SESSION['correo_electronico'])){  
+    echo "<script type='text/javascript'>alert('Para ver sus reservas, debe iniciar sesión');
     window.location='../Usuarios/iniciarsesion.php';
     </script>";
 }
 $email=$_SESSION['correo_electronico'];
-$sql1="SELECT * FROM persona WHERE correo_electronico='$email'";
-$result=mysqli_query($bd,$sql1);
+$codigor=$_GET['cod_reserva'];
+$sql="SELECT * FROM persona WHERE correo_electronico='$email'";
+$result=mysqli_query($bd,$sql);
 $datos=mysqli_fetch_assoc($result);
 $num=$datos['num_doc'];
-$sql="SELECT * FROM reserva JOIN habitacion ON reserva.cod_tipo_hab=habitacion.cod_tipo_hab JOIN tipo_habitacion ON tipo_habitacion.cod_tipo_hab=habitacion.cod_tipo_hab WHERE num_doc='$num'";
-$resultado=mysqli_query($bd,$sql);
+$sql1="SELECT * FROM reserva JOIN habitacion ON reserva.cod_tipo_hab=habitacion.cod_tipo_hab JOIN tipo_habitacion ON tipo_habitacion.cod_tipo_hab=habitacion.cod_tipo_hab WHERE reserva.cod_reserva='$codigor'";
+$resultado=mysqli_query($bd,$sql1);
 $reservas=mysqli_fetch_assoc($resultado);
-//var_dump($reservas);
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -61,9 +61,9 @@ $reservas=mysqli_fetch_assoc($resultado);
             <li><a href="">Contáctenos</a></li>
             <li><a href="../Servicios/servicios.php">Servicios</a>
                 <ul class="submenu">
-                    <li><a href="serviciores.php">Restaurante</a></li>
-                    <li><a href="serviciobar.php">Bar</a></li>
-                    <li><a href="serviciozona.php">Zonas húmedas</a></li>
+                    <li><a href="../Servicios/serviciores.php">Restaurante</a></li>
+                    <li><a href="../Servicios/serviciobar.php">Bar</a></li>
+                    <li><a href="../Servicios/serviciozona.php">Zonas húmedas</a></li>
                 </ul>
             </li>
     </ul>
@@ -77,7 +77,7 @@ $reservas=mysqli_fetch_assoc($resultado);
     <div class="detalles">
     <img src="../admin/clases/Habitacion/imagenes/<?php echo $reservas['imagen'];?>" alt="">
     <h4>Habitación <?php echo $reservas['nom_tipo_hab'];?></h4>
-    <h5>Precio: COP <?php echo $reservas['precio'];?></h5>
+    <h5>Precio noche: COP <?php echo $reservas['precio'];?></h5>
     <span><?php echo $reservas['fecha_inicio'];?></span>
     <span><?php echo $reservas['fecha_fin'];?></span>
     <br>
@@ -85,7 +85,7 @@ $reservas=mysqli_fetch_assoc($resultado);
     <br>
     <span>Descripción: <?php echo $reservas['descripcion_hab'];?></span>
     <br>
-    <button><a href="../factura/consulta_factura.php">Ver factura</a></button>
+    <button><a href="../factura/consulta_factura.php?cod_reserva=<?php echo $reservas['cod_reserva'];?>">Ver factura</a></button>
     <button onclick="return confirmacion()"><a href="cancelar_reserva.php?cod_reserva=<?php echo $reservas['cod_reserva'];?>">Cancelar</a></button>
 </div>
 <?php }?>

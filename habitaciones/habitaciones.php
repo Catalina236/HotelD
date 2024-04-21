@@ -85,8 +85,8 @@ $bd = conectar_db();
                     <div class="info">
                         <h3>Habitación <?php echo $habitacion['nom_tipo_hab'];?></h3>
                         <p><?php echo $habitacion['descripcion_hab'];?></p>
-                        <p><?php echo $habitacion['capacidad'];?></p>
-                        <h4><?php echo $habitacion['valor_base'];?></h4>
+                        <p><strong>Capacidad</strong> <?php echo $habitacion['capacidad'];?></p>
+                        <h4>COP <?php echo $habitacion['valor_base'];?></h4>
                         <button class="botonre"><a href="../Reserva/confirmar_reserva.php?cod_tipo_hab=<?php echo $habitacion['cod_tipo_hab'];?>">Reservar</a></button>
                     </div>
                 </div>

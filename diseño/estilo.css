@@ -326,6 +326,9 @@ form{
     margin-left: 35px;
     margin-top: -10px;
 }
+.btn_ver_detalles:hover{
+    cursor: pointer;
+}
 .contenido-btn a{
     font-family: 'Nunito';
     font-size: 17px;
@@ -406,35 +409,36 @@ footer section i{
     font-family: 'Nunito';
   }
 .container {
-    /*display: grid;
-    place-items: center;*/
     position: relative;
-    bottom: 75px;
-    left: 700px;
+    top: -64px;
+    left: 695px;
 }
 
 .group-menu {
     cursor: pointer;
 }
+
 .dot {
-    width: 5px;
-    height: 5px;
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
     background-color: black;
     margin-top: 4px;
 }
+
 .frame1 {
     visibility: hidden;
 }
+
 .frame1 .info {
-    font-size: 15px;
-    color: black;
+    font-size: 20px;
+    color: white;
     padding-top: 13px;
     cursor: pointer;
 }
 
 .frame1 .info:hover {
-    background-color: #7295aa;
+    background-color: #0085cc;
 }
 
 .frame1 .info span {
@@ -443,23 +447,35 @@ footer section i{
 
 .style {
     width: 250px;
-    height: 205px;
-    background-color:#93cef0;
-    /*margin-top: 5px;*/
-    box-shadow: 1px 1px 3px black;
+    height: 200px;
+    background-color: #93cef0;
+    margin-top: 1px;
     margin-left: -180px;
     border-radius: 10px;
 }
+
+.style2 {
+    width: 250px;
+    height: 200px;
+    background-color: #93cef0;
+    margin-left: 165px;
+    margin-top: -75px;
+    z-index: 999;
+    border-radius: 10px;
+}
+
 .frame2 {
     visibility: hidden;
 }
+
 .frame2 .setting-item {
     color: white;
-    font-size: 15px;
+    font-size: 20px;
     padding: 6px;
+    border-bottom: 1px solid #93cef0;
     cursor: pointer;
 }
 
 .frame2 .setting-item:hover {
-    background-color:#93cef0;
+    background-color: #93cef0;
 }

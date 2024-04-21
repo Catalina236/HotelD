@@ -100,39 +100,15 @@ body{
     align-items: center;
     justify-content: center;
 }
-.puntos{
+.puntos p{
     font-size: 100px;
     font-weight:500;
-    margin-top:-190px;
+    margin-top: -10px;
     color: black;
 }
 .puntos .bold{
-    font-weight: 700;
-    margin-left:10px;
-    margin-right:10px;
-    color:#5E17EB;
+    font-weight: 600;
+    margin-left:3px;
+    margin-right:3px;
+    color:dodgerblue;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

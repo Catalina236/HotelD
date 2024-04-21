@@ -18,6 +18,7 @@ if (!isset($_SESSION['correo_electronico'])) {
 
 // Obtiene el ID del usuario logeado
 $user_id = $_SESSION['correo_electronico'];
+$cod_factura=$_GET['cod_factura'];
 
 // Consulta SQL para obtener los detalles de la factura del usuario logeado
 $sql = "SELECT 
@@ -51,13 +52,13 @@ $sql = "SELECT
     DATEDIFF(reserva.fecha_fin, reserva.fecha_inicio) AS dias_reserva
 FROM
     factura
-        INNER JOIN
+        LEFT JOIN
     reserva ON factura.cod_reserva = reserva.cod_reserva
-        INNER JOIN
+        LEFT JOIN
     persona ON factura.num_doc = persona.num_doc
-        INNER JOIN
+        LEFT JOIN
     detalle_factura ON factura.cod_factura = detalle_factura.cod_factura
-        INNER JOIN
+        LEFT JOIN
     carrito_persona ON detalle_factura.cod_carrito = carrito_persona.cod_carrito
         LEFT JOIN
     bar ON carrito_persona.id_agregadosbar = bar.id_bar
@@ -68,7 +69,7 @@ FROM
         INNER JOIN
     tipo_habitacion ON reserva.cod_tipo_hab = tipo_habitacion.cod_tipo_hab
 WHERE
-    persona.correo_electronico = '$user_id'";
+    persona.correo_electronico = '$user_id' AND factura.cod_factura='$cod_factura'";
 
 // Ejecuta la consulta SQL
 $result = $conn->query($sql);
@@ -140,15 +141,7 @@ if ($result->num_rows > 0) {
         $pdf->Cell(40,10,utf8_decode($row["nom_tipo_hab"]),1,0, 'C');
         $pdf->Cell(30,10,'$' . $row["valor_base"] * $row['dias_reserva'],1,1, 'C');
 
-        // Detalle del Carrito
-        $pdf->SetFont('Arial','B',12);
-        $pdf->Ln();
-        $pdf->Cell(30,10,'ID Carrito',1,0);
-        $pdf->Cell(30,10,'Documento',1,0, 'C');
-        $pdf->Cell(30,10,'Cod Servicio',1,0, 'C');
-        $pdf->Cell(40,10,'Nombre Producto',1,0, 'C');
-        $pdf->Cell(25,10,'Cantidad',1,0, 'C');
-        $pdf->Cell(40,10,'Subtotal',1,1, 'C');
+        // Detalle del Carrito       
 
         // Consulta el detalle del carrito para obtener todas las filas
         $carrito_sql = "SELECT 
@@ -164,10 +157,19 @@ if ($result->num_rows > 0) {
         $carrito_result = $conn->query($carrito_sql);
 
         // Verifica si se encontraron filas en el resultado de la consulta del carrito
+        $total_servicios_ads = 0;
+            
         if ($carrito_result->num_rows > 0) {
-            $total_servicios_ads = 0;
             // Itera sobre cada fila del resultado de la consulta del carrito
             while ($carrito_row = $carrito_result->fetch_assoc()) {
+                $pdf->SetFont('Arial','B',12);
+                $pdf->Ln();
+                $pdf->Cell(30,10,'ID Carrito',1,0);
+                $pdf->Cell(30,10,'Documento',1,0, 'C');
+                $pdf->Cell(30,10,'Cod Servicio',1,0, 'C');
+                $pdf->Cell(40,10,'Nombre Producto',1,0, 'C');
+                $pdf->Cell(25,10,'Cantidad',1,0, 'C');
+                $pdf->Cell(40,10,'Subtotal',1,1, 'C');
                 // Establece la fuente y el tamaño del texto
                 $pdf->SetFont('Arial','',12);
                 // Imprime las celdas con la información del carrito
