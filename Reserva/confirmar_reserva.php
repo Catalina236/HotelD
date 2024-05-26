@@ -1,3 +1,15 @@
+<?php 
+require '../Bd/conexion.php';
+$bd=conectar_db();
+session_start();
+if (!isset($_SESSION['correo_electronico'])) {
+    $_SESSION["redirect_to"]=$_SERVER["REQUEST_URI"];
+
+    echo "<script type='text/javascript'>alert('Para reservar y ver sus reservas, debe iniciar sesión');
+    window.location='../Usuarios/iniciarsesion.php';
+    </script>";
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -53,9 +65,6 @@
 
 <body class="bg-light">
     <?php
-    session_start();
-    require '../Bd/conexion.php';
-    $bd=conectar_db();
     $codigo = $_GET['cod_tipo_hab'];
     
     $sql2="SELECT * FROM tipo_habitacion JOIN habitacion ON tipo_habitacion.cod_tipo_hab=habitacion.cod_tipo_hab WHERE tipo_habitacion.cod_tipo_hab='$codigo'";
@@ -114,106 +123,85 @@
                             </div>
                         </form>
                     <?php
-                    if(isset($_POST['Reservar'])){
-                        $Fechai=$_POST['checkin'];
-                        $Fechaf=$_POST['checkout'];
-                        $Precio=$habitacion['valor_base'];
-                        $codigo=$habitacion['cod_tipo_hab'];
-                        $MetodoPago=$_POST['metodo_pago'];
-                        $sqlr = "SELECT * FROM reserva WHERE (fecha_inicio <= '$Fechaf' AND fecha_fin >= '$Fechai') AND cod_tipo_hab='$codigo'";
+        if(isset($_POST['Reservar'])){
+            $Fechai=$_POST['checkin'];
+            $Fechaf=$_POST['checkout'];
+            $Precio=$habitacion['valor_base'];
+            $codigo=$habitacion['cod_tipo_hab'];
+            $MetodoPago=$_POST['metodo_pago'];
+            $sqlr = "SELECT * FROM reserva WHERE (fecha_inicio <= '$Fechaf' AND fecha_fin >= '$Fechai') AND cod_tipo_hab='$codigo'";
 
-                        $resultado = mysqli_query($bd, $sqlr);
-                        $datosr = mysqli_fetch_assoc($resultado);
+            $resultado = mysqli_query($bd, $sqlr);
+            $datosr = mysqli_fetch_assoc($resultado);
 
-                        if($datosr) {
-                            echo "Error: Ya hay una reserva existente para estas fechas. Seleccione una habitación o fecha diferente.";
-                        }
-                        else{
-                            if(!isset($_SESSION['cod_usuario'])){
-                            echo "<script type='text/javascript'>alert('Para hacer una reserva, debe iniciar sesión');
-                                window.location='../Usuarios/iniciarsesion.php';
+            if($datosr) {
+                echo "Error: Ya hay una reserva existente para estas fechas. Seleccione una habitación o fecha diferente.";
+            }
+            else{
+                $id=$_SESSION['correo_electronico'];
+                $sqlu="SELECT * FROM persona WHERE correo_electronico='$id'";
+                $resultado=mysqli_query($bd,$sqlu);
+                if($resultado){
+                    $datosu=mysqli_fetch_assoc($resultado);
+                    $num_doc=$datosu['num_doc'];
+                    if($Fechai>$Fechaf || $Fechaf<$Fechai){
+                        echo 'No se puede hacer una reserva con una fecha de inicio mayor a la final...Seleccione una fecha diferente e intente nuevamente';}
+                else{
+                    $sql_insert="INSERT INTO reserva(fecha_inicio,fecha_fin,precio,cod_tipo_hab,num_doc) VALUES('$Fechai','$Fechaf','$Precio','$codigo','$num_doc')";
+                    $reservar=mysqli_query($bd,$sql_insert);
+                    $cod_reserva=mysqli_insert_id($bd);
+                    $fecha_factura=date("Y/m/d");
+                    if($reservar){
+                        $result=mysqli_query($bd,"SELECT * FROM carrito_persona JOIN persona ON carrito_persona.num_doc=persona.num_doc WHERE correo_electronico='$id'");
+                        if($result){
+                            $datos_car=mysqli_fetch_assoc($result);
+                            $cod_carrito=$datos_car['cod_carrito'];
+                        if($cod_carrito!==null){
+                            $sqlfc="INSERT INTO factura (fecha_factura,metodo_pago,num_doc,cod_reserva,cod_carrito) VALUES('$fecha_factura','$MetodoPago','$num_doc','$cod_reserva','$cod_carrito')";
+
+                            $generar_fac1=mysqli_query($bd,$sqlfc);
+                            $cod_fac=mysqli_insert_id($bd);
+                            
+                            $sql_cantidad="SELECT COUNT(*) FROM persona JOIN carrito_persona ON persona.num_doc=carrito_persona.num_doc WHERE persona.num_doc='$num_doc'";
+                            $rconsulta=mysqli_query($bd,$sql_cantidad);
+                            $cantidad=mysqli_fetch_assoc($rconsulta);
+                            $cantidad=$cantidad["COUNT(*)"];
+                            
+                            $generar_facturac=mysqli_query($bd,"INSERT INTO detalle_factura(cod_factura,cod_carrito,cantidad_serv_adquiridos) VALUES('$cod_fac','$cod_carrito','$cantidad');");
+                            if($generar_facturac){
+                                echo "<script type='text/javascript'>
+                                alert ('Reserva generada exitosamente, los servicios del carrito fueron añadidos. Puede consultar el valor total en ver factura');
+                                window.location='ver_reservas.php';
                                 </script>";
-                            }    
+                            }
+                            }
                             else{
-                                $id=$_SESSION['correo_electronico'];
-                                $sqlu="SELECT * FROM persona WHERE correo_electronico='$id'";
-                                $resultado=mysqli_query($bd,$sqlu);
-                                if($resultado){
-                                    $datosu=mysqli_fetch_assoc($resultado);
-                                    $num_doc=$datosu['num_doc'];
-                                    if($Fechai>$Fechaf || $Fechaf<$Fechai){
-                                        echo 'No se puede hacer una reserva con una fecha de inicio mayor a la final...Seleccione una fecha diferente e intente nuevamente';
-                                    }
-    
-                                    else{
-                                        /*$finicio=strtotime($Fechai);
-                                        $ffin=strtotime($Fechaf);
-                                        $diferencia=$ffin-$finicio;
-                                        $segundosporDia=60*60*24;
-                                        $dias=$diferencia/$segundosporDia;
-                                        $Total=$dias*$Precio;*/
+                                $sqlf="INSERT INTO factura (fecha_factura,metodo_pago,num_doc,cod_reserva) VALUES('$fecha_factura','$MetodoPago','$num_doc','$cod_reserva')";
+                            
+                                $generar_fac=mysqli_query($bd,$sqlf);
+                            
+                                $cod_fac=mysqli_insert_id($bd);
+                            
+                                $generar_factura=mysqli_query($bd,"INSERT INTO detalle_factura(cod_factura) VALUES('$cod_fac');");
+                                if($generar_factura){
+                                    echo "<script type='text/javascript'>
+                                    alert ('Reserva generada exitosamente...');
+                                    window.location='ver_reservas.php';
+                                    </script>";
+                                }
+                        }
+                        }
+                        }
+                    }
+                    }
+                }
+            }
+    ?>
+</div>
+</div>
+</div>
 
-                                        $sql_insert="INSERT INTO reserva(fecha_inicio,fecha_fin,precio,cod_tipo_hab,num_doc) VALUES('$Fechai','$Fechaf','$Precio','$codigo','$num_doc')";
-                                        $reservar=mysqli_query($bd,$sql_insert);
-                                        $cod_reserva=mysqli_insert_id($bd);
-                                        $fecha_factura=date("Y/m/d");
-                                        if($reservar){
-
-                                            $result=mysqli_query($bd,"SELECT * FROM carrito_persona JOIN persona ON carrito_persona.num_doc=persona.num_doc WHERE correo_electronico='$id'");
-                                            if($result){
-                                                $datos_car=mysqli_fetch_assoc($result);
-                                                $cod_carrito=$datos_car['cod_carrito'];
-                                            
-                                                if($cod_carrito!==null){
-                                            
-                                                    $sqlfc="INSERT INTO factura (fecha_factura,metodo_pago,num_doc,cod_reserva,cod_carrito) VALUES('$fecha_factura','$MetodoPago','$num_doc','$cod_reserva','$cod_carrito')";
-
-                                                    $generar_fac1=mysqli_query($bd,$sqlfc);
-                                                    $cod_fac=mysqli_insert_id($bd);
-                                                    
-                                                    $sql_cantidad="SELECT COUNT(*) FROM persona JOIN carrito_persona ON persona.num_doc=carrito_persona.num_doc WHERE persona.num_doc='$num_doc'";
-                                                    $rconsulta=mysqli_query($bd,$sql_cantidad);
-                                                    $cantidad=mysqli_fetch_assoc($rconsulta);
-                                                    $cantidad=$cantidad["COUNT(*)"];
-                                                    
-                                                    $generar_facturac=mysqli_query($bd,"INSERT INTO detalle_factura(cod_factura,cod_carrito,cantidad_serv_adquiridos) VALUES('$cod_fac','$cod_carrito','$cantidad');");
-                                                    if($generar_facturac){
-                                                        echo "<script type='text/javascript'>
-                                                        alert ('Reserva generada exitosamente, los servicios del carrito fueron añadidos. Puede consultar el valor total en ver factura');
-                                                        window.location='ver_reservas.php';
-                                                        </script>";
-                                                    }
-                                                    }
-                                                    else{
-                                                        $sqlf="INSERT INTO factura (fecha_factura,metodo_pago,num_doc,cod_reserva) VALUES('$fecha_factura','$MetodoPago','$num_doc','$cod_reserva')";
-                                                    
-                                                        $generar_fac=mysqli_query($bd,$sqlf);
-                                                    
-                                                        $cod_fac=mysqli_insert_id($bd);
-                                                    
-                                                        $generar_factura=mysqli_query($bd,"INSERT INTO detalle_factura(cod_factura) VALUES('$cod_fac');");
-                                                        if($generar_factura){
-                                                            echo "<script type='text/javascript'>
-                                                            alert ('Reserva generada exitosamente...');
-                                                            window.location='ver_reservas.php';
-                                                            </script>";
-                                                        }
-                                                }
-                                                }
-                                                }
-                                            }
-                                            }
-                                        }
-                                    }
-
-                                        }
-
-                        ?>
-            </div>
-                    </div>
-                </div>
-
-            </div>
-            </div>    
-            </body>
-            </html>
+</div>
+</div>    
+</body>
+</html>

@@ -92,6 +92,7 @@ nav{
     font-family: 'Nunito';
     outline: none;
 }
+
 .botonb{
     padding: 8px;
     width: 159px;
@@ -478,4 +479,11 @@ footer section i{
 
 .frame2 .setting-item:hover {
     background-color: #93cef0;
+}
+.contenido span a{
+    color: black;
+}
+.contenido span a:hover{
+    color: dodgerblue;
+    text-decoration: none;
 }

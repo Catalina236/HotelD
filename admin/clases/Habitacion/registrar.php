@@ -19,7 +19,7 @@ if(isset($_POST['Enviar'])){
     $precio=$_POST['precio'];
     $estado=$_POST['estado'];
     $descripcion=$_POST['descripcion'];
-    $imagen=$_FILES['imagen']['name'];
+    $imagen=$_FILES['imagen']['name']; 
     if(isset($imagen) && $imagen!=""){
         $tipo=$_FILES['imagen']['type'];
         $temp=$_FILES['imagen']['tmp_name'];

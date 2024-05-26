@@ -31,7 +31,7 @@ $total=$trabajo->VerServicios();
         <table>
             <thead bgcolor=#8CAAF8>
                 <tr>
-                    <th colspan="11">
+                    <th colspan="7">
                         <h2>Servicios</h2>
                     </th>
                     <th><a href="registrar_serv.php"><img src="../../imagenes/restaurante.png" alt=""></a></th> 
@@ -39,15 +39,11 @@ $total=$trabajo->VerServicios();
 
                 <tr>
                     <th>Código servicio</th>
-                    <th>Id bar</th>
-                    <th>Producto bar</th>
-                    <th>Valor bar</th>
-                    <th>Id zonas humedas</th>
-                    <th>Zonas húmedas</th>
-                    <th>Valor zonas húmedas</th>
-                    <th>Id restaurante</th>
-                    <th>Producto restaurante</th>
-                    <th>Valor restaurante</th>
+                    <th>Id producto</th>
+                    <th>Nombre del producto</th>
+                    <th>Valor producto</th>
+                    <th>Descripcion</th>
+                    <th>Imagen</th>
                     <th>Editar</th>
                     <th>Eliminar</th>
                 </tr>
@@ -56,19 +52,29 @@ $total=$trabajo->VerServicios();
                 <?php foreach($datos as $row) { ?>
                     <tr>
                         <td><?php echo $row['cod_servicio'];?></td>
-                        <td><?php echo $row['id_bar'];?></td>
-                        <td><?php echo $row['nom_producto_bar'];?></td>
-                        <td><?php echo $row['valor_bar'];?></td>
-                        <td><?php echo $row['id_zon_hum'];?></td>
-                        <td><?php echo $row['nom_servicio_zh'];?></td>
-                        <td><?php echo $row['valor_zh'];?></td>
-                        
-                        <td><?php echo $row['id_rest'];?></td>
-                        <td><?php echo $row['nom_producto_rest'];?></td>
-                        <td><?php echo $row['valorR'];?></td>
+                        <td><?php echo $row['id_rest'];?>
+                        <?php echo $row['id_bar'];?>
+                        <?php echo $row['id_zon_hum'];?></td>
+                        <td><?php echo $row['nom_producto_rest'];?>
+                        <?php echo $row['nom_producto_bar'];?>
+                        <?php echo $row['nom_servicio_zh'];?></td>
+                        <td><?php echo $row['valorR'];?>
+                        <?php echo $row['valor_bar'];?>
+                        <?php echo $row['valor_zh'];?></td>
+                        <td><?php echo $row['descripcionr'];?>
+                        <?php echo $row['descripcion_bar'];?>
+                        <?php echo $row['descripcion_zh'];?></td>
+                        <?php if (strpos($row['cod_servicio'],'1')===0):?>
+                        <td><img src="imagenes/<?php echo $row['foto_res'];?>" alt=""></td>
+                        <?php ?>
+                        <?php elseif(strpos($row['cod_servicio'],'2')===0):?>
+                        <td><img src="imagenes/<?php echo $row['foto_bar'];?>" alt=""></td>
+                        <?php else:?>
+                        <td><img src="imagenes/<?php echo $row['foto_zh'];?>" alt=""></td>
+                        <?php endif;?>
+
                         <td><a href="editar_serv.php?cod=<?php echo $row['cod_servicio'];?>"><img src="../../imagenes/editar.png" alt=""></a></td>
-                        <td>
-                        <a class="eliminar" id="eliminar" onclick='return confirmacion()' href="eliminar.php?cod=<?php echo $row['cod_servicio'];?>"><img src="../../imagenes/eliminar.png" alt=""></a></td>
+                        <td><a class="eliminar" id="eliminar" onclick='return confirmacion()' href="eliminar.php?cod=<?php echo $row['cod_servicio'];?>"><img src="../../imagenes/eliminar.png" alt=""></a></td>
                     </tr>
                 <?php }?>
             </tbody>
@@ -83,17 +89,17 @@ $total=$trabajo->VerServicios();
 
     if ($pagina_actual > 1) {
         $pagina_anterior=$pagina_actual-1;
-        echo "<a href='index.php?pagina=$pagina_anterior' class='enlace'>Anterior</a>";
+        echo "<a href='seleccionar.php?pagina=$pagina_anterior' class='enlace'>Anterior</a>";
     }  
 
     if ($pagina_actual < $total_paginas) {
         $siguiente_pagina = $pagina_actual + 1;
-        echo "<a class='enlaces' href='index.php?pagina=$siguiente_pagina'>          Siguiente</a> <br>";
+        echo "<a class='enlaces' href='seleccionar.php?pagina=$siguiente_pagina'>          Siguiente</a> <br>";
     }
     
     if($total_paginas>2){
         for ($i = 1; $i <= $total_paginas; $i++) {
-            echo"<a class='enlace' href='index.php?pagina=".$i."'> ".$i." </a> ";
+            echo"<a class='enlace' href='seleccionar.php?pagina=".$i."'> ".$i." </a> ";
         }
     }
     ?>

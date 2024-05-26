@@ -16,7 +16,13 @@ if(isset($_POST['Enviar'])){
     $id_rest=$_POST['id_rest'];
     $nom_producto=$_POST['nom_producto'];
     $valor_rest=$_POST['valor'];
-    $dato->insertarServicio($cod_servicio,$num_doc_cliente,$id_rest,$nom_producto,$valor_rest);
+    $descripcion=$_POST['descripcion'];
+    $foto=$_FILES['foto']['name'];
+    if(isset($foto) && $foto!=""){
+        $tipo=$_FILES['foto']['type'];
+        $temp=$_FILES['foto']['tmp_name'];
+        $dato->insertarServicio($cod_servicio,$num_doc_cliente,$id_rest,$nom_producto,$valor_rest,$descripcion,$foto,$temp);
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -29,7 +35,7 @@ if(isset($_POST['Enviar'])){
     <title>Servicio</title>
 </head>
 <body>
-    <form action="" method="POST">
+    <form action="" method="POST" enctype="multipart/form-data">
         <h1>Registro Servicios</h1>
         <label for="">Codigo Servicio</label>
         <input type="text" name="cod_servicio" id="" class="casilla">
@@ -41,6 +47,10 @@ if(isset($_POST['Enviar'])){
         <input type="text" name="nom_producto" class="casilla">
         <label for="">Valor</label>
         <input type="text" name="valor" class="casilla">
+        <label for="">Descripción</label>
+        <input type="text" name="descripcion" id="" class="casilla">
+        <label for="">Foto Servicio</label>
+        <input type="file" name="foto" id="">
         <input type="submit" name="Enviar" class="casilla">
     </form>
 </body>

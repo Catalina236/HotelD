@@ -13,7 +13,7 @@ $sql="SELECT * FROM persona WHERE correo_electronico='$email'";
 $result=mysqli_query($bd,$sql);
 $datos=mysqli_fetch_assoc($result);
 $num=$datos['num_doc'];
-$sql1="SELECT * FROM reserva JOIN habitacion ON reserva.cod_tipo_hab=habitacion.cod_tipo_hab JOIN tipo_habitacion ON tipo_habitacion.cod_tipo_hab=habitacion.cod_tipo_hab WHERE reserva.cod_reserva='$codigor'";
+$sql1="SELECT * FROM reserva JOIN habitacion ON reserva.cod_tipo_hab=habitacion.cod_tipo_hab JOIN tipo_habitacion ON tipo_habitacion.cod_tipo_hab=habitacion.cod_tipo_hab JOIN factura ON factura.cod_reserva=reserva.cod_reserva WHERE reserva.cod_reserva='$codigor'";
 $resultado=mysqli_query($bd,$sql1);
 $reservas=mysqli_fetch_assoc($resultado);
 ?>
@@ -84,6 +84,12 @@ $reservas=mysqli_fetch_assoc($resultado);
     <span>Capacidad: <?php echo $reservas['capacidad'];?></span>
     <br>
     <span>Descripción: <?php echo $reservas['descripcion_hab'];?></span>
+    <br>
+    <span>Medio de pago: <?php echo $reservas['metodo_pago'];?></span>
+    <br>
+    <span>Servicios adicionales:
+        <strong><a href="../Servicios/vercarrito.php">Ver</a></strong>
+    </span>
     <br>
     <button><a href="../factura/consulta_factura.php?cod_reserva=<?php echo $reservas['cod_reserva'];?>">Ver factura</a></button>
     <button onclick="return confirmacion()"><a href="cancelar_reserva.php?cod_reserva=<?php echo $reservas['cod_reserva'];?>">Cancelar</a></button>

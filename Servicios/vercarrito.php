@@ -15,11 +15,17 @@ $datos=mysqli_fetch_assoc($resultado);
 $num=$datos['num_doc'];
 
 
-$queryVerCarrito = "SELECT c.cod_carrito, c.num_doc, c.cod_servicio, 
-                           r.nom_producto_rest as nombre_producto_rest,
-                           b.nom_producto_bar as nombre_producto_bar,
-                           z.nom_servicio_zh as nombre_producto_zh,
-                           c.cantidad, c.subtotal
+$queryVerCarrito = "SELECT c.cod_carrito, c.num_doc, c.cod_servicio,
+r.nom_producto_rest as nombre_producto_rest,
+b.nom_producto_bar as nombre_producto_bar,
+z.nom_servicio_zh as nombre_producto_zh,
+r.valor as valor_r,
+b.valor as valor_b,
+z.valor as valor_z,
+r.foto_serv as foto_res,
+b.foto_serv as foto_bar,
+z.foto_serv as foto_z,
+c.cantidad, c.subtotal
                     FROM carrito_persona c
                     LEFT JOIN restaurante r ON c.id_agregadosrest = r.id_rest
                     LEFT JOIN bar b ON c.id_agregadosbar = b.id_bar
@@ -93,28 +99,35 @@ mysqli_close($bd);
         <table class="tabla-carrito">
             <thead>
                 <tr>
-                    <th>ID Carrito</th>
-                    <th>Número de Documento</th>
-                    <th>Código de Servicio</th>
-                    <th>Nombre del Producto (Restaurante)</th>
-                    <th>Nombre del Producto (Bar)</th>
-                    <th>Nombre del Producto (Zonas Húmedas)</th>
+                    <th>Imagen</th>
+                    <th>Nombre del Producto</th>
                     <th>Cantidad</th>
                     <th>Subtotal</th>
+                    <th>Valor base</th>
                     <th colspan="9">Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($filasCarrito as $fila) : ?>
                     <tr>
-                        <td><?= $fila['cod_carrito'] ?></td>
-                        <td><?= $fila['num_doc'] ?></td>
-                        <td><?= $fila['cod_servicio'] ?></td>
-                        <td><?= $fila['nombre_producto_rest'] ?></td>
-                        <td><?= $fila['nombre_producto_bar'] ?></td>
-                        <td><?= $fila['nombre_producto_zh'] ?></td>
+                        <?php $cod_servicio=$fila['cod_servicio']; ?>
+                        <td>
+                        <img class="imagen_columna" src="../admin/clases/Servicios/imagenes/<?php echo $fila['foto_res']; ?>" alt=""><br>
+                        <img class="imagen_columna" src="../admin/clases/Servicios/imagenes/<?php echo $fila['foto_bar']; ?>" alt=""><br>
+                        <img class="imagen_columna" src="../admin/clases/Servicios/imagenes/<?php echo $fila['foto_z']; ?>" alt="">
+                    </td>
+                        <td><?= $fila['nombre_producto_rest'] ?>
+                        <?= $fila['nombre_producto_bar'] ?>
+                        <?= $fila['nombre_producto_zh'] ?></td>
                         <td id="cantidad<?= $fila['cod_carrito'] ?>"><?= $fila['cantidad'] ?></td>
-                        <td id="valorProducto<?= $fila['subtotal'] ?>"></td>
+                        <td><?= $fila['subtotal'] ?></td>
+                        <?php if (substr($cod_servicio, 0, 1) === '1'): ?>
+                        <td id="valorProducto<?= $fila['cod_carrito'] ?>"><?= $fila['valor_r'] ?></td>
+                        <?php elseif (substr($cod_servicio, 0, 1) === '2'): ?>
+                        <td id="valorProducto<?= $fila['cod_carrito'] ?>"><?= $fila['valor_b'] ?></td>
+                        <?php else: ?>
+                        <td id="valorProducto<?= $fila['cod_carrito'] ?>"><?= $fila['valor_z'] ?></td>
+                        <?php endif; ?>
                         <td>
                             <button class="eliminar-btn" onclick="eliminarProducto(<?= $fila['cod_carrito'] ?>)">
                               <img src="../imagenes/dele.png" alt="">

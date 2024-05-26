@@ -134,28 +134,25 @@ if ($result === false) {
             <div class="detalle-factura">
             <?php
                         // Consulta SQL para obtener el contenido del carrito
-                        $carrito_sql = "SELECT 
-                            carrito_persona.*,
-                            bar.nom_producto_bar AS nom_bar,
-                            restaurante.nom_producto_rest AS nom_restaurante,
-                            zonas_humedas.nom_servicio_zh AS nom_zonas_humedas
-                            FROM carrito_persona
-                            LEFT JOIN bar ON carrito_persona.id_agregadosbar = bar.id_bar
-                            LEFT JOIN restaurante ON carrito_persona.id_agregadosrest = restaurante.id_rest
-                            LEFT JOIN zonas_humedas ON carrito_persona.id_agregadoszonas = zonas_humedas.id_zon_hum
-                            WHERE num_doc = '{$row['num_doc']}'";
-                        $carrito_result = $conn->query($carrito_sql);
+            $carrito_sql = "SELECT 
+                carrito_persona.*,
+                bar.nom_producto_bar AS nom_bar,
+                restaurante.nom_producto_rest AS nom_restaurante,
+                zonas_humedas.nom_servicio_zh AS nom_zonas_humedas
+                FROM carrito_persona
+                LEFT JOIN bar ON carrito_persona.id_agregadosbar = bar.id_bar
+                LEFT JOIN restaurante ON carrito_persona.id_agregadosrest = restaurante.id_rest
+                LEFT JOIN zonas_humedas ON carrito_persona.id_agregadoszonas = zonas_humedas.id_zon_hum
+                WHERE num_doc = '{$row['num_doc']}'";
+            $carrito_result = $conn->query($carrito_sql);
 
-                        $total_servicios_ads = 0; // Inicializar el total de servicios adicionales
-                            
-                        if ($carrito_result->num_rows > 0) :
-                            while ($carrito_row = $carrito_result->fetch_assoc()) :
-                                // Sumar el subtotal al total de servicios adicionales
-                                $total_servicios_ads += $carrito_row['subtotal'];
-                        ?>
-                        
+            $total_servicios_ads = 0; // Inicializar el total de servicios adicionales
+                
+            if ($carrito_result->num_rows > 0) :
+            ?>
+            
+            <table class="tabla-carrito">
                 <h3>Detalle del Carrito</h3>
-                <table class="tabla-carrito">
                     <thead>
                         <tr>
                             <th>ID Carrito</th>
@@ -167,29 +164,33 @@ if ($result === false) {
                         </tr>
                     </thead>
                     <tbody>
-                                <tr>
-                                    <td><?= $carrito_row['cod_carrito'] ?></td>
-                                    <td><?= $carrito_row['num_doc'] ?></td>
-                                    <td><?= $carrito_row['cod_servicio'] ?></td>
-                                    <td>
-                                        <?php 
-                                        if (!empty($carrito_row['nom_bar'])) {
-                                            echo $carrito_row['nom_bar'];
-                                        } elseif (!empty($carrito_row['nom_restaurante'])) {
-                                            echo $carrito_row['nom_restaurante'];
-                                        } elseif (!empty($carrito_row['nom_zonas_humedas'])) {
-                                            echo $carrito_row['nom_zonas_humedas'];
-                                        }
-                                        ?>
-                                    </td>
-                                    <td><?= $carrito_row['cantidad'] ?></td>
-                                    <td><?= $carrito_row['subtotal'] ?></td>
-                                </tr>
-                        <?php
-                            endwhile;
+                        <?php 
+                         while ($carrito_row = $carrito_result->fetch_assoc()) :
+                            $total_servicios_ads += $carrito_row['subtotal'];
+                        ?>
+                            <tr>
+                                <td><?= $carrito_row['cod_carrito'] ?></td>
+                                <td><?= $carrito_row['num_doc'] ?></td>
+                                <td><?= $carrito_row['cod_servicio'] ?></td>
+                                <td>
+                                    <?php 
+                                    if (!empty($carrito_row['nom_bar'])) {
+                                        echo $carrito_row['nom_bar'];
+                                    } elseif (!empty($carrito_row['nom_restaurante'])) {
+                                        echo $carrito_row['nom_restaurante'];
+                                    } elseif (!empty($carrito_row['nom_zonas_humedas'])) {
+                                        echo $carrito_row['nom_zonas_humedas'];
+                                    }
+                                    ?>
+                                </td>
+                                <td><?= $carrito_row['cantidad'] ?></td>
+                                <td><?= $carrito_row['subtotal'] ?></td>
+                            </tr>
+                    </tbody>
+                    <?php
+                        endwhile;
                         endif;
                         ?>
-                    </tbody>
                 </table>
             </div>
             <!-- Fin de la sección de detalle del carrito -->

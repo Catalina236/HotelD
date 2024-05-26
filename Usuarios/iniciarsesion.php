@@ -65,6 +65,14 @@
             $_SESSION['correo_electronico']=$rows['correo_electronico'];
             $rol=$rows['cod_usuario'];
             $_SESSION['cod_usuario']=$rol;
+            if (isset($_SESSION["redirect_to"])) {
+                $redirect_url = $_SESSION["redirect_to"];
+                unset($_SESSION["redirect_to"]);
+                header("Location: $redirect_url");
+                exit();
+            } else {
+               header("Location: ..index.php");
+            }
             switch($_SESSION['cod_usuario']){
                 case 1:
                     header("Location: vercuenta.php");

@@ -51,7 +51,7 @@ require 'Bd/conexion.php';
                 </ul>
             </li>
             <?php endif;?>
-                <li><a href="">Contáctenos</a></li>
+                <li><a href="Usuarios/contacto.php">Contáctenos</a></li>
             <li><a href="Servicios/servicios.php">Servicios</a>
             <ul class="submenu">
                 <li><a href="Servicios/serviciores.php">Restaurante</a></li>

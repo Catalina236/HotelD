@@ -158,20 +158,20 @@ if ($result->num_rows > 0) {
 
         // Verifica si se encontraron filas en el resultado de la consulta del carrito
         $total_servicios_ads = 0;
+        $pdf->SetFont('Arial','B',12);
+        $pdf->Ln();
+        $pdf->Cell(30,10,'ID Carrito',1,0);
+        $pdf->Cell(30,10,'Documento',1,0, 'C');
+        $pdf->Cell(30,10,'Cod Servicio',1,0, 'C');
+        $pdf->Cell(40,10,'Nombre Producto',1,0, 'C');
+        $pdf->Cell(25,10,'Cantidad',1,0, 'C');
+        $pdf->Cell(40,10,'Subtotal',1,1, 'C');
+        // Establece la fuente y el tamaño del texto
+        $pdf->SetFont('Arial','',12);        
             
         if ($carrito_result->num_rows > 0) {
             // Itera sobre cada fila del resultado de la consulta del carrito
             while ($carrito_row = $carrito_result->fetch_assoc()) {
-                $pdf->SetFont('Arial','B',12);
-                $pdf->Ln();
-                $pdf->Cell(30,10,'ID Carrito',1,0);
-                $pdf->Cell(30,10,'Documento',1,0, 'C');
-                $pdf->Cell(30,10,'Cod Servicio',1,0, 'C');
-                $pdf->Cell(40,10,'Nombre Producto',1,0, 'C');
-                $pdf->Cell(25,10,'Cantidad',1,0, 'C');
-                $pdf->Cell(40,10,'Subtotal',1,1, 'C');
-                // Establece la fuente y el tamaño del texto
-                $pdf->SetFont('Arial','',12);
                 // Imprime las celdas con la información del carrito
                 $pdf->Cell(30,10,$carrito_row["cod_carrito"],1,0);
                 $pdf->Cell(30,10,$carrito_row["num_doc"],1,0, 'C');

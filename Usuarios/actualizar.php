@@ -107,7 +107,15 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
                 $resultado = mysqli_query($bd, $sql2);
         
                 if($resultado){
-                    move_uploaded_file($temp, 'imagenesbd/'.$Foto);
+
+                    if (!empty($_FILES['foto']['name'])) {
+                        move_uploaded_file($temp, 'imagenesbd/' . $Foto);
+                        }
+                        echo "<script type='text/javascript'>
+                        alert ('Usuario actualizado exitosamente...');
+                        window.location='verusuarios.php';
+                        </script>";
+                    /*move_uploaded_file($temp, 'imagenesbd/'.$Foto);
                     /*echo "<script type='text/javascript'>
                     alert ('Usuario actualizado exitosamente...');
                     window.location='vercuenta.php';

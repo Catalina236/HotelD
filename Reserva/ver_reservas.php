@@ -3,9 +3,7 @@ require '../Bd/conexion.php';
 $bd = conectar_db();
 session_start();
 if (!isset($_SESSION['correo_electronico'])) {
-    echo "<script type='text/javascript'>alert('Para ver sus reservas, debe iniciar sesión');
-    window.location='../Usuarios/iniciarsesion.php';
-    </script>";
+    header("Location:../habitaciones/habitaciones.php");
 }
 $email = $_SESSION['correo_electronico'];
 $sql1 = "SELECT * FROM persona WHERE correo_electronico='$email'";

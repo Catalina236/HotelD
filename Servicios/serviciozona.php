@@ -6,19 +6,24 @@ $errores = [];
 
 session_start();
 
-if (!isset($_SESSION['correo_electronico'])) {
-    header("Location:../Usuarios/iniciarsesion.php");
-}
-$id=$_SESSION['correo_electronico'];
-$sql="SELECT * FROM persona WHERE correo_electronico='$id'";
-$resultado=mysqli_query($bd,$sql);
-$datos=mysqli_fetch_assoc($resultado);
-$num=$datos['num_doc'];
+$sql2="SELECT * FROM zonas_humedas";
+$resultado2=mysqli_query($bd,$sql2);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (!isset($_SESSION['correo_electronico'])) {
+        $_SESSION["redirect_to"]=$_SERVER["REQUEST_URI"];
+        echo "<script type='text/javascript'>alert('Para añadir servicios al carrito debe iniciar sesión');
+        window.location='../Usuarios/iniciarsesion.php';
+        </script>";
+    }
+    $id=$_SESSION['correo_electronico'];
+    $sql="SELECT * FROM persona WHERE correo_electronico='$id'";
+    $resultado=mysqli_query($bd,$sql);
+    $datos=mysqli_fetch_assoc($resultado);
+    $num=$datos['num_doc'];
     //$numDoc = "1111";
-    $codigoServicio = $_POST['CodigoServicio'];
-    $id_agregadoszona = $_POST['id_agregadoszonas']; // Corregido el nombre del campo
+    $codigoServicio = $_POST['cod_servicio'];
+    $id_agregadoszona = $_POST['id_zonas_humedas']; // Corregido el nombre del campo
     $cantidad = isset($_POST['cantidad']) ? $_POST['cantidad'] : 1;
 
     // Realiza la consulta SQL para obtener el valor del producto de zonas humedas
@@ -113,40 +118,26 @@ mysqli_close($bd);
             <div class="carrito">
                 <a href="vercarrito.php" class="boton-ver-carrito"><img src="../imagenes/carrito.png" alt="" srcset=""></a>
             </div>
-            <div class="serviciosa 1"> 
-                <img class="serviciosi" src="../imagenes/spaser.jpg" alt="">
+            <?php while($servicios=mysqli_fetch_assoc($resultado2)){?>
+            <div class="serviciosa 1">
+                <img class="restaurante" src="../admin/clases/Servicios/imagenes/<?php echo $servicios['foto_serv'];?>" alt="">
                 <div class="info">
-                    <h3>Spa</h3>
-                    <p>
-                        Un spa es un refugio de tranquilidad y rejuvenecimiento que busca proporcionar a sus visitantes una experiencia holística para el cuidado del cuerpo y la mente. Sus instalaciones suelen contar con ambientes serenos y acogedores, con una atención centrada en el cliente.</p>
-                    <h4>COP 50.000</h4>
+                    <h3><?php echo $servicios['nom_servicio_zh'];?> </h3>
+                    <p><?php echo $servicios ['descripcion'];?></p>
+                    <h4><?php echo $servicios['valor'];?></h4>
+                    
                 </div>
                 <form class="formulario" method="POST" action="serviciozona.php">
-                    <input type="hidden" name="CodigoServicio" value="100">
-                    <input type="hidden" name="id_agregadoszonas" value="z1"> <!-- Asigna valores únicos según el servicio -->
-                    <label for="cantidad_zona">Cantidad de Personas:</label>
-                    <input type="number" class="add-cantidad" id="cantidad_zona" name="cantidad" min="1" required>
+                    <label for="cantidad">Cantidad de Producto:</label> <!-- Puedes generar un ID único para cada item del carrito -->
+                    <input type="hidden" name="cod_servicio" value="<?php echo $servicios['cod_servicio']; ?>">
+                    
+                    <input type="hidden" name="id_zonas_humedas" value="<?php echo $servicios['id_zon_hum']; ?>">
+                    <input type="number" class="add-cantidad" id="cantidad" name="cantidad" min="1" required>
                     <button class="botonres" type="submit">Añadir al carrito</button>
                 </form>
             </div>
-
-            <div class="serviciosa 2">
-                <img class="serviciosi" src="../imagenes/piscinaser.jpg" alt="">
-                <div class="info">
-                    <h3>Piscina</h3>
-                    <p>Una piscina es un oasis acuático que puede encontrarse tanto en espacios privados, como en patios traseros, como en instalaciones públicas, como clubes, hoteles o complejos recreativos. Su diseño puede variar, pero generalmente consta de un área revestida con material impermeable, como azulejos o láminas de vinilo, que retiene el agua.</p>
-                    <h4>COP 20.000</h4>
-                </div>
-                <form class="formulario" method="POST" action="serviciozona.php">
-                    <input type="hidden" name="CodigoServicio" value="100">
-                    <input type="hidden" name="id_agregadoszonas" value="z2"> <!-- Asigna valores únicos según el servicio -->
-                    <label for="cantidad_zona">Cantidad de Personas:</label>
-                    <input type="number" class="add-cantidad" id="cantidad_zona" name="cantidad" min="1" required>
-                    <button class="botonres" type="submit">Añadir al carrito</button>
-                </form>
-            </div>
+            <?php }?>
         </section>
     </div>
 </body>
-</html> 
-
+</html>
